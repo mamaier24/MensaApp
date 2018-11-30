@@ -12,31 +12,39 @@
     tools:context="de.hsulm.mensaapp.RegisterActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="210dp"
+        android:layout_height="179dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/hsu_icon" />
+
     <TextView
 
         android:id="@+id/eVUsername"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:text="Benutzername"
         app:layout_constraintBottom_toTopOf="@+id/eTUsername"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
         android:id="@+id/eTUsername"
         android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:hint="Benutzernamen eingeben"
+        app:layout_constraintBottom_toTopOf="@+id/eTPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eVUsername" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
@@ -44,45 +52,47 @@
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:text="Passwort"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTUsername" />
+        app:layout_constraintBottom_toTopOf="@+id/eTPassword"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
         android:id="@+id/eTPassword"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:hint="Passwort eingeben"
         android:inputType="textPassword"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eVpassword" />
+        app:layout_constraintBottom_toTopOf="@+id/eTEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/eVemail"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:text="E-Mail-Adresse"
+        app:layout_constraintBottom_toTopOf="@+id/eTEmail"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTPassword" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/eTEmail"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:hint="E-Mail eingeben"
         android:inputType="textEmailAddress"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eVemail" />
+        app:layout_constraintBottom_toTopOf="@+id/bRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bRegister"
@@ -91,8 +101,9 @@
         android:layout_marginLeft="64dp"
 
         android:layout_marginRight="64dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="420dp"
         android:text="Registrieren"
+        app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
