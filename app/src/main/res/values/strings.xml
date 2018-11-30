@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MensaApp</string>
+    <string name="Speiseplan">Speiseplan</string>
+    <string name="Lob_Tadel">Lob und Tadel</string>
+    <string name="Abmelden">Abmelden</string>
+    <string name="Suche">Suche</string>
+
+</resources>

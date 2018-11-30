@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/Speiseplan"
+        android:title="@string/Speiseplan"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Lob_Tadel"
+        android:title="@string/Lob_Tadel"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Suche"
+        android:title="@string/Suche"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Abmelden"
+        android:title="@string/Abmelden"
+        app:showAsAction="never"/>
+
+
+
+</menu>
