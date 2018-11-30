@@ -56,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressDialog = new ProgressDialog(this);
 
         buttonRegister.setOnClickListener(this);
+        buttonRegister.setTransformationMethod(null);
 
     }
 

@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextUsername = (EditText) findViewById(R.id.eTUsername);
         editTextPassword = (EditText) findViewById(R.id.eTPassword);
         buttonLogin = (Button) findViewById(R.id.bLogin);
+        buttonLogin.setTransformationMethod(null);
 
             registerLink = (TextView)findViewById(R.id.tVRegister);
 
