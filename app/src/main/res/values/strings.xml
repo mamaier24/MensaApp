@@ -1,8 +1,21 @@
 <resources>
+
+    //Wird für das Toolbarmenü benötigt
     <string name="app_name">MensaApp</string>
     <string name="Speiseplan">Speiseplan</string>
     <string name="Lob_Tadel">Lob und Tadel</string>
     <string name="Abmelden">Abmelden</string>
     <string name="Suche">Suche</string>
+
+    //Wird für den Spinner benötigt
+    <string-array name="Standorte">
+        <item>Prittwitzstraße diese Woche</item>
+        <item>Prittwitzstraße nächste Woche</item>
+        <item>Böfingen diese Woche</item>
+        <item>Böfingen nächste Woche</item>
+        <item>Eselsberg diese Woche</item>
+        <item>Eselsberg nächste Woche</item>
+
+    </string-array>
 
 </resources>

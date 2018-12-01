@@ -69,7 +69,7 @@ public class UserAreaActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.Speiseplan:
                 //Intent zum speiseplan
-                Intent speiseplanIntent = new Intent(UserAreaActivity.this, SpeiseplanActivity.class);
+                Intent speiseplanIntent = new Intent(UserAreaActivity.this, Speiseplan.class);
                 UserAreaActivity.this.startActivity(speiseplanIntent);
                 Toast.makeText(this, "Auf Speiseplan geklickt?", Toast.LENGTH_LONG).show();
                 break;
