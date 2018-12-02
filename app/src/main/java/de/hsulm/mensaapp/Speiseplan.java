@@ -12,11 +12,13 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 
@@ -36,14 +38,13 @@ public class Speiseplan extends AppCompatActivity {
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;     //Strings den Spinner füllen
 
-    int week = WeekNumber();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speiseplan);
 
         spinner = (Spinner)findViewById(R.id.spinnerStandort);
+        pdfview =(PDFView)findViewById(R.id.pdfView);
         adapter = ArrayAdapter.createFromResource(this, R.array.Standorte, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -54,46 +55,42 @@ public class Speiseplan extends AppCompatActivity {
                 String standort = parent.getItemAtPosition(position).toString();
 
 
-                switch (standort){  //oder über id
+                switch (standort){
                     case "Prittwitzstraße diese Woche":
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + ((Integer)week).toString() +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + getWeekNumber() +".pdf";
+                        new RetrievePDFStream(link).execute();
                         break;
                     case "Prittwitzstraße nächste Woche":
-                        week = week+1;
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + ((Integer)week).toString() +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + (getWeekNumber() + 1) +".pdf";
+                        new RetrievePDFStream(link).execute();
                         break;
                     case "Böfingen diese Woche":
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/BÖ" + ((Integer)week).toString() +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/BÖ" + getWeekNumber() +".pdf";
+                        new RetrievePDFStream(link).execute();
                         break;
                     case "Böfingen nächste Woche":
-                        week = week+1;
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/BÖ" + ((Integer)week).toString() +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/BÖ" + (getWeekNumber() + 1) +".pdf";
+                        new RetrievePDFStream(link).execute();
                         break;
                     case "Eselsberg diese Woche":
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/OE" + ((Integer)week).toString() +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/OE" + getWeekNumber() +".pdf";
+                        new RetrievePDFStream(link).execute();
                         break;
                     case "Eselsberg nächste Woche":
-                        week = week+1;
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/OE"  + ((Integer)week).toString() +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/OE"  + (getWeekNumber() + 1) +".pdf";
+                        new RetrievePDFStream(link).execute();
                         break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent){
             }
+
         });
 
-        pdfview =(PDFView)findViewById(R.id.pdfView);
-        //Von den Assets
-        //pdfview.fromAsset("Speiseplan.pdf").load();
-
-        //Von URL
-        String url = link;
-        new RetrievePDFStream(url).execute();
-
-
-
     }
+
 
     class RetrievePDFStream extends AsyncTask<String,Void,InputStream>
     {
@@ -102,7 +99,6 @@ public class Speiseplan extends AppCompatActivity {
         public RetrievePDFStream(String url){
             this.pdfurl = url;
         }
-
 
         @Override
         protected InputStream doInBackground(String... strings) {
@@ -117,32 +113,31 @@ public class Speiseplan extends AppCompatActivity {
             }
             catch (IOException e)
             {
-                return null;
+                return inputStream = null;
             }
             return inputStream;
         }
 
         @Override
         protected void onPostExecute(InputStream inputStream){
-            pdfview.fromStream(inputStream).load();
+            if(inputStream != null){
+                pdfview.fromStream(inputStream).load();
+            }
+            else{
+                Toast.makeText(Speiseplan.this, "Speiseplan nicht verfügbar!", Toast.LENGTH_LONG).show();
+            }
         }
 
     }
 
 
-    public int WeekNumber(){
+    public int getWeekNumber(){
 
-        String inputDate = "20181201";
-        String inputFormat = "yyyyMMdd";
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(inputFormat);
-        Date date = new Date();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
+        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+        calDe.setTime(new Date());
+        int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
 
         return(weekNumber);
-        //System.out.println(weekNumber);
     }
+
 }
