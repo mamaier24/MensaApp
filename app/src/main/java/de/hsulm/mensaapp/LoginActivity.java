@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -123,10 +125,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
+        buttonLogin.setEnabled(false);
+
         if(view == buttonLogin)
             userLogin();
         if (view == registerLink)
              startActivity(new Intent(this, RegisterActivity.class));
 
+        Timer buttonTimer = new Timer();
+        buttonTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        buttonLogin.setEnabled(true);
+                    }
+                });
+            }
+
+        }, 5000);
+
     }
+
 }
