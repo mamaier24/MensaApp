@@ -13,27 +13,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextUsername, editTextEmail, editTextPassword;
     private Button buttonRegister;
     private ProgressDialog progressDialog;
-
     private TextView textViewLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         buttonRegister.setTransformationMethod(null);
 
     }
+
 
     private void registerUser() {
         final String email = editTextEmail.getText().toString().trim();
@@ -101,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
                     }
+
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -115,20 +114,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
-            //vl gleich loginseite starten
-
     }
+
 
     @Override
     public void onClick(View view) {
         if (view == buttonRegister)
             registerUser();
-
     }
+
 
     public void onNotError(){
 
         startActivity(new Intent(this, LoginActivity.class));
 
     }
+
 }
