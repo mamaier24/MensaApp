@@ -21,9 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".UserAreaActivity" />
-        <activity android:name=".Speiseplan"></activity>
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".UserAreaActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".Speiseplan"
+            android:screenOrientation="nosensor"></activity>
     </application>
 
 </manifest>
