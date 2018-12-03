@@ -5,8 +5,10 @@ package de.hsulm.mensaapp;
  */
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
 
 public class UserAreaActivity extends AppCompatActivity {
 
@@ -76,6 +80,28 @@ public class UserAreaActivity extends AppCompatActivity {
 
             case R.id.Lob_Tadel:
                 //Intent zu Lob und Tadel
+                Log.i("Want to Send Mail","");
+                String[] TO = {"mensa@studierendenwerk-ulm.de"};//Email
+                String[] CC = new String[] {SharedPrefManager.getInstance(this).getUserEmail()};
+                String UN = SharedPrefManager.getInstance(this).getUsername();
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bitte geben sie Ihre Speise(n) an:\n");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hier ist Platz für Lob und konstruktive Kritik:\n\n\n\nViele Grüße " +UN);
+
+
+                try{
+                    startActivity(Intent.createChooser(emailIntent, "Wählen Sie eine Email-App aus..."));
+                    finish();
+                    Log.i("Mail Sent", "");
+                }catch (android.content.ActivityNotFoundException ex){
+                    Toast.makeText(this,"Mail is not initiated", Toast.LENGTH_SHORT).show();
+                }
+
+
                 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Noch nicht bearbeitet
                 Toast.makeText(UserAreaActivity.this, "Auf Lob und Tadel geklickt?", Toast.LENGTH_SHORT).show();
                 break;
