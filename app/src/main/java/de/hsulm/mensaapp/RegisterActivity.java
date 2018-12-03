@@ -22,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -119,8 +121,29 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if (view == buttonRegister)
+
+        buttonRegister.setEnabled(false);
+
+        if (view == buttonRegister){
             registerUser();
+        }
+
+        Timer buttonTimer = new Timer();
+        buttonTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        buttonRegister.setEnabled(true);
+                    }
+                });
+            }
+
+        }, 5000);
+
     }
 
 
