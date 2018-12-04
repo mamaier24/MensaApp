@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
@@ -31,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextUsername, editTextEmail, editTextPassword;
     private Button buttonRegister;
     private ProgressDialog progressDialog;
+    private ProgressBar progessBar_register;
     private TextView textViewLogin;
 
 
@@ -48,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextEmail = (EditText) findViewById(R.id.eTEmail);
         editTextUsername = (EditText) findViewById(R.id.eTUsername);
         editTextPassword = (EditText) findViewById(R.id.eTPassword);
+        progessBar_register = (ProgressBar)findViewById(R.id.progressBar_register);
+        progessBar_register.setVisibility(View.GONE);
 
 
         buttonRegister = (Button) findViewById(R.id.bRegister);
@@ -65,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String username = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        progressDialog.setMessage("Registering user...");
+        progressDialog.setMessage("Benutzer registrieren...");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -122,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
 
+        progessBar_register.setVisibility(View.VISIBLE);
         buttonRegister.setEnabled(false);
 
         if (view == buttonRegister){
@@ -138,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void run() {
                         buttonRegister.setEnabled(true);
+                        progessBar_register.setVisibility(View.GONE);
                     }
                 });
             }
