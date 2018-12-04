@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextUsername = (EditText) findViewById(R.id.eTUsername);
         editTextPassword = (EditText) findViewById(R.id.eTPassword);
         buttonLogin = (Button) findViewById(R.id.bLogin);
-        progessBar_login = (ProgressBar)findViewById(R.id.progressBar);
+        progessBar_login = (ProgressBar)findViewById(R.id.progressBar_login);
         progessBar_login.setVisibility(View.GONE);
         buttonLogin.setTransformationMethod(null);
         registerLink = (TextView)findViewById(R.id.tVRegister);
