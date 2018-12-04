@@ -126,6 +126,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    //Deactivate loginbutton to avoid login spamming
+    //Activate progressbar to symbol activity
     @Override
     public void onClick(View view) {
 

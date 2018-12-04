@@ -123,6 +123,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    //Deactivate registerbutton to avoid registration spamming
+    //Activate progressbar to symbol activity
     @Override
     public void onClick(View view) {
 
