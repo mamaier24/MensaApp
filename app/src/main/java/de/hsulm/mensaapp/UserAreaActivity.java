@@ -17,8 +17,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-
 public class UserAreaActivity extends AppCompatActivity {
 
     RatingBar ratingbar;
@@ -73,9 +71,9 @@ public class UserAreaActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.Speiseplan:
                 //Intent zum speiseplan
-                Intent speiseplanIntent = new Intent(UserAreaActivity.this, Speiseplan.class);
+                Intent speiseplanIntent = new Intent(UserAreaActivity.this, MenuActivity.class);
                 UserAreaActivity.this.startActivity(speiseplanIntent);
-                Toast.makeText(this, "Auf Speiseplan geklickt?", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Auf MenuActivity geklickt?", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.Lob_Tadel:

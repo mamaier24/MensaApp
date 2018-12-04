@@ -25,7 +25,7 @@
             android:screenOrientation="nosensor"/>
         <activity android:name=".UserAreaActivity"
             android:screenOrientation="nosensor"/>
-        <activity android:name=".Speiseplan"
+        <activity android:name=".MenuActivity"
             android:screenOrientation="nosensor"></activity>
     </application>
 

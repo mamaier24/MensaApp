@@ -1,14 +1,10 @@
 package de.hsulm.mensaapp;
 
-import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -18,21 +14,13 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 
 import java.util.*;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-
-import de.hsulm.mensaapp.R;
-
-import static de.hsulm.mensaapp.R.id.parent;
-import static de.hsulm.mensaapp.R.id.pdfView;
-
-public class Speiseplan extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
     private String link;
     private PDFView pdfview;
     private Spinner spinner;
@@ -52,10 +40,10 @@ public class Speiseplan extends AppCompatActivity {
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-                String standort = parent.getItemAtPosition(position).toString();
+                String location = parent.getItemAtPosition(position).toString();
 
 
-                switch (standort){
+                switch (location){
                     case "Prittwitzstraße diese Woche":
                         link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + getWeekNumber() +".pdf";
                         new RetrievePDFStream(link).execute();
@@ -124,7 +112,7 @@ public class Speiseplan extends AppCompatActivity {
                 pdfview.fromStream(inputStream).load();
             }
             else{
-                Toast.makeText(Speiseplan.this, "Speiseplan nicht verfügbar!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, "Speiseplan nicht verfügbar!", Toast.LENGTH_LONG).show();
             }
         }
 
