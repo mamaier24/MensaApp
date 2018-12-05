@@ -60,7 +60,7 @@ public class UserAreaActivity extends AppCompatActivity {
         textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
         textViewUsername.setText(SharedPrefManager.getInstance(this).getUsername());
     }
-    
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
