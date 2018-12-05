@@ -18,16 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -223,7 +219,7 @@ public class UserAreaActivity extends AppCompatActivity {
         refreshButton.performClick();
 
     }
-    
+
 
     public synchronized void distributeFoodList(ArrayList food_list){
         global_food_list = food_list;
