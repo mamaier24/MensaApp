@@ -39,6 +39,7 @@ public class UserAreaActivity extends AppCompatActivity {
     private BroadcastReceiver mReceiver=null;
     private String foodtext;
     private TextView textViewUsername, textViewUserEmail;
+    private ArrayList<Food> global_food_list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,11 +203,11 @@ public class UserAreaActivity extends AppCompatActivity {
                                     food_list.add(food);
                                 }
 
+                                distributeFoodList(food_list);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            System.out.println(food_list);
 
                         }
                     };
@@ -221,6 +222,11 @@ public class UserAreaActivity extends AppCompatActivity {
 
         refreshButton.performClick();
 
+    }
+
+    public synchronized void distributeFoodList(ArrayList food_list){
+        global_food_list = food_list;
+        System.out.println(global_food_list);
     }
     //DB OPERATIONS CREATED BY STEPHAN DANZ
     //END
