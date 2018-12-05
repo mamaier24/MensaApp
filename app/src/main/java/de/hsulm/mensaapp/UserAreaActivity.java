@@ -34,13 +34,11 @@ import java.util.Locale;
 
 public class UserAreaActivity extends AppCompatActivity {
 
-    RatingBar ratingbar;
-    Button button;
-    BroadcastReceiver mReceiver=null;
-    String foodtext;
-
+    private RatingBar ratingbar;
+    private Button button;
+    private BroadcastReceiver mReceiver=null;
+    private String foodtext;
     private TextView textViewUsername, textViewUserEmail;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +59,15 @@ public class UserAreaActivity extends AppCompatActivity {
 
         textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
         textViewUsername.setText(SharedPrefManager.getInstance(this).getUsername());
-
-
-
-
-
-
     }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
 
     public void addListenerOnButtonClick() {
         ratingbar = (RatingBar) findViewById(R.id.ratingBar);
@@ -90,6 +84,7 @@ public class UserAreaActivity extends AppCompatActivity {
 
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -144,6 +139,7 @@ public class UserAreaActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
     //DB OPERATIONS CREATED BY STEPHAN DANZ
     //Necessary for DB operations
@@ -200,7 +196,6 @@ public class UserAreaActivity extends AppCompatActivity {
                                 food_arr = new JSONArray(intent.getStringExtra("food_object"));
 
                                 for (int i = 0; i < food_arr.length(); i++) {
-
                                     food_obj = food_arr.getJSONObject(i);
                                     Food food = new Food(food_obj.getInt("id"), food_obj.getString("name"), food_obj.getString("category"), food_obj.getString("date"), food_obj.getInt("vegan"), food_obj.getInt("vegetarian"), food_obj.getLong("price"), food_obj.getString("uuid"));
                                     foodtext = foodtext + food.getName() + "\n";
@@ -225,10 +220,11 @@ public class UserAreaActivity extends AppCompatActivity {
             }
         });
 
+        refreshButton.performClick();
+
     }
     //DB OPERATIONS CREATED BY STEPHAN DANZ
     //END
-
 
 }
 
