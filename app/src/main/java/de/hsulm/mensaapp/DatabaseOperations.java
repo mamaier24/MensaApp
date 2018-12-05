@@ -1,32 +1,20 @@
 package de.hsulm.mensaapp;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Debug;
-import android.support.annotation.VisibleForTesting;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by jkoeber on 06.03.14.
+ * Created by Stephan Danz 05/12/2018
+ * Class necessary for handling all DB operations such as getting food
  */
 public class DatabaseOperations extends IntentService {
 
@@ -57,12 +45,9 @@ public class DatabaseOperations extends IntentService {
 
                         try {
 
-
-
                             JSONArray jsonArray = new JSONArray(response);
                             String food_object = jsonArray.toString();
                             publishStatus(food_object);
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -86,7 +71,6 @@ public class DatabaseOperations extends IntentService {
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(arrayRequest);
-
     }
 
 
