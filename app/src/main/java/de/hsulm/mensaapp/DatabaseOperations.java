@@ -41,27 +41,20 @@ public class DatabaseOperations extends IntentService {
 
                     @Override
                     public void onResponse(String response) {
-
-
                         try {
-
                             JSONArray jsonArray = new JSONArray(response);
                             String food_object = jsonArray.toString();
                             publishStatus(food_object);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-
                 },
-
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) { }
 
                 }){
-
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         HashMap<String, String> params = new HashMap<>();
