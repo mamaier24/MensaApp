@@ -8,14 +8,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +29,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class UserAreaActivity extends AppCompatActivity {
 
     RatingBar ratingbar;
     Button button;
-    BroadcastReceiver mReceiver;
+    BroadcastReceiver mReceiver=null;
+    String foodtext;
 
     private TextView textViewUsername, textViewUserEmail;
 
@@ -40,7 +47,7 @@ public class UserAreaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
-        if(!SharedPrefManager.getInstance(this).isLoggedIn()){
+        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
@@ -49,44 +56,16 @@ public class UserAreaActivity extends AppCompatActivity {
         textViewUserEmail = (TextView) findViewById(R.id.textViewUseremail);
 
         addListenerOnButtonClick();
+        addRefreshButtonListener();
+
 
         textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
         textViewUsername.setText(SharedPrefManager.getInstance(this).getUsername());
 
-        //Essential for reception of food from DB
-        Intent intent = new Intent(this, DatabaseOperations.class);
-        intent.putExtra("searchQuery","2018KW49F1");
-        startService(intent);
 
-         mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
 
-                JSONArray food_arr;
-                JSONObject food_obj;
-                ArrayList<Food> food_list = new ArrayList<>();
 
-                try {
-                    food_arr = new JSONArray(intent.getStringExtra("food_object"));
 
-                     for(int i=0; i<food_arr.length();i++) {
-
-                         food_obj = food_arr.getJSONObject(i);
-                         Food food = new Food(food_obj.getInt("id"), food_obj.getString("name"), food_obj.getString("category"), food_obj.getString("date"),food_obj.getInt("vegan"),food_obj.getInt("vegetarian"),food_obj.getLong("price"),food_obj.getString("uuid"));
-                         food_list.add(food);
-                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println("Success!");
-
-            }
-        };
-
-        registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
-        //END of DB operations
 
     }
 
@@ -96,37 +75,37 @@ public class UserAreaActivity extends AppCompatActivity {
         return true;
     }
 
-    public void addListenerOnButtonClick(){
-        ratingbar=(RatingBar)findViewById(R.id.ratingBar);
-        button=(Button)findViewById(R.id.button);
+    public void addListenerOnButtonClick() {
+        ratingbar = (RatingBar) findViewById(R.id.ratingBar);
+        button = (Button) findViewById(R.id.button);
         //Performing action on Button Click
-        button.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 //Getting the rating and displaying it on the toast
-                String rating=String.valueOf(ratingbar.getRating());
+                String rating = String.valueOf(ratingbar.getRating());
                 Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
             }
 
         });
     }
 
-        @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.Speiseplan:
-                //Intent zum speiseplan
+                //Intent for "Speiseplan"
                 Intent speiseplanIntent = new Intent(UserAreaActivity.this, MenuActivity.class);
                 UserAreaActivity.this.startActivity(speiseplanIntent);
                 Toast.makeText(this, "Auf MenuActivity geklickt?", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.Lob_Tadel:
-                //Intent zu Lob und Tadel
-                Log.i("Want to Send Mail","");
+                //Intent for "Lob und Tadel"
+                Log.i("Want to Send Mail", "");
                 String[] TO = {"mensa@studierendenwerk-ulm.de"};//Email
-                String[] CC = new String[] {SharedPrefManager.getInstance(this).getUserEmail()};
+                String[] CC = new String[]{SharedPrefManager.getInstance(this).getUserEmail()};
                 String UN = SharedPrefManager.getInstance(this).getUsername();
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
@@ -134,15 +113,15 @@ public class UserAreaActivity extends AppCompatActivity {
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
                 emailIntent.putExtra(Intent.EXTRA_CC, CC);
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bitte geben sie Ihre Speise(n) an:\n");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hier ist Platz für Lob und konstruktive Kritik:\n\n\n\nViele Grüße " +UN);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hier ist Platz für Lob und konstruktive Kritik:\n\n\n\nViele Grüße " + UN);
 
 
-                try{
+                try {
                     startActivity(Intent.createChooser(emailIntent, "Wählen Sie eine Email-App aus..."));
                     finish();
                     Log.i("Mail Sent", "");
-                }catch (android.content.ActivityNotFoundException ex){
-                    Toast.makeText(this,"Mail is not initiated", Toast.LENGTH_SHORT).show();
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "Mail is not initiated", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -166,7 +145,7 @@ public class UserAreaActivity extends AppCompatActivity {
         return true;
     }
 
-
+    //DB OPERATIONS CREATED BY STEPHAN DANZ
     //Necessary for DB operations
     //TODO: on resume
     @Override
@@ -174,6 +153,82 @@ public class UserAreaActivity extends AppCompatActivity {
         super.onPause();
         unregisterReceiver(mReceiver);
     }
+
+
+    public String getFoodID() {
+
+        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+        calDe.setTime(new Date());
+        int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
+        int year = calDe.get(Calendar.YEAR);
+        String food_id = "Y" + year + ":CW" + weekNumber + ":DMO";
+        return (food_id);
+
+    }
+
+
+    public void addRefreshButtonListener() {
+
+        Button refreshButton = (Button) findViewById(R.id.refreshButton);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick (View v) {
+
+                //DB OPERATIONS CREATED BY STEPHAN DANZ
+                //Essential for reception of food from DB
+                final TextView textView = (TextView) findViewById(R.id.textView2);
+                textView.setMovementMethod(new ScrollingMovementMethod());
+                String food_id = getFoodID();
+                foodtext = "";
+                Intent intent = new Intent(v.getContext(),DatabaseOperations.class);
+                intent.putExtra("searchQuery", food_id);
+                startService(intent);
+
+                if(mReceiver==null) {
+
+                    mReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+
+                            JSONArray food_arr;
+                            JSONObject food_obj;
+                            ArrayList<Food> food_list = new ArrayList<>();
+
+                            try {
+                                food_arr = new JSONArray(intent.getStringExtra("food_object"));
+
+                                for (int i = 0; i < food_arr.length(); i++) {
+
+                                    food_obj = food_arr.getJSONObject(i);
+                                    Food food = new Food(food_obj.getInt("id"), food_obj.getString("name"), food_obj.getString("category"), food_obj.getString("date"), food_obj.getInt("vegan"), food_obj.getInt("vegetarian"), food_obj.getLong("price"), food_obj.getString("uuid"));
+                                    foodtext = foodtext + food.getName() + "\n";
+                                    textView.setText(foodtext);
+                                    food_list.add(food);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            System.out.println(food_list);
+
+                        }
+                    };
+
+                    registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
+                    //END of DB operations
+                    //DB OPERATIONS CREATED BY STEPHAN DANZ
+
+                }
+            }
+        });
+
+    }
+    //DB OPERATIONS CREATED BY STEPHAN DANZ
+    //END
+
 
 }
 
