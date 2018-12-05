@@ -223,6 +223,7 @@ public class UserAreaActivity extends AppCompatActivity {
         refreshButton.performClick();
 
     }
+    
 
     public synchronized void distributeFoodList(ArrayList food_list){
         global_food_list = food_list;
