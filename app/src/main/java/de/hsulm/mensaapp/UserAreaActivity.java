@@ -93,7 +93,6 @@ public class UserAreaActivity extends AppCompatActivity {
                 //Intent for "Speiseplan"
                 Intent speiseplanIntent = new Intent(UserAreaActivity.this, MenuActivity.class);
                 UserAreaActivity.this.startActivity(speiseplanIntent);
-                Toast.makeText(this, "Auf MenuActivity geklickt?", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.Lob_Tadel:
@@ -114,7 +113,7 @@ public class UserAreaActivity extends AppCompatActivity {
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Wählen Sie eine Email-App aus..."));
                     finish();
-                    Log.i("Mail Sent", "");
+                    Log.i("Mail gesendet", "");
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(this, "Mail is not initiated", Toast.LENGTH_SHORT).show();
                 }
