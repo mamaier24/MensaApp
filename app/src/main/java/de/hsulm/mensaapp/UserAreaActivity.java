@@ -183,7 +183,6 @@ public class UserAreaActivity extends AppCompatActivity {
                     mReceiver = new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
-
                             JSONArray food_arr;
                             JSONObject food_obj;
                             ArrayList<Food> food_list = new ArrayList<>();
@@ -204,7 +203,6 @@ public class UserAreaActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
                     };
 
