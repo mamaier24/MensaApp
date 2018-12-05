@@ -4,7 +4,10 @@ package de.hsulm.mensaapp;
  * Created by Marcel Maier on 30/11/18.
  */
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +20,17 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class UserAreaActivity extends AppCompatActivity {
 
     RatingBar ratingbar;
     Button button;
+    BroadcastReceiver mReceiver;
 
     private TextView textViewUsername, textViewUserEmail;
 
@@ -42,6 +52,42 @@ public class UserAreaActivity extends AppCompatActivity {
 
         textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
         textViewUsername.setText(SharedPrefManager.getInstance(this).getUsername());
+
+        //Essential for reception of food from DB
+        Intent intent = new Intent(this, DatabaseOperations.class);
+        intent.putExtra("searchQuery","2018KW49F1");
+        startService(intent);
+
+         mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                JSONArray food_arr;
+                JSONObject food_obj;
+                ArrayList<Food> food_list = new ArrayList<>();
+
+                try {
+                    food_arr = new JSONArray(intent.getStringExtra("food_object"));
+
+                     for(int i=0; i<food_arr.length();i++) {
+
+                         food_obj = food_arr.getJSONObject(i);
+                         Food food = new Food(food_obj.getInt("id"), food_obj.getString("name"), food_obj.getString("category"), food_obj.getString("date"),food_obj.getInt("vegan"),food_obj.getInt("vegetarian"),food_obj.getLong("price"),food_obj.getString("uuid"));
+                         food_list.add(food);
+                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("Success!");
+
+            }
+        };
+
+        registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
+        //END of DB operations
+
     }
 
     @Override
@@ -119,5 +165,15 @@ public class UserAreaActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
+    //Necessary for DB operations
+    //TODO: on resume
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(mReceiver);
+    }
+
 }
 

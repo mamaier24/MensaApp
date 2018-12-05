@@ -32,6 +32,8 @@
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="nosensor" />
+        <service
+            android:name=".DatabaseOperations" />
 
     </application>
 
