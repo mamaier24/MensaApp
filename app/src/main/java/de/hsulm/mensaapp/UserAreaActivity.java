@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +33,7 @@ import java.util.Locale;
 
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperations;
 
-public class UserAreaActivity extends AppCompatActivity {
+public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private RatingBar ratingbar;
     private Button button;
@@ -42,11 +44,18 @@ public class UserAreaActivity extends AppCompatActivity {
     private FoodAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
     private  boolean flag=false;
+    private SwipeRefreshLayout swipe_refresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
+
+        swipe_refresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        swipe_refresh.setOnRefreshListener(this);
+
+        initializeRecycler();
 
         if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
@@ -58,8 +67,6 @@ public class UserAreaActivity extends AppCompatActivity {
         getFoodFromDB();
 
     }
-
-
 
 
     @Override
@@ -123,6 +130,27 @@ public class UserAreaActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+
+            @Override public void run() {
+
+                String food_id = getFoodID();
+                Intent intent = new Intent(UserAreaActivity.this,DatabaseOperations.class);
+                intent.putExtra("searchQuery", food_id);
+                startService(intent);
+
+                if (swipe_refresh != null) {
+                    swipe_refresh.setRefreshing(false);
+                }
+
+            }
+        }, 4000);
+
+    }
+
+
     //DB OPERATIONS CREATED BY STEPHAN DANZ
     //Necessary for DB operations
     //TODO: on resume
@@ -155,11 +183,8 @@ public class UserAreaActivity extends AppCompatActivity {
 
             //DB OPERATIONS CREATED BY STEPHAN DANZ
             //Essential for reception of food from DB
-            String food_id = getFoodID();
-            Intent intent = new Intent(this,DatabaseOperations.class);
+
             final ArrayList<FoodClass> food_list = new ArrayList<>();
-            intent.putExtra("searchQuery", food_id);
-            startService(intent);
 
             if(mReceiver==null) {
 
@@ -213,6 +238,17 @@ public class UserAreaActivity extends AppCompatActivity {
             }
 
             return food_list;
+
+    }
+
+    public void initializeRecycler(){
+
+        getFoodFromDB();
+
+        String food_id = getFoodID();
+        Intent intent = new Intent(this,DatabaseOperations.class);
+        intent.putExtra("searchQuery", food_id);
+        startService(intent);
 
     }
 
