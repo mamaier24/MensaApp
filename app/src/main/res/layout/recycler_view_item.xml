@@ -76,6 +76,7 @@
             android:layout_height="33dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:isIndicator="true"
             app:layout_constraintStart_toEndOf="@+id/tvBewertung"
             app:layout_constraintTop_toBottomOf="@+id/tvPreis" />
     </android.support.constraint.ConstraintLayout>

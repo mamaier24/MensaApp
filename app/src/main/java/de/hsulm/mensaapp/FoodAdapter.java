@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -48,6 +49,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
         holder.mTitel.setText(currentItem.getName());
         holder.mPreis.setText(currentItem.getPrice());
         holder.mBewertung.setText(((Float)currentItem.getRating()).toString());
+        holder.mRatingBar.setRating(((Float)currentItem.getRating()).intValue());
     }
 
 
@@ -71,6 +73,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
             TextView mTitel;
             TextView mPreis;
             TextView mBewertung;
+            RatingBar mRatingBar;
 
             public GerichtViewHolder(View itemView, final OnItemClickListener listener) {
                 super(itemView);
@@ -79,6 +82,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
                 mTitel = (TextView) itemView.findViewById(R.id.tvTitel);
                 mPreis = (TextView) itemView.findViewById(R.id.tvPreis);
                 mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
+                mRatingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

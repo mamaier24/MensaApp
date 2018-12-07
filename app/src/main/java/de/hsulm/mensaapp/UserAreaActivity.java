@@ -221,7 +221,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                                                      food_obj.getString("name"), food_obj.getString("category"),
                                                      food_obj.getInt("vegan"),
                                                      food_obj.getInt("vegetarian"), food_obj.getString("price"),
-                                                     food_obj.getString("uuid"), 1.0f, "MA_PIC_ID_A1XX.png");
+                                                     food_obj.getString("uuid"), food_obj.getLong("rating"), "MA_PIC_ID_A1XX.png");
 
                                 food_list.add(food);
 
