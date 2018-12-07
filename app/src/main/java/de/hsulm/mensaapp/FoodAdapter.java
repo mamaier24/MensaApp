@@ -10,14 +10,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHolder> {
-private ArrayList<FoodClass> mexampleList;
-private OnItemClickListener mListener;
+    private ArrayList<FoodClass> mexampleList;
+    private OnItemClickListener mListener;
 
-public interface OnItemClickListener{
-    void OnItemClick(int position);
-}
+    public interface OnItemClickListener{
+        void OnItemClick(int position);
+    }
 
-public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener){
     mListener = listener;
 }
 
@@ -51,34 +51,41 @@ public void setOnItemClickListener(OnItemClickListener listener){
     }
 
 
-public static class GerichtViewHolder extends RecyclerView.ViewHolder {
+    public void clear() {
+        final int size = mexampleList.size();
+        mexampleList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 
 
-        ImageView mImage;
-        TextView mTitel;
-        TextView mPreis;
-        TextView mBewertung;
+    public static class GerichtViewHolder extends RecyclerView.ViewHolder {
 
-        public GerichtViewHolder(View itemView, final OnItemClickListener listener) {
-            super(itemView);
 
-            mImage = (ImageView) itemView.findViewById(R.id.ivFavorite);
-            mTitel = (TextView) itemView.findViewById(R.id.tvTitel);
-            mPreis = (TextView) itemView.findViewById(R.id.tvPreis);
-            mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
+            ImageView mImage;
+            TextView mTitel;
+            TextView mPreis;
+            TextView mBewertung;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.OnItemClick(position);
+            public GerichtViewHolder(View itemView, final OnItemClickListener listener) {
+                super(itemView);
+
+                mImage = (ImageView) itemView.findViewById(R.id.ivFavorite);
+                mTitel = (TextView) itemView.findViewById(R.id.tvTitel);
+                mPreis = (TextView) itemView.findViewById(R.id.tvPreis);
+                mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(listener != null){
+                            int position = getAdapterPosition();
+                            if(position != RecyclerView.NO_POSITION){
+                                listener.OnItemClick(position);
+                            }
                         }
                     }
-                }
-            });
-        }
+                });
+            }
     }
 
 

@@ -135,7 +135,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         new Handler().postDelayed(new Runnable() {
 
             @Override public void run() {
-
+                mAdapter.clear();
                 String food_id = getFoodID();
                 Intent intent = new Intent(UserAreaActivity.this,DatabaseOperations.class);
                 intent.putExtra("searchQuery", food_id);
