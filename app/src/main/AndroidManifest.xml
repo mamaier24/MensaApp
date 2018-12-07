@@ -14,7 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="nosensor">
@@ -33,11 +32,12 @@
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="nosensor" />
-        <activity
-            android:name=".SearchActivity"
-            android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".GerichtProfil" />
+
+        <service android:name=".DatabaseOperations" />
+        <service
+            android:name=".CreateFoodList"
+            android:exported="false"></service>
     </application>
 
 </manifest>
