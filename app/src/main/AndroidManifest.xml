@@ -32,9 +32,12 @@
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="nosensor" />
-        <service
-            android:name=".DatabaseOperations" />
+        <activity android:name=".GerichtProfil" />
 
+        <service android:name=".DatabaseOperations" />
+        <service
+            android:name=".CreateFoodList"
+            android:exported="false"></service>
     </application>
 
 </manifest>

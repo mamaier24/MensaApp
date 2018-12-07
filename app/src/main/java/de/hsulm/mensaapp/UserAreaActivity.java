@@ -11,8 +11,10 @@ import android.content.IntentFilter;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -35,7 +39,10 @@ public class UserAreaActivity extends AppCompatActivity {
     private BroadcastReceiver mReceiver=null;
     private String foodtext;
     private TextView textViewUsername, textViewUserEmail;
-    private ArrayList<Food> global_food_list = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private GerichtAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutmanager;
+    private  boolean flag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,39 +54,19 @@ public class UserAreaActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        textViewUsername = (TextView) findViewById(R.id.textViewUsername);
-        textViewUserEmail = (TextView) findViewById(R.id.textViewUseremail);
+        //Food dummy = new Food(1, "dummy", "dummy", 0, 0, 0f, "dummy", 0f, R.drawable.ic_android_black);
+        //food_list.add(dummy);
+        getFoodFromDB();
 
-        addListenerOnButtonClick();
-        addRefreshButtonListener();
-
-
-        textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
-        textViewUsername.setText(SharedPrefManager.getInstance(this).getUsername());
     }
+
+
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
-
-
-    public void addListenerOnButtonClick() {
-        ratingbar = (RatingBar) findViewById(R.id.ratingBar);
-        button = (Button) findViewById(R.id.button);
-        //Performing action on Button Click
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                //Getting the rating and displaying it on the toast
-                String rating = String.valueOf(ratingbar.getRating());
-                Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
-            }
-
-        });
     }
 
 
@@ -143,7 +130,13 @@ public class UserAreaActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(mReceiver);
+        try {
+            if (mReceiver != null) {
+                unregisterReceiver(mReceiver);
+            }
+        }catch (IllegalArgumentException e){
+            mReceiver=null;
+        }
     }
 
 
@@ -159,70 +152,71 @@ public class UserAreaActivity extends AppCompatActivity {
     }
 
 
-    public void addRefreshButtonListener() {
+    public ArrayList getFoodFromDB() {
 
-        Button refreshButton = (Button) findViewById(R.id.refreshButton);
+            //DB OPERATIONS CREATED BY STEPHAN DANZ
+            //Essential for reception of food from DB
+            String food_id = getFoodID();
+            Intent intent = new Intent(this,DatabaseOperations.class);
+            final ArrayList<Food> food_list = new ArrayList<>();
+            intent.putExtra("searchQuery", food_id);
+            startService(intent);
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+            if(mReceiver==null) {
 
-            @Override
-            public void onClick (View v) {
+                mReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        JSONArray food_arr;
+                        JSONObject food_obj;
 
-                //DB OPERATIONS CREATED BY STEPHAN DANZ
-                //Essential for reception of food from DB
-                final TextView textView = (TextView) findViewById(R.id.textView2);
-                textView.setMovementMethod(new ScrollingMovementMethod());
-                String food_id = getFoodID();
-                foodtext = "";
-                Intent intent = new Intent(v.getContext(),DatabaseOperations.class);
-                intent.putExtra("searchQuery", food_id);
-                startService(intent);
+                        try {
+                            food_arr = new JSONArray(intent.getStringExtra("food_object"));
 
-                if(mReceiver==null) {
+                            for (int i = 0; i < food_arr.length(); i++) {
+                                food_obj = food_arr.getJSONObject(i);
 
-                    mReceiver = new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-                            JSONArray food_arr;
-                            JSONObject food_obj;
-                            ArrayList<Food> food_list = new ArrayList<>();
+                                Food food = new Food(food_obj.getInt("id"),
+                                                     food_obj.getString("name"), food_obj.getString("category"),
+                                                     food_obj.getInt("vegan"),
+                                                     food_obj.getInt("vegetarian"), food_obj.getLong("price"),
+                                                     food_obj.getString("uuid"), 1.0f, R.drawable.ic_android_black);
 
-                            try {
-                                food_arr = new JSONArray(intent.getStringExtra("food_object"));
+                                food_list.add(food);
 
-                                for (int i = 0; i < food_arr.length(); i++) {
-                                    food_obj = food_arr.getJSONObject(i);
-                                    Food food = new Food(food_obj.getInt("id"), food_obj.getString("name"), food_obj.getString("category"), food_obj.getString("date"), food_obj.getInt("vegan"), food_obj.getInt("vegetarian"), food_obj.getLong("price"), food_obj.getString("uuid"));
-                                    foodtext = foodtext + food.getName() + "\n";
-                                    textView.setText(foodtext);
-                                    food_list.add(food);
-                                }
-
-                                distributeFoodList(food_list);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
+
+                            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                            mLayoutmanager = new LinearLayoutManager(context);
+                            mAdapter = new GerichtAdapter(food_list);
+                            mRecyclerView.setLayoutManager(mLayoutmanager);
+                            mRecyclerView.setAdapter(mAdapter);
+
+                            mAdapter.setOnItemClickListener(new GerichtAdapter.OnItemClickListener() {
+                                @Override
+                                public void OnItemClick(int position) {
+                                    Intent intent = new Intent(UserAreaActivity.this, GerichtProfil.class);
+                                    intent.putExtra("Food", food_list.get(position));
+                                    startActivity(intent);
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    };
+                    }
+                };
 
-                    registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
-                    //END of DB operations
-                    //DB OPERATIONS CREATED BY STEPHAN DANZ
+                registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
+                //END of DB operations
+                //DB OPERATIONS CREATED BY STEPHAN DANZ
 
-                }
             }
-        });
 
-        refreshButton.performClick();
+            return food_list;
 
     }
 
-
-    public synchronized void distributeFoodList(ArrayList food_list){
-        global_food_list = food_list;
-        System.out.println(global_food_list);
-    }
     //DB OPERATIONS CREATED BY STEPHAN DANZ
     //END
 
