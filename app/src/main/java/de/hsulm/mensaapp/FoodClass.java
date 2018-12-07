@@ -59,7 +59,7 @@ public class FoodClass implements Parcelable {
     }
 
     public String getName() {
-        if(name != null || !name.isEmpty()) {
+        if(name != null) {
             name = name.replaceAll(System.getProperty("line.separator"), (""));
         }
         return name;
