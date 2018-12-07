@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.MySQL;
+package de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -47,7 +47,7 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
             lv.setAdapter(adapter);
 
         }else {
-            Toast.makeText(c,"Unable to Parse",Toast.LENGTH_SHORT).show();
+            Toast.makeText(c,"Keine Suchergebnisse!",Toast.LENGTH_SHORT).show();
         }
     }
 

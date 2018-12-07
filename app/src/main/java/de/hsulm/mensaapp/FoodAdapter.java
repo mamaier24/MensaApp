@@ -1,7 +1,6 @@
 package de.hsulm.mensaapp;
 
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class GerichtAdapter extends RecyclerView.Adapter<GerichtAdapter.GerichtViewHolder> {
-private ArrayList<Food> mexampleList;
+public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHolder> {
+private ArrayList<FoodClass> mexampleList;
 private OnItemClickListener mListener;
 
 public interface OnItemClickListener{
@@ -23,7 +22,7 @@ public void setOnItemClickListener(OnItemClickListener listener){
 }
 
 
-    public GerichtAdapter(ArrayList<Food> exampleList) {
+    public FoodAdapter(ArrayList<FoodClass> exampleList) {
         mexampleList = exampleList;
     }
 
@@ -38,10 +37,10 @@ public void setOnItemClickListener(OnItemClickListener listener){
 
     @Override
     public void onBindViewHolder(GerichtViewHolder holder, int position) {
-        Food currentItem = mexampleList.get(position);
+        FoodClass currentItem = mexampleList.get(position);
         holder.mImage.setImageResource(currentItem.getmimgId());
         holder.mTitel.setText(currentItem.getName());
-        holder.mPreis.setText(((Float)currentItem.getPrice()).toString());
+        holder.mPreis.setText(currentItem.getPrice());
         holder.mBewertung.setText(((Float)currentItem.getRating()).toString());
     }
 

@@ -1,16 +1,13 @@
 package de.hsulm.mensaapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import de.hsulm.mensaapp.MySQL.SenderReceiver;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
 
 public class SearchActivity extends AppCompatActivity {
 

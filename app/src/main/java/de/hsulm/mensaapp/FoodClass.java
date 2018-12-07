@@ -3,7 +3,7 @@ package de.hsulm.mensaapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Food implements Parcelable {
+public class FoodClass implements Parcelable {
 
     private int id;
     private String name;
@@ -11,12 +11,12 @@ public class Food implements Parcelable {
     private String date;
     private int vegan;
     private int vegetarian;
-    private float price;
+    private String price;
     private String uuid;
     private float rating;
     private int mimgId;
 
-    public Food(int id, String name, String category, int vegan, int vegetarian, float price, String uuid, float rating, int mimgId){
+    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, float rating, int mimgId){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -29,28 +29,28 @@ public class Food implements Parcelable {
         this.mimgId = mimgId;
     }
 
-    protected Food(Parcel in) {
+    protected FoodClass(Parcel in) {
         id = in.readInt();
         name = in.readString();
         category = in.readString();
         date = in.readString();
         vegan = in.readInt();
         vegetarian = in.readInt();
-        price = in.readFloat();
+        price = in.readString();
         uuid = in.readString();
         rating = in.readFloat();
         mimgId = in.readInt();
     }
 
-    public static final Creator<Food> CREATOR = new Creator<Food>() {
+    public static final Creator<FoodClass> CREATOR = new Creator<FoodClass>() {
         @Override
-        public Food createFromParcel(Parcel in) {
-            return new Food(in);
+        public FoodClass createFromParcel(Parcel in) {
+            return new FoodClass(in);
         }
 
         @Override
-        public Food[] newArray(int size) {
-            return new Food[size];
+        public FoodClass[] newArray(int size) {
+            return new FoodClass[size];
         }
     };
 
@@ -59,7 +59,7 @@ public class Food implements Parcelable {
     }
 
     public String getName() {
-        if(name != null) {
+        if(name != null || !name.isEmpty()) {
             name = name.replaceAll(System.getProperty("line.separator"), (""));
         }
         return name;
@@ -77,7 +77,7 @@ public class Food implements Parcelable {
         return vegetarian;
     }
 
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
@@ -98,7 +98,7 @@ public class Food implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(((Float)price).toString());
+        dest.writeString(price);
         dest.writeString(name);
         dest.writeString(((Float)rating).toString());
         dest.writeInt(mimgId);

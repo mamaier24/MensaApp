@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.MySQL;
+package de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,10 +15,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-
-import de.hsulm.mensaapp.MySQL.Connector;
-import de.hsulm.mensaapp.MySQL.DataPackager;
-import de.hsulm.mensaapp.MySQL.Parser;
 
 public class SenderReceiver extends AsyncTask<Void,Void,String>{
 

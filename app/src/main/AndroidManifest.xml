@@ -32,14 +32,11 @@
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".GerichtProfil" />
+        <activity android:name=".FoodProfile" />
         <activity android:name=".SearchActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <service android:name=".DatabaseOperations" />
-        <service
-            android:name=".CreateFoodList"
-            android:exported="false"></service>
+        <service android:name=".SQL_SEARCH_BY_ID.DatabaseOperations" />
     </application>
 
 </manifest>

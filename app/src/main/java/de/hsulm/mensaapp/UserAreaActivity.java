@@ -11,14 +11,12 @@ import android.content.IntentFilter;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -27,10 +25,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperations;
 
 public class UserAreaActivity extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class UserAreaActivity extends AppCompatActivity {
     private String foodtext;
     private TextView textViewUsername, textViewUserEmail;
     private RecyclerView mRecyclerView;
-    private GerichtAdapter mAdapter;
+    private FoodAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutmanager;
     private  boolean flag=false;
 
@@ -54,7 +53,7 @@ public class UserAreaActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        //Food dummy = new Food(1, "dummy", "dummy", 0, 0, 0f, "dummy", 0f, R.drawable.ic_android_black);
+        //FoodClass dummy = new FoodClass(1, "dummy", "dummy", 0, 0, 0f, "dummy", 0f, R.drawable.ic_android_black);
         //food_list.add(dummy);
         getFoodFromDB();
 
@@ -111,7 +110,6 @@ public class UserAreaActivity extends AppCompatActivity {
                 //Intent zum Suche
                 Intent sucheIntent = new Intent(UserAreaActivity.this, SearchActivity.class);
                 UserAreaActivity.this.startActivity(sucheIntent);
-                Toast.makeText(UserAreaActivity.this, "Auf Suche geklickt?", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.Abmelden:
@@ -159,7 +157,7 @@ public class UserAreaActivity extends AppCompatActivity {
             //Essential for reception of food from DB
             String food_id = getFoodID();
             Intent intent = new Intent(this,DatabaseOperations.class);
-            final ArrayList<Food> food_list = new ArrayList<>();
+            final ArrayList<FoodClass> food_list = new ArrayList<>();
             intent.putExtra("searchQuery", food_id);
             startService(intent);
 
@@ -177,10 +175,10 @@ public class UserAreaActivity extends AppCompatActivity {
                             for (int i = 0; i < food_arr.length(); i++) {
                                 food_obj = food_arr.getJSONObject(i);
 
-                                Food food = new Food(food_obj.getInt("id"),
+                                FoodClass food = new FoodClass(food_obj.getInt("id"),
                                                      food_obj.getString("name"), food_obj.getString("category"),
                                                      food_obj.getInt("vegan"),
-                                                     food_obj.getInt("vegetarian"), food_obj.getLong("price"),
+                                                     food_obj.getInt("vegetarian"), food_obj.getString("price"),
                                                      food_obj.getString("uuid"), 1.0f, R.drawable.ic_restaurant_menu_black_24dp);
 
                                 food_list.add(food);
@@ -189,15 +187,15 @@ public class UserAreaActivity extends AppCompatActivity {
 
                             mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                             mLayoutmanager = new LinearLayoutManager(context);
-                            mAdapter = new GerichtAdapter(food_list);
+                            mAdapter = new FoodAdapter(food_list);
                             mRecyclerView.setLayoutManager(mLayoutmanager);
                             mRecyclerView.setAdapter(mAdapter);
 
-                            mAdapter.setOnItemClickListener(new GerichtAdapter.OnItemClickListener() {
+                            mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
                                 @Override
                                 public void OnItemClick(int position) {
-                                    Intent intent = new Intent(UserAreaActivity.this, GerichtProfil.class);
-                                    intent.putExtra("Food", food_list.get(position));
+                                    Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
+                                    intent.putExtra("food", food_list.get(position));
                                     startActivity(intent);
                                 }
                             });

@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.MySQL;
+package de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS;
 
 import org.json.JSONException;
 import org.json.JSONObject;

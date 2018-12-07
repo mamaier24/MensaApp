@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp;
+package de.hsulm.mensaapp.SQL_SEARCH_BY_ID;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hsulm.mensaapp.Constants;
+import de.hsulm.mensaapp.RequestHandler;
 
 /**
  * Created by Stephan Danz 05/12/2018
