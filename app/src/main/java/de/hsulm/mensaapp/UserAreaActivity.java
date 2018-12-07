@@ -104,7 +104,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bitte geben sie Ihre Speise(n) an:\n");
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "Hier ist Platz für Lob und konstruktive Kritik:\n\n\n\nViele Grüße " + UN);
 
-
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Wählen Sie eine Email-App aus..."));
                     finish();
@@ -113,13 +112,10 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     Toast.makeText(this, "Mail is not initiated", Toast.LENGTH_SHORT).show();
                 }
 
-
-                //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Noch nicht bearbeitet
-                Toast.makeText(UserAreaActivity.this, "Auf Lob und Tadel geklickt?", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.Suche:
-                //Intent zum Suche
+                //Intent zum Suchen
                 Intent sucheIntent = new Intent(UserAreaActivity.this, SearchActivity.class);
                 UserAreaActivity.this.startActivity(sucheIntent);
                 break;
