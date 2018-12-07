@@ -8,8 +8,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -216,7 +221,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                                                      food_obj.getString("name"), food_obj.getString("category"),
                                                      food_obj.getInt("vegan"),
                                                      food_obj.getInt("vegetarian"), food_obj.getString("price"),
-                                                     food_obj.getString("uuid"), 1.0f, R.drawable.ic_restaurant_menu_black_24dp);
+                                                     food_obj.getString("uuid"), 1.0f, "MA_PIC_ID_A1XX.png");
 
                                 food_list.add(food);
 

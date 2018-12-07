@@ -20,7 +20,7 @@ public class FoodProfile extends AppCompatActivity {
         String price = exampleItem.getPrice();
         String name = exampleItem.getName();
         String rating = ((Float)exampleItem.getRating()).toString();
-        int imageRes = exampleItem.getmimgId();
+        String imageRes = exampleItem.getmimgId();
 
 
         TextView mPreis = (TextView) findViewById(R.id.Preis);

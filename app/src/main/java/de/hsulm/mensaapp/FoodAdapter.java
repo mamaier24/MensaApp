@@ -1,17 +1,23 @@
 package de.hsulm.mensaapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHolder> {
     private ArrayList<FoodClass> mexampleList;
     private OnItemClickListener mListener;
+
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
@@ -38,7 +44,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
     @Override
     public void onBindViewHolder(GerichtViewHolder holder, int position) {
         FoodClass currentItem = mexampleList.get(position);
-        holder.mImage.setImageResource(currentItem.getmimgId());
+        new DownloadImageTask(holder.mImage).execute(Constants.ROOT_URL_PICTURES + currentItem.getmimgId());
         holder.mTitel.setText(currentItem.getName());
         holder.mPreis.setText(currentItem.getPrice());
         holder.mBewertung.setText(((Float)currentItem.getRating()).toString());
@@ -86,6 +92,32 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
                     }
                 });
             }
+    }
+
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
 

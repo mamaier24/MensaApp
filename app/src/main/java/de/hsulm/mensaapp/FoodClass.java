@@ -14,9 +14,9 @@ public class FoodClass implements Parcelable {
     private String price;
     private String uuid;
     private float rating;
-    private int mimgId;
+    private String mimgId;
 
-    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, float rating, int mimgId){
+    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, float rating, String mimgId){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -39,7 +39,7 @@ public class FoodClass implements Parcelable {
         price = in.readString();
         uuid = in.readString();
         rating = in.readFloat();
-        mimgId = in.readInt();
+        mimgId = in.readString();
     }
 
     public static final Creator<FoodClass> CREATOR = new Creator<FoodClass>() {
@@ -87,7 +87,7 @@ public class FoodClass implements Parcelable {
 
     public float getRating(){return rating;}
 
-    public int getmimgId() {
+    public String getmimgId() {
         return mimgId;
     }
 
@@ -101,7 +101,7 @@ public class FoodClass implements Parcelable {
         dest.writeString(price);
         dest.writeString(name);
         dest.writeString(((Float)rating).toString());
-        dest.writeInt(mimgId);
+        dest.writeString(mimgId);
 
     }
 }
