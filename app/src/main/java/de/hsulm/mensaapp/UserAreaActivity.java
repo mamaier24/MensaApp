@@ -151,6 +151,18 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
+        mAdapter.clear();
+        String food_id = getFoodID();
+        Intent intent = new Intent(UserAreaActivity.this,DatabaseOperations.class);
+        intent.putExtra("searchQuery", food_id);
+        startService(intent);
+    }
+
+
     //DB OPERATIONS CREATED BY STEPHAN DANZ
     //Necessary for DB operations
     //TODO: on resume
