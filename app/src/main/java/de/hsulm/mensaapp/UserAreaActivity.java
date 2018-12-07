@@ -181,7 +181,7 @@ public class UserAreaActivity extends AppCompatActivity {
                                                      food_obj.getString("name"), food_obj.getString("category"),
                                                      food_obj.getInt("vegan"),
                                                      food_obj.getInt("vegetarian"), food_obj.getLong("price"),
-                                                     food_obj.getString("uuid"), 1.0f, R.drawable.ic_android_black);
+                                                     food_obj.getString("uuid"), 1.0f, R.drawable.ic_restaurant_menu_black_24dp);
 
                                 food_list.add(food);
 

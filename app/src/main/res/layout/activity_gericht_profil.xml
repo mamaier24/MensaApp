@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="84dp"
         android:contentDescription="@string/bildgericht"
-        app:srcCompat="@drawable/ic_android_black" />
+        app:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
 
     <TextView
         android:id="@+id/Titel"
