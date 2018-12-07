@@ -117,6 +117,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+            bmImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 

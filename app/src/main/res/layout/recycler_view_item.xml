@@ -36,7 +36,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:padding="5dp"
-            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_restaurant_menu_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
