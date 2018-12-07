@@ -109,7 +109,8 @@ public class UserAreaActivity extends AppCompatActivity {
 
             case R.id.Suche:
                 //Intent zum Suche
-                //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Noch nicht bearbeitet
+                Intent sucheIntent = new Intent(UserAreaActivity.this, SearchActivity.class);
+                UserAreaActivity.this.startActivity(sucheIntent);
                 Toast.makeText(UserAreaActivity.this, "Auf Suche geklickt?", Toast.LENGTH_SHORT).show();
                 break;
 
