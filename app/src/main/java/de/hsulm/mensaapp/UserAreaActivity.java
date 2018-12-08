@@ -163,10 +163,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         initializeRecycler();
     }
 
-
-    //DB OPERATIONS CREATED BY STEPHAN DANZ
-    //Necessary for DB operations
-    //TODO: on resume
+    
     @Override
     public void onPause() {
         super.onPause();
