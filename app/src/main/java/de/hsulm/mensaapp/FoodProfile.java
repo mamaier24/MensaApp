@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import static de.hsulm.mensaapp.R.layout.activity_gericht_profil;
@@ -69,8 +70,10 @@ public class FoodProfile extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-            bmImage.setScaleType(ImageView.ScaleType.FIT_XY);
+            if(result != null) {
+                bmImage.setImageBitmap(result);
+                bmImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
         }
     }
 

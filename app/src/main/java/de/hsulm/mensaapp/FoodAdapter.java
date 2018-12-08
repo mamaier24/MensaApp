@@ -114,15 +114,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+                mIcon11 = null;
             }
             return mIcon11;
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-            bmImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            if (result != null) {
+                bmImage.setImageBitmap(result);
+                bmImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
         }
     }
 
