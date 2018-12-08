@@ -163,7 +163,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         initializeRecycler();
     }
 
-    
+
     @Override
     public void onPause() {
         super.onPause();

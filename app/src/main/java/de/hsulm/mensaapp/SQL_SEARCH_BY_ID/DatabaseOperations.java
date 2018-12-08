@@ -34,7 +34,7 @@ public class DatabaseOperations {
 
     public void getFoodFromDB(final String searchQuery, final IDatabaseOperations callback) {
 
-        String food_object = null;
+        final String food_object = null;
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
@@ -59,7 +59,7 @@ public class DatabaseOperations {
                                               food_obj.getString("name"), food_obj.getString("category"),
                                               food_obj.getInt("vegan"),
                                               food_obj.getInt("vegetarian"), food_obj.getString("price"),
-                                              food_obj.getString("uuid"), food_obj.getInt("rating"), "MA_PIC_ID_A1XX.png");
+                                              food_obj.getString("uuid"), food_obj.getInt("rating"), food_obj.getString("picID"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
