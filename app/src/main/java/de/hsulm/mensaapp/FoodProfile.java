@@ -63,8 +63,7 @@ public class FoodProfile extends AppCompatActivity {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+                mIcon11 = null;
             }
             return mIcon11;
         }
