@@ -5,18 +5,18 @@ import android.os.Parcelable;
 
 public class FoodClass implements Parcelable {
 
-    private int id;
-    private String name;
-    private String category;
-    private String date;
-    private int vegan;
-    private int vegetarian;
-    private String price;
-    private String uuid;
-    private float rating;
-    private String mimgId;
+    public int id;
+    public String name;
+    public String category;
+    public String date;
+    public int vegan;
+    public int vegetarian;
+    public String price;
+    public String uuid;
+    public int rating;
+    public String mimgId;
 
-    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, float rating, String mimgId){
+    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -38,7 +38,7 @@ public class FoodClass implements Parcelable {
         vegetarian = in.readInt();
         price = in.readString();
         uuid = in.readString();
-        rating = in.readFloat();
+        rating = in.readInt();
         mimgId = in.readString();
     }
 
@@ -85,7 +85,7 @@ public class FoodClass implements Parcelable {
         return uuid;
     }
 
-    public float getRating(){return rating;}
+    public int getRating(){return rating;}
 
     public String getmimgId() {
         return mimgId;
@@ -98,10 +98,15 @@ public class FoodClass implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(price);
+        dest.writeInt(id);
         dest.writeString(name);
-        dest.writeString(((Float)rating).toString());
+        dest.writeString(category);
+        dest.writeString(date);
+        dest.writeInt(vegan);
+        dest.writeInt(vegetarian);
+        dest.writeString(price);
+        dest.writeString(uuid);
+        dest.writeInt(rating);
         dest.writeString(mimgId);
-
     }
 }

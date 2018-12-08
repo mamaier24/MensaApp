@@ -15,41 +15,44 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHolder> {
+public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
     private ArrayList<FoodClass> mexampleList;
     private OnItemClickListener mListener;
+
+    public FoodAdapter(ArrayList<FoodClass> exampleList)
+    {
+        this.mexampleList = exampleList;
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        this.mListener = listener;
+    }
 
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-    mListener = listener;
-}
-
-
-    public FoodAdapter(ArrayList<FoodClass> exampleList) {
-        mexampleList = exampleList;
-    }
-
 
     @Override
-    public GerichtViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.recycler_view_item, parent, false);
-        GerichtViewHolder mGerichtViewHolder = new GerichtViewHolder(listItem, mListener);
-        return mGerichtViewHolder;
+        FoodViewHolder mFoodViewHolder = new FoodViewHolder(listItem, mListener);
+        return mFoodViewHolder;
     }
 
+
     @Override
-    public void onBindViewHolder(GerichtViewHolder holder, int position) {
+    public void onBindViewHolder(FoodViewHolder holder, int position) {
         FoodClass currentItem = mexampleList.get(position);
-        new DownloadImageTask(holder.mImage).execute(Constants.ROOT_URL_PICTURES + currentItem.getmimgId());
+        new DownloadRecyclerImage(holder.mImage).execute(Constants.ROOT_URL_PICTURES + currentItem.getmimgId());
         holder.mTitel.setText(currentItem.getName());
         holder.mPreis.setText(currentItem.getPrice());
-        holder.mBewertung.setText(((Float)currentItem.getRating()).toString());
-        holder.mRatingBar.setRating(((Float)currentItem.getRating()).intValue());
+        holder.mBewertung.setText(((Integer)currentItem.getRating()).toString());
+        holder.mRatingBar.setRating(currentItem.getRating());
     }
 
 
@@ -66,16 +69,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
     }
 
 
-    public static class GerichtViewHolder extends RecyclerView.ViewHolder {
-
-
+    public static class FoodViewHolder extends RecyclerView.ViewHolder {
             ImageView mImage;
             TextView mTitel;
             TextView mPreis;
             TextView mBewertung;
             RatingBar mRatingBar;
 
-            public GerichtViewHolder(View itemView, final OnItemClickListener listener) {
+            public FoodViewHolder(View itemView, final OnItemClickListener listener) {
                 super(itemView);
 
                 mImage = (ImageView) itemView.findViewById(R.id.ivFavorite);
@@ -99,10 +100,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
     }
 
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class DownloadRecyclerImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
+        public DownloadRecyclerImage(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
@@ -124,6 +125,5 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.GerichtViewHol
             bmImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
-
 
 }

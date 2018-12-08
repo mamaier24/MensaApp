@@ -4,15 +4,9 @@ package de.hsulm.mensaapp;
  * Created by Marcel Maier on 30/11/18.
  */
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.icu.util.Calendar;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,34 +16,24 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperations;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperations;
 
 public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private RatingBar ratingbar;
-    private Button button;
-    private BroadcastReceiver mReceiver=null;
-    private String foodtext;
-    private TextView textViewUsername, textViewUserEmail;
     private RecyclerView mRecyclerView;
-    private FoodAdapter mAdapter;
+    private FoodAdapter mAdapter = null;
     private RecyclerView.LayoutManager mLayoutmanager;
-    private  boolean flag=false;
     private SwipeRefreshLayout swipe_refresh;
+    private DatabaseOperations operations = new DatabaseOperations(this);
+    private ArrayList<FoodClass> food_list2 = new ArrayList<>();
+    public final static String extraItem ="food";
 
 
     @Override
@@ -67,9 +51,32 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        //FoodClass dummy = new FoodClass(1, "dummy", "dummy", 0, 0, 0f, "dummy", 0f, R.drawable.ic_android_black);
-        //food_list.add(dummy);
-        getFoodFromDB();
+    }
+
+
+    public void initializeRecycler() {
+
+        operations.getFoodFromDB(getFoodID(), new IDatabaseOperations() {
+            @Override
+            public void onSuccess(final ArrayList<FoodClass> food_list) {
+
+                mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                mLayoutmanager = new LinearLayoutManager(UserAreaActivity.this);
+                mAdapter = new FoodAdapter(food_list);
+                mRecyclerView.setLayoutManager(mLayoutmanager);
+                mRecyclerView.setAdapter(mAdapter);
+
+                mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+                        Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
+                        intent.putExtra("food", food_list.get(position));
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -137,16 +144,13 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
             @Override public void run() {
                 mAdapter.clear();
-                String food_id = getFoodID();
-                Intent intent = new Intent(UserAreaActivity.this,DatabaseOperations.class);
-                intent.putExtra("searchQuery", food_id);
-                startService(intent);
+                initializeRecycler();
 
                 if (swipe_refresh != null) {
                     swipe_refresh.setRefreshing(false);
                 }
-
             }
+
         }, 4000);
 
     }
@@ -155,12 +159,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onRestart() {
         super.onRestart();
-        registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
         mAdapter.clear();
-        String food_id = getFoodID();
-        Intent intent = new Intent(UserAreaActivity.this,DatabaseOperations.class);
-        intent.putExtra("searchQuery", food_id);
-        startService(intent);
+        initializeRecycler();
     }
 
 
@@ -170,13 +170,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onPause() {
         super.onPause();
-        try {
-            if (mReceiver != null) {
-                unregisterReceiver(mReceiver);
-            }
-        }catch (IllegalArgumentException e){
-            mReceiver=null;
-        }
     }
 
 
@@ -191,82 +184,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     }
 
-
-    public ArrayList getFoodFromDB() {
-
-            //DB OPERATIONS CREATED BY STEPHAN DANZ
-            //Essential for reception of food from DB
-
-            final ArrayList<FoodClass> food_list = new ArrayList<>();
-
-            if(mReceiver==null) {
-
-                mReceiver = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        JSONArray food_arr;
-                        JSONObject food_obj;
-
-                        try {
-                            food_arr = new JSONArray(intent.getStringExtra("food_object"));
-
-                            for (int i = 0; i < food_arr.length(); i++) {
-                                food_obj = food_arr.getJSONObject(i);
-
-                                FoodClass food = new FoodClass(food_obj.getInt("id"),
-                                                     food_obj.getString("name"), food_obj.getString("category"),
-                                                     food_obj.getInt("vegan"),
-                                                     food_obj.getInt("vegetarian"), food_obj.getString("price"),
-                                                     food_obj.getString("uuid"), food_obj.getLong("rating"), "MA_PIC_ID_A1XX.png");
-
-                                food_list.add(food);
-
-                            }
-
-                            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                            mLayoutmanager = new LinearLayoutManager(context);
-                            mAdapter = new FoodAdapter(food_list);
-                            mRecyclerView.setLayoutManager(mLayoutmanager);
-                            mRecyclerView.setAdapter(mAdapter);
-
-                            mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
-                                @Override
-                                public void OnItemClick(int position) {
-                                    Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
-                                    intent.putExtra("food", food_list.get(position));
-                                    startActivity(intent);
-                                }
-                            });
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-
-                registerReceiver(mReceiver, new IntentFilter(DatabaseOperations.CUSTOM_INTENT));
-                //END of DB operations
-                //DB OPERATIONS CREATED BY STEPHAN DANZ
-
-            }
-
-            return food_list;
-
-    }
-
-    public void initializeRecycler(){
-
-        getFoodFromDB();
-
-        String food_id = getFoodID();
-        Intent intent = new Intent(this,DatabaseOperations.class);
-        intent.putExtra("searchQuery", food_id);
-        startService(intent);
-
-    }
-
-    //DB OPERATIONS CREATED BY STEPHAN DANZ
-    //END
 
 }
 

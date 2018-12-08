@@ -1,7 +1,7 @@
 package de.hsulm.mensaapp.SQL_SEARCH_BY_ID;
 
-import android.app.IntentService;
-import android.content.Intent;
+import android.content.Context;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -9,34 +9,34 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hsulm.mensaapp.Constants;
 import de.hsulm.mensaapp.RequestHandler;
+import de.hsulm.mensaapp.FoodClass;
 
 /**
  * Created by Stephan Danz 05/12/2018
  * Class necessary for handling all DB operations such as getting food
  */
-public class DatabaseOperations extends IntentService {
+public class DatabaseOperations {
 
-    private static final String CLASS_NAME = DatabaseOperations .class.getName();
-    public static final String CUSTOM_INTENT = DatabaseOperations .class.getName()+".Receiver";
-    public static final String RESULT = "serviceResult";
-    public static final String STATUS = "serviceStatus";
-    public static final int STATE_FINAL = 20;
+    private Context mContext;
 
-    public DatabaseOperations() {
-        super("IntentTestService");
+    public DatabaseOperations(Context context) {
+        mContext = context;
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
 
-        final String searchQuery = intent.getStringExtra("searchQuery");
+    public void getFoodFromDB(final String searchQuery, final IDatabaseOperations callback) {
 
-        StringRequest arrayRequest = new StringRequest (
+        String food_object = null;
+
+        StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_DB_OPS,
 
@@ -44,10 +44,33 @@ public class DatabaseOperations extends IntentService {
 
                     @Override
                     public void onResponse(String response) {
+
+                        final ArrayList<FoodClass> food_list = new ArrayList<>();
+                        FoodClass food = null;
+
                         try {
-                            JSONArray jsonArray = new JSONArray(response);
-                            String food_object = jsonArray.toString();
-                            publishStatus(food_object);
+                            JSONArray food_arr = new JSONArray(response);
+
+                            for (int i = 0; i < food_arr.length(); i++) {
+
+                                try {
+                                    JSONObject food_obj = food_arr.getJSONObject(i);
+                                    food = new FoodClass(food_obj.getInt("id"),
+                                              food_obj.getString("name"), food_obj.getString("category"),
+                                              food_obj.getInt("vegan"),
+                                              food_obj.getInt("vegetarian"), food_obj.getString("price"),
+                                              food_obj.getString("uuid"), food_obj.getInt("rating"), "MA_PIC_ID_A1XX.png");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                food_list.add(food);
+
+                            }
+
+                            System.out.println(food_list + "fffffffffffffff");
+                            callback.onSuccess(food_list);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -55,24 +78,22 @@ public class DatabaseOperations extends IntentService {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) { }
-
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> params = new HashMap<>();
-                        params.put("searchQuery", searchQuery);
-                        return params;
+                    public void onErrorResponse(VolleyError error) {
                     }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("searchQuery", searchQuery);
+                return params;
+            }
         };
 
-        RequestHandler.getInstance(this).addToRequestQueue(arrayRequest);
+        RequestHandler.getInstance(mContext).addToRequestQueue(arrayRequest);
+
     }
 
-
-    private void publishStatus(String food_object) {
-        Intent intent = new Intent(CUSTOM_INTENT);
-        intent.putExtra("food_object", food_object);
-        getApplicationContext().sendBroadcast(intent);
-    }
 }
+
+
