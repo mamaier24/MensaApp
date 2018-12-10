@@ -59,9 +59,7 @@ public class FoodProfile extends AppCompatActivity {
             }
 
         });
-
-
-
+        
         new DownloadProfileImage(mImage).execute(Constants.ROOT_URL_PICTURES + imageRes);
 
         mPreis.setText(price);
