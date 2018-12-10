@@ -23,16 +23,16 @@ import de.hsulm.mensaapp.FoodClass;
  * Created by Stephan Danz 05/12/2018
  * Class necessary for handling all DB operations such as getting food
  */
-public class DatabaseOperations {
+public class DatabaseOperationsID {
 
     private Context mContext;
 
-    public DatabaseOperations(Context context) {
+    public DatabaseOperationsID(Context context) {
         mContext = context;
     }
 
 
-    public void getFoodFromDB(final String searchQuery, final IDatabaseOperations callback) {
+    public void getFoodFromDB(final String searchQuery, final IDatabaseOperationsID callback) {
 
         final String food_object = null;
 

@@ -46,6 +46,7 @@ public class FoodProfile extends AppCompatActivity {
 
         int user_id = SharedPrefManager.getInstance(this).getUserId();
         int food_id = food.getId();
+        int user_rating = Math.round(mRatingBar.getRating());
 
 
     }
