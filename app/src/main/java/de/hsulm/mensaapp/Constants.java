@@ -12,5 +12,7 @@ public class Constants {
     public static final String URL_REGISTER = ROOT_URL + "registerUser.php";
     public static final String URL_LOGIN = ROOT_URL + "userLogin.php";
     public static final String URL_DB_OPS = ROOT_URL_DB_OPS + "index.php";
+    public static final String URL_RATING = ROOT_URL + "user_rating.php";
+    public static final String URL_GET_RATING = ROOT_URL + "get_user_rating.php";
 
 }

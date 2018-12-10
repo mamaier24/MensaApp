@@ -1,6 +1,8 @@
 package de.hsulm.mensaapp.SQL_FETCH_OR_CREATE_RATING;
 
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,8 +22,10 @@ import de.hsulm.mensaapp.Constants;
 import de.hsulm.mensaapp.FoodClass;
 import de.hsulm.mensaapp.RequestHandler;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
+import de.hsulm.mensaapp.SharedPrefManager;
+import de.hsulm.mensaapp.UserAreaActivity;
 
-public class DatabaseOperationsRating {
+public class DatabaseOperationsRatingSet {
 
     /**
      * Created by Stephan Danz 05/12/2018
@@ -30,48 +34,36 @@ public class DatabaseOperationsRating {
 
     private Context mContext;
 
-    public DatabaseOperationsRating(Context context) {
+    public DatabaseOperationsRatingSet(Context context) {
         mContext = context;
     }
 
 
-    public void getFoodFromDB(final String searchQuery, final IDatabaseOperationsID callback) {
+    public void setAndGetRating(int user_id, final int food_id, final int user_rating) {
 
-        final String food_object = null;
+        final String user_id_string = ((Integer)user_id).toString();
+        final String food_id_string = ((Integer)food_id).toString();
+        final String user_rating_string = ((Integer)user_rating).toString();
+
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_DB_OPS,
+                Constants.URL_RATING,
 
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
 
-                        final ArrayList<FoodClass> food_list = new ArrayList<>();
-                        FoodClass food = null;
-
                         try {
-                            JSONArray food_arr = new JSONArray(response);
 
-                            for (int i = 0; i < food_arr.length(); i++) {
+                            JSONObject rating_obj = new JSONObject(response);
 
-                                try {
-                                    JSONObject food_obj = food_arr.getJSONObject(i);
-                                    food = new FoodClass(food_obj.getInt("id"),
-                                            food_obj.getString("name"), food_obj.getString("category"),
-                                            food_obj.getInt("vegan"),
-                                            food_obj.getInt("vegetarian"), food_obj.getString("price"),
-                                            food_obj.getString("uuid"), food_obj.getInt("rating"), food_obj.getString("picID"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                food_list.add(food);
-
+                            if(!rating_obj.getBoolean("error")){
+                                Toast.makeText(mContext, rating_obj.getString("message"), Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(mContext, rating_obj.getString("message") , Toast.LENGTH_LONG).show();
                             }
-
-                            callback.onSuccess(food_list);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -87,7 +79,9 @@ public class DatabaseOperationsRating {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("searchQuery", searchQuery);
+                params.put("user_id", user_id_string);
+                params.put("food_id", food_id_string);
+                params.put("user_rating",user_rating_string);
                 return params;
             }
         };
