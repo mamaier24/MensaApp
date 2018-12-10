@@ -19,4 +19,9 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#7FB2E5</item>
+        <item name="colorControlActivated">#7FB2E5</item>
+    </style>
+
 </resources>

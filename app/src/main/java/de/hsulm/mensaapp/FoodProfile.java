@@ -31,15 +31,20 @@ public class FoodProfile extends AppCompatActivity {
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         ImageView mImage = (ImageView) findViewById(R.id.Bild);
         final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
+        final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
 
         food = getIntent().getParcelableExtra("food");
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
         int food_id = food.getId();
 
-
         String price = food.getPrice();
         String name = food.getName();
         String imageRes = food.getmimgId();
+        int rating = food.getRating();
+
+        mBewertung.setText(Integer.toString(rating));
+        mRatingBar2.setRating(rating);
+        mRatingBar2.setIsIndicator(true);
 
         DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfile.this);
         get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
@@ -54,8 +59,6 @@ public class FoodProfile extends AppCompatActivity {
             }
 
         });
-
-
 
         new DownloadProfileImage(mImage).execute(Constants.ROOT_URL_PICTURES + imageRes);
 
