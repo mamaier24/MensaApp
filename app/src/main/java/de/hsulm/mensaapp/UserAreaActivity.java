@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperations;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperations;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
 
 public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -31,7 +31,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     private FoodAdapter mAdapter = null;
     private RecyclerView.LayoutManager mLayoutmanager;
     private SwipeRefreshLayout swipe_refresh;
-    private DatabaseOperations operations = new DatabaseOperations(this);
+    private DatabaseOperationsID operations = new DatabaseOperationsID(this);
     private ArrayList<FoodClass> food_list2 = new ArrayList<>();
     public final static String extraItem ="food";
 
@@ -56,7 +56,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     public void initializeRecycler() {
 
-        operations.getFoodFromDB(getFoodID(), new IDatabaseOperations() {
+        operations.getFoodFromDB(getFoodID(), new IDatabaseOperationsID() {
             @Override
             public void onSuccess(final ArrayList<FoodClass> food_list) {
 
