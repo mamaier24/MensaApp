@@ -29,7 +29,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speiseplan);
+        setContentView(R.layout.activity_menu);
 
         spinner = (Spinner)findViewById(R.id.spinnerStandort);
         pdfview =(PDFView)findViewById(R.id.pdfView);
