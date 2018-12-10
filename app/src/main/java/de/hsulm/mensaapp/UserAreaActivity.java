@@ -16,8 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -43,6 +45,15 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
         swipe_refresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
         swipe_refresh.setOnRefreshListener(this);
+
+        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+        calDe.setTime(new Date());
+        int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
+        int year = calDe.get(Calendar.YEAR);
+
+
+        TextView mDate = (TextView) findViewById(R.id.mDate);
+        mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber);
 
         initializeRecycler();
 
@@ -180,6 +191,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         return (food_id);
 
     }
+
+
 
 
 }

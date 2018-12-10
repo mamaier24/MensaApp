@@ -53,6 +53,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.mPreis.setText(currentItem.getPrice());
         holder.mBewertung.setText(((Integer)currentItem.getRating()).toString());
         holder.mRatingBar.setRating(currentItem.getRating());
+        holder.mCategory.setText(currentItem.category);
     }
 
 
@@ -75,6 +76,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             TextView mPreis;
             TextView mBewertung;
             RatingBar mRatingBar;
+            TextView mCategory;
 
             public FoodViewHolder(View itemView, final OnItemClickListener listener) {
                 super(itemView);
@@ -84,6 +86,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                 mPreis = (TextView) itemView.findViewById(R.id.tvPreis);
                 mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
                 mRatingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+                mCategory = (TextView) itemView.findViewById(R.id.mCategory);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
