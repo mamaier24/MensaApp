@@ -1,7 +1,10 @@
 package de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -12,13 +15,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import de.hsulm.mensaapp.FoodAdapter;
+import de.hsulm.mensaapp.FoodClass;
+import de.hsulm.mensaapp.FoodProfile;
+import de.hsulm.mensaapp.SearchActivity;
+import de.hsulm.mensaapp.UserAreaActivity;
+
 public class Parser extends AsyncTask<Void,Void,Integer> {
 
-    Context c;
-    String data;
-    ListView lv;
+    private Context c;
+    private String data;
+    private ListView lv;
+    private FoodClass food;
 
-    ArrayList<String> names=new ArrayList<>();
+    private ArrayList<String> names=new ArrayList<>();
+    private ArrayList<FoodClass> food_list = new ArrayList<>();
 
     public Parser(Context c, String data, ListView lv) {
         this.c = c;
@@ -46,6 +57,16 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
             ArrayAdapter adapter=new ArrayAdapter(c,android.R.layout.simple_list_item_1,names);
             lv.setAdapter(adapter);
 
+            lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                    String item = (String) lv.getItemAtPosition(position);
+                    Intent intent = new Intent(c, FoodProfile.class);
+                    intent.putExtra("food", food_list.get(position));
+                    c.startActivity(intent);
+                }
+            });
+
         }else {
             Toast.makeText(c,"Keine Suchergebnisse!",Toast.LENGTH_SHORT).show();
         }
@@ -57,6 +78,7 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
         {
             JSONArray ja=new JSONArray(data);
             JSONObject jo=null;
+            food_list.clear();
 
             names.clear();
 
@@ -64,7 +86,16 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
             {
                 jo=ja.getJSONObject(i);
                 String name=jo.getString("name");
+                int id = jo.getInt("id");
                 names.add(name);
+
+                food = new FoodClass(jo.getInt("id"),
+                        jo.getString("name"), jo.getString("category"),
+                        jo.getInt("vegan"),
+                        jo.getInt("vegetarian"), jo.getString("price"),
+                        jo.getString("uuid"), jo.getInt("rating"), jo.getString("picID"));
+
+                food_list.add(food);
 
             }
 
