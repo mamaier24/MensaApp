@@ -1,7 +1,6 @@
-package de.hsulm.mensaapp.SQL_FETCH_OR_CREATE_RATING;
+package de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -9,7 +8,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,18 +17,15 @@ import java.util.Map;
 import de.hsulm.mensaapp.Constants;
 import de.hsulm.mensaapp.RequestHandler;
 
-public class DatabaseOperationsFetch {
+public class DatabaseOperationsFetchRating {
 
     private Context mContext;
-    private int rating;
-    private IDatabaseOperationsFetch callback;
+    private String rating;
 
-    public DatabaseOperationsFetch(Context context) {
-        mContext = context;
-    }
+    public DatabaseOperationsFetchRating(Context context) { mContext = context; }
 
 
-    public void setAndGetRating(int user_id, final int food_id) {
+    public void setAndGetRating(int user_id, final int food_id, final IDatabaseOperationsFetchRating callback) {
 
         final String user_id_string = ((Integer)user_id).toString();
         final String food_id_string = ((Integer)food_id).toString();
@@ -48,13 +43,13 @@ public class DatabaseOperationsFetch {
 
                             JSONObject rating_obj = new JSONObject(response);
 
-                            rating = rating_obj.getInt("user_rating");
+                            rating = rating_obj.getString("user_rating");
                             callback.onSuccess(rating);
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {

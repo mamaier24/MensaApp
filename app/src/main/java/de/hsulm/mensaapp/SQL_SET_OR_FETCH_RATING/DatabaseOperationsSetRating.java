@@ -1,7 +1,6 @@
-package de.hsulm.mensaapp.SQL_FETCH_OR_CREATE_RATING;
+package de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -10,22 +9,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.FoodClass;
 import de.hsulm.mensaapp.RequestHandler;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
-import de.hsulm.mensaapp.SharedPrefManager;
-import de.hsulm.mensaapp.UserAreaActivity;
 
-public class DatabaseOperationsRatingSet {
+public class DatabaseOperationsSetRating {
 
     /**
      * Created by Stephan Danz 05/12/2018
@@ -34,7 +27,7 @@ public class DatabaseOperationsRatingSet {
 
     private Context mContext;
 
-    public DatabaseOperationsRatingSet(Context context) {
+    public DatabaseOperationsSetRating(Context context) {
         mContext = context;
     }
 
@@ -59,11 +52,11 @@ public class DatabaseOperationsRatingSet {
 
                             JSONObject rating_obj = new JSONObject(response);
 
-                            if(!rating_obj.getBoolean("error")){
+                            if (!rating_obj.getBoolean("error") && !rating_obj.getString("message").equals("alreadyRated")) {
                                 Toast.makeText(mContext, rating_obj.getString("message"), Toast.LENGTH_LONG).show();
-                            }else{
-                                Toast.makeText(mContext, rating_obj.getString("message") , Toast.LENGTH_LONG).show();
-                            }
+
+                            } else if (rating_obj.getBoolean("error"))
+                                Toast.makeText(mContext, "Fehler bei der Bewertung!", Toast.LENGTH_LONG).show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

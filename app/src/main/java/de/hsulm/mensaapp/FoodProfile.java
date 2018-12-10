@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 
-import de.hsulm.mensaapp.SQL_FETCH_OR_CREATE_RATING.DatabaseOperationsFetch;
-import de.hsulm.mensaapp.SQL_FETCH_OR_CREATE_RATING.DatabaseOperationsRatingSet;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
@@ -29,7 +30,7 @@ public class FoodProfile extends AppCompatActivity {
         TextView mTitel = (TextView) findViewById(R.id.Titel);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         ImageView mImage = (ImageView) findViewById(R.id.Bild);
-        RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
+        final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
 
         food = getIntent().getParcelableExtra("food");
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
@@ -38,25 +39,29 @@ public class FoodProfile extends AppCompatActivity {
 
         String price = food.getPrice();
         String name = food.getName();
-        //String rating = ((Integer) food.getRating()).toString();
         String imageRes = food.getmimgId();
 
-        DatabaseOperationsFetch get_rating = new DatabaseOperationsFetch(FoodProfile.this);
-        int fetched_rating = get_rating.setAndGetRating(user_id, food_id);
+        DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfile.this);
+        get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
 
-        if(fetched_rating != 0) {
-            mRatingBar.setRating(fetched_rating);
-        }
+            @Override
+            public void onSuccess(String fetched_rating) {
+
+                if(fetched_rating != null && !fetched_rating.isEmpty() && !fetched_rating.equals("null")) {
+                    mRatingBar.setRating(Integer.parseInt(fetched_rating));
+                }
+
+            }
+
+        });
+
+
 
         new DownloadProfileImage(mImage).execute(Constants.ROOT_URL_PICTURES + imageRes);
-
-        //mRatingBar.setRating(Float.parseFloat(rating));
 
         mPreis.setText(price);
 
         mTitel.setText(name);
-
-        //mBewertung.setText("Ø " + rating);
 
         mRatingBar.setStepSize(1);
 
@@ -66,7 +71,7 @@ public class FoodProfile extends AppCompatActivity {
             public void onRatingChanged(RatingBar mRatingBar, float user_rating, boolean fromUser) {
                 int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
                 int food_id = food.getId();
-                DatabaseOperationsRatingSet new_rating = new DatabaseOperationsRatingSet(FoodProfile.this);
+                DatabaseOperationsSetRating new_rating = new DatabaseOperationsSetRating(FoodProfile.this);
                 new_rating.setAndGetRating(user_id, food_id, Math.round(user_rating));
             }
 
@@ -74,6 +79,8 @@ public class FoodProfile extends AppCompatActivity {
         });
 
     }
+
+
 
     private class DownloadProfileImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
