@@ -32,11 +32,11 @@
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".FoodProfile" />
+        <activity android:name=".FoodProfile"
+            android:screenOrientation="nosensor"/>
         <activity android:name=".SearchActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <service android:name=".SQL_SEARCH_BY_ID.DatabaseOperationsID" />
     </application>
 
 </manifest>
