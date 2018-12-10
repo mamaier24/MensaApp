@@ -5,22 +5,20 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.io.InputStream;
 
-import static de.hsulm.mensaapp.R.layout.activity_gericht_profil;
+import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
 public class FoodProfile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_gericht_profil);
+        setContentView(activity_food_profile);
 
         TextView mBewertung = (TextView) findViewById(R.id.Bewertung);
         TextView mTitel = (TextView) findViewById(R.id.Titel);

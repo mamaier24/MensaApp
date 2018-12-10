@@ -68,7 +68,6 @@ public class DatabaseOperations {
 
                             }
 
-                            System.out.println(food_list + "fffffffffffffff");
                             callback.onSuccess(food_list);
 
                         } catch (JSONException e) {
