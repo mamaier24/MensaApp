@@ -17,6 +17,19 @@
         custom:auto_cycle="true"
         custom:indicator_visibility="visible" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageSlider"
+        android:layout_alignBottom="@+id/imageSlider"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
+        app:layout_constraintEnd_toEndOf="@+id/imageSlider"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
     <TextView
         android:id="@+id/Titel"
         android:layout_width="0dp"

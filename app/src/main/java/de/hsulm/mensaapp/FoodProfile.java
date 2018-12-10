@@ -1,14 +1,15 @@
 package de.hsulm.mensaapp;
 
-import android.database.sqlite.SQLiteException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -17,10 +18,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 
-import java.io.InputStream;
-
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
-import static de.hsulm.mensaapp.R.layout.indicator_layout;
 
 public class FoodProfile extends AppCompatActivity {
     private SliderLayout sliderShow;
@@ -36,6 +34,7 @@ public class FoodProfile extends AppCompatActivity {
         TextView mTitel = (TextView) findViewById(R.id.Titel);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         RatingBar mRatingBar = (RatingBar)findViewById(R.id.ratingBar2);
+        ImageButton btnCamera = (ImageButton)findViewById(R.id.imageButton);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         defaultSliderView = new DefaultSliderView(this);
 
@@ -45,7 +44,6 @@ public class FoodProfile extends AppCompatActivity {
         String name = food.getName();
         String rating = ((Integer)food.getRating()).toString();
         String imageRes = food.getmimgId();
-
 
         new DownloadProfileImage().execute(Constants.ROOT_URL_PICTURES + imageRes);
 
@@ -57,7 +55,30 @@ public class FoodProfile extends AppCompatActivity {
 
         mBewertung.setText("Ø " + rating);
 
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePicture();
+            }
+        });
+
     }
+    private void takePicture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,0);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    protected void onStop() {
+        sliderShow.stopAutoCycle();
+        super.onStop();
+    }
+
 
 
     private class DownloadProfileImage extends AsyncTask<String, Void, Void> {
