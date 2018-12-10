@@ -44,6 +44,10 @@ public class FoodProfile extends AppCompatActivity {
 
         mBewertung.setText("Ø " + rating);
 
+        int user_id = SharedPrefManager.getInstance(this).getUserId();
+        int food_id = food.getId();
+
+
     }
 
 
