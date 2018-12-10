@@ -72,11 +72,9 @@ public class FoodProfile extends AppCompatActivity {
 
             @Override
             public void onRatingChanged(RatingBar mRatingBar, float user_rating, boolean fromUser) {
-
                 if(user_rating<1){
                     mRatingBar.setRating(1);
                 }
-
                 int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
                 int food_id = food.getId();
                 DatabaseOperationsSetRating new_rating = new DatabaseOperationsSetRating(FoodProfile.this);
