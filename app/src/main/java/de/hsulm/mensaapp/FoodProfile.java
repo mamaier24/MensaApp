@@ -57,13 +57,11 @@ public class FoodProfile extends AppCompatActivity {
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                takePicture();
-            }
+            public void onClick(View view) {cameraIntent();}
         });
 
     }
-    private void takePicture() {
+    private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent,0);
     }
