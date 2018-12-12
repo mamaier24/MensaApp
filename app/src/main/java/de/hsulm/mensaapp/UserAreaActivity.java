@@ -156,6 +156,14 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 mAdapter.clear();
                 initializeRecycler();
 
+                Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+                calDe.setTime(new Date());
+                int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
+                int year = calDe.get(Calendar.YEAR);
+
+                TextView mDate = (TextView) findViewById(R.id.mDate);
+                mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber + " " + "Tag: " + getDay());
+
                 if (swipe_refresh != null) {
                     swipe_refresh.setRefreshing(false);
                 }
