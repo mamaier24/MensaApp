@@ -78,6 +78,10 @@ public class FoodClass implements Parcelable {
     }
 
     public String getPrice() {
+        if(price != null) {
+            price = price.replaceAll(System.getProperty("line.separator"), (""));
+            price = price.replaceAll("\\?","");
+        }
         return price;
     }
 
