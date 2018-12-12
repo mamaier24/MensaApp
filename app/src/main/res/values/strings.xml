@@ -12,6 +12,12 @@
     <string name="preis">Preis</string>
     <string name="bewertung">Bewertung</string>
 
+    //Strings für den Bilder hochladen Dialog
+    <string name="uploadoptions">Uploadoptionen</string>
+    <string name="uploadmsg">Bild aus Gallerie wählen oder neues Bild aufnehmen</string>
+    <string name="gallery">Gallerie</string>
+    <string name="camera">Kamera</string>
+
     //Wird für den Spinner benötigt
     <string-array name="Standorte">
         <item>Prittwitzstraße diese Woche</item>

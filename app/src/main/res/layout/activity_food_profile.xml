@@ -15,22 +15,19 @@
         android:layout_height="235dp"
         android:contentDescription="@string/bildgericht"
         custom:auto_cycle="true"
-        custom:indicator_visibility="visible" />
+        custom:indicator_visibility="visible" >
+    </com.daimajia.slider.library.SliderLayout>
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignEnd="@+id/imageSlider"
-        android:layout_alignBottom="@+id/imageSlider"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@null"
-        android:onClick="onClick"
+    <ImageView
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
         app:layout_constraintEnd_toEndOf="@+id/imageSlider"
-        tools:src="@mipmap/ic_camera" />
+        app:srcCompat="@mipmap/ic_camera" />
+
 
     <TextView
         android:id="@+id/Titel"
@@ -102,4 +99,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/Preis"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/Preis" />
+
+
+
 </android.support.constraint.ConstraintLayout>
