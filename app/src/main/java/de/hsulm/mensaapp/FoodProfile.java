@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ public class FoodProfile extends AppCompatActivity {
         ImageView mImage = (ImageView) findViewById(R.id.Bild);
         final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
         final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
+        CheckBox mCheckboxVegan = (CheckBox)findViewById(R.id.checkBox_vegan);
+        CheckBox mCheckboxVegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
 
         food = getIntent().getParcelableExtra("food");
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
@@ -41,6 +44,19 @@ public class FoodProfile extends AppCompatActivity {
         String name = food.getName();
         String imageRes = food.getmimgId();
         int rating = food.getRating();
+        int vegetarian = food.isVegetarian();
+        int vegan = food.isVegan();
+
+        mCheckboxVegan.setEnabled(false);
+        mCheckboxVegetarian.setEnabled(false);
+
+        if(vegetarian == 1){
+            mCheckboxVegetarian.setChecked(true);
+        }
+        if(vegan == 1){
+            mCheckboxVegan.setChecked(true);
+        }
+
 
         mBewertung.setText(Integer.toString(rating));
         mRatingBar2.setRating(rating);
