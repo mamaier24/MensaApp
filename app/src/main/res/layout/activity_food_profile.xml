@@ -34,12 +34,13 @@
 
     <TextView
         android:id="@+id/Preis"
-        android:layout_width="41dp"
+        android:layout_width="wrap_content"
         android:layout_height="23dp"
+        android:layout_marginStart="8dp"
         android:text="@string/preis"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/Bewertung"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     <TextView
@@ -80,7 +81,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="29dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Durchschnittsbewertung:"
         android:textSize="18sp"
@@ -91,9 +92,10 @@
         android:id="@+id/textView5"
         android:layout_width="45dp"
         android:layout_height="25dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Preis:"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </android.support.constraint.ConstraintLayout>

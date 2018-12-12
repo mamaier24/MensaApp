@@ -51,9 +51,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
         int year = calDe.get(Calendar.YEAR);
 
-
         TextView mDate = (TextView) findViewById(R.id.mDate);
-        mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber);
+        mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber + " " + "Tag: " + getDay());
 
         initializeRecycler();
 
@@ -217,6 +216,42 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
         String food_id = "Y" + year + ":CW" + weekNumber + ":" + day_str;
         return (food_id);
+
+    }
+
+
+    public String getDay(){
+
+        String day_str ="";
+        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+        calDe.setTime(new Date());
+        int day = calDe.get(Calendar.DAY_OF_WEEK);
+
+        switch (day) {
+            case Calendar.SUNDAY:
+                day_str="Sonntag";
+                break;
+            case Calendar.MONDAY:
+                day_str="Montag";
+                break;
+            case Calendar.TUESDAY:
+                day_str="Dienstag";
+                break;
+            case Calendar.WEDNESDAY:
+                day_str="Mittwoch";
+                break;
+            case Calendar.THURSDAY:
+                day_str="Donnerstag";
+                break;
+            case Calendar.FRIDAY:
+                day_str="Freitag";
+                break;
+            case Calendar.SATURDAY:
+                day_str="Samstag";
+                break;
+        }
+
+        return day_str;
 
     }
 
