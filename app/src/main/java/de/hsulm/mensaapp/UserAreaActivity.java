@@ -183,11 +183,39 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     public String getFoodID() {
 
+        String day_str ="";
         Calendar calDe = Calendar.getInstance(Locale.GERMAN);
         calDe.setTime(new Date());
         int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
         int year = calDe.get(Calendar.YEAR);
-        String food_id = "Y" + year + ":CW" + weekNumber + ":DMO";
+        int day = calDe.get(Calendar.DAY_OF_WEEK);
+
+        switch (day) {
+            case Calendar.SUNDAY:
+                day_str="SO";
+                break;
+            case Calendar.MONDAY:
+                day_str="MO";
+                break;
+            case Calendar.TUESDAY:
+                day_str="DI";
+                break;
+            case Calendar.WEDNESDAY:
+                day_str="MI";
+                break;
+            case Calendar.THURSDAY:
+                day_str="DO";
+                break;
+            case Calendar.FRIDAY:
+                day_str="FR";
+                break;
+            case Calendar.SATURDAY:
+                day_str="SA";
+                break;
+        }
+
+
+        String food_id = "Y" + year + ":CW" + weekNumber + ":" + day_str;
         return (food_id);
 
     }
