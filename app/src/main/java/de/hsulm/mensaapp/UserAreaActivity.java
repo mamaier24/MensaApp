@@ -51,7 +51,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
         int year = calDe.get(Calendar.YEAR);
 
-
         TextView mDate = (TextView) findViewById(R.id.mDate);
         mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber + " " + "Tag: " + getDay());
 
