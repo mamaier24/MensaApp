@@ -90,7 +90,7 @@ public class FoodProfile extends AppCompatActivity {
 
     }
     private void takepicture() {
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         AlertDialog.Builder imageDialog = new AlertDialog.Builder(this);
         imageDialog.setTitle(getString(R.string.uploadoptions));
         String [] imageDialogItems = {getString(R.string.gallery),getString(R.string.camera)};
@@ -178,7 +178,6 @@ public class FoodProfile extends AppCompatActivity {
         public String ImageHttpRequest(String requestURL,HashMap<String,String>PData){
         return "OK";
         }
-
     }
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
