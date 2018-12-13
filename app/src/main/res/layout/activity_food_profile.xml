@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FoodProfile"
     android:id="@+id/relativeLayout2">
 
-    <ImageView
-        android:id="@+id/Bild"
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/imageSlider"
         android:layout_width="0dp"
-        android:layout_height="213dp"
+        android:layout_height="235dp"
         android:contentDescription="@string/bildgericht"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
+        custom:auto_cycle="true"
+        custom:indicator_visibility="visible" >
+    </com.daimajia.slider.library.SliderLayout>
+
+    <ImageView
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
+        app:layout_constraintEnd_toEndOf="@+id/imageSlider"
+        app:srcCompat="@mipmap/ic_camera" />
+
 
     <TextView
         android:id="@+id/Titel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/gerichttitel"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Bild" />
+        app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
 
     <TextView
         android:id="@+id/Preis"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/preis"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/Bewertung"
-        android:layout_width="85dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="8dp"
         android:text="@string/bewertung"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
-
-    <RatingBar
-        android:id="@+id/ratingBar3"
-        android:layout_width="240dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
@@ -70,13 +71,10 @@
     <RatingBar
         android:id="@+id/ratingBar2"
         android:layout_width="240dp"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:theme="@style/RatingBar"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Titel" />
@@ -84,42 +82,24 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Durchschnittsbewertung:"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Bewertung:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
+        app:layout_constraintBottom_toBottomOf="@+id/Bewertung"
+        app:layout_constraintEnd_toStartOf="@+id/Bewertung"
+        app:layout_constraintTop_toTopOf="@+id/Bewertung" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="45dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Preis:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintBottom_toBottomOf="@+id/Preis"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/Preis" />
 
-    <CheckBox
-        android:id="@+id/checkBox_vegetarian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="vegetarisch"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox_vegan" />
 
-    <CheckBox
-        android:id="@+id/checkBox_vegan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="vegan"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
