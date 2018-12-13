@@ -223,7 +223,12 @@ public class FoodProfile extends AppCompatActivity {
 
             try {
                 //Check if there is only one image available
-                if (urls.length <2 ){
+                if (urls[0]=="a"){
+                    defaultSliderView
+                            .image(R.drawable.ic_restaurant_menu_black_24dp)
+                            .setScaleType(BaseSliderView.ScaleType.Fit);
+                    sliderShow.addSlider(defaultSliderView);
+                }else if (urls.length <2 ){
                     defaultSliderView
                             .image(urls[0])
                             .setScaleType(BaseSliderView.ScaleType.Fit);
@@ -235,8 +240,7 @@ public class FoodProfile extends AppCompatActivity {
                         protected void onTransform(View view, float position) {
                         }
                     });
-                }
-                else {
+                }else {
                     //Load every image fore this max. 10
                     for (int i = 0; i<urls.length;i++){
                         defaultSliderView
