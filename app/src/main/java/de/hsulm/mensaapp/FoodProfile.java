@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -61,10 +62,14 @@ public class FoodProfile extends AppCompatActivity {
         TextView mBewertung = (TextView) findViewById(R.id.Bewertung);
         TextView mTitel = (TextView) findViewById(R.id.Titel);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
+        CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
+        CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
         RatingBar mRatingBar = (RatingBar)findViewById(R.id.ratingBar2);
         ImageView btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         defaultSliderView = new DefaultSliderView(this);
+        mCheckBox_vegan.setEnabled(false);
+        mCheckBox_vegetarian.setEnabled(false);
 
         FoodClass food = getIntent().getParcelableExtra("food");
 
@@ -72,6 +77,8 @@ public class FoodProfile extends AppCompatActivity {
         String name = food.getName();
         String rating = ((Integer)food.getRating()).toString();
         String imageRes = food.getmimgId();
+        int vegetarian = food.isVegetarian();
+        int vegan = food.isVegan();
 
         new DownloadProfileImage().execute(Constants.ROOT_URL_PICTURES + imageRes);
 
@@ -87,6 +94,14 @@ public class FoodProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {takepicture();}
         });
+
+        if(vegetarian == 1){
+            mCheckBox_vegetarian.setChecked(true);
+        }
+
+        if(vegan==1){
+            mCheckBox_vegan.setChecked(true);
+        }
 
     }
     private void takepicture() {
