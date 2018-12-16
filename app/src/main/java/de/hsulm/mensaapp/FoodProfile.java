@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -37,6 +39,10 @@ import java.net.URL;
 import java.util.HashMap;
 
 
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
+
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
 public class FoodProfile extends AppCompatActivity {
@@ -46,6 +52,7 @@ public class FoodProfile extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
     InputStream inputStream;
     Bitmap image;
+    ImageView placeholder;
     ByteArrayOutputStream byteArrayOutputStream;
     ProgressDialog progressDialog;
     String imageTag = "image_tag";
@@ -54,42 +61,83 @@ public class FoodProfile extends AppCompatActivity {
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
     String root_url = "http://www.s673993392.online.de/pictures/a";
+    private FoodClass food;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_food_profile);
 
+        int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+
         TextView mBewertung = (TextView) findViewById(R.id.Bewertung);
         TextView mTitel = (TextView) findViewById(R.id.Titel);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
         CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
-        RatingBar mRatingBar = (RatingBar)findViewById(R.id.ratingBar2);
+        final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
+        final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
         ImageView btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         defaultSliderView = new DefaultSliderView(this);
         mCheckBox_vegan.setEnabled(false);
         mCheckBox_vegetarian.setEnabled(false);
 
-        FoodClass food = getIntent().getParcelableExtra("food");
+        final FoodClass food = getIntent().getParcelableExtra("food");
 
+        int food_id = food.getId();
         String price = food.getPrice();
         String name = food.getName();
-        String rating = ((Integer)food.getRating()).toString();
+        int rating = food.getRating();
         String imageRes = food.getmimgId();
         int vegetarian = food.isVegetarian();
         int vegan = food.isVegan();
 
+        mBewertung.setText(Integer.toString(rating));
+        mRatingBar2.setRating(rating);
+        mRatingBar2.setIsIndicator(true);
+
         new DownloadProfileImage().execute(Constants.ROOT_URL_PICTURES + imageRes);
 
-        mRatingBar.setRating(Float.parseFloat(rating));
+        mRatingBar.setRating(rating);
 
         mPreis.setText(price);
 
         mTitel.setText(name);
 
         mBewertung.setText("Ø " + rating);
+
+        DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfile.this);
+        get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
+
+            @Override
+            public void onSuccess(String fetched_rating) {
+
+                if(fetched_rating != null && !fetched_rating.isEmpty() && !fetched_rating.equals("null")) {
+                    mRatingBar.setRating(Integer.parseInt(fetched_rating));
+                }
+
+            }
+
+        });
+
+        mRatingBar.setStepSize(1);
+
+        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+            @Override
+            public void onRatingChanged(RatingBar mRatingBar, float user_rating, boolean fromUser) {
+                if(user_rating<1){
+                    mRatingBar.setRating(1);
+                }
+                int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+                int food_id = food.getId();
+                DatabaseOperationsSetRating new_rating = new DatabaseOperationsSetRating(FoodProfile.this);
+                new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()));
+            }
+
+
+        });
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,12 +272,24 @@ public class FoodProfile extends AppCompatActivity {
 
             try {
                 //Check if there is only one image available
-                if (urls[0] == "a"){
-                    defaultSliderView
-                            .image(R.drawable.ic_restaurant_menu_black_24dp)
-                            .setScaleType(BaseSliderView.ScaleType.Fit);
-                    sliderShow.addSlider(defaultSliderView);
-                }else if (urls.length <2 ){
+
+                 if(urls[0].equals(root_url)){
+
+                 }
+
+                 else if (urls.length <2 ){
+
+                     runOnUiThread(new Runnable() {
+
+                         @Override
+                         public void run() {
+
+                             ImageView placeholder = (ImageView)findViewById(R.id.placeholder);
+                             placeholder.setVisibility(View.GONE);
+
+                         }
+                     });
+
                     defaultSliderView
                             .image(urls[0])
                             .setScaleType(BaseSliderView.ScaleType.Fit);
@@ -255,11 +315,9 @@ public class FoodProfile extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                defaultSliderView
-                        .image(R.drawable.ic_restaurant_menu_black_24dp)
-                        .setScaleType(BaseSliderView.ScaleType.Fit);
-                sliderShow.addSlider(defaultSliderView);
+
                 Log.d("Error","Image Download failed");
+
             }
             sliderShow.setDuration(7500);
             return null;

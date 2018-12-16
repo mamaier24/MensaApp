@@ -16,6 +16,13 @@
         android:contentDescription="@string/bildgericht"
         custom:auto_cycle="true"
         custom:indicator_visibility="visible" >
+
+        <ImageView
+            android:id="@+id/placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            custom:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
     </com.daimajia.slider.library.SliderLayout>
 
     <ImageView
