@@ -22,23 +22,11 @@
         android:id="@+id/btnCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
-        app:layout_constraintEnd_toEndOf="@+id/imageSlider"
-        app:srcCompat="@mipmap/ic_camera" />
-
-
-    <ImageView
-        android:id="@+id/Bild"
-        android:layout_width="0dp"
-        android:layout_height="213dp"
-        android:contentDescription="@string/bildgericht"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
+        app:srcCompat="@mipmap/ic_camera" />
 
     <TextView
         android:id="@+id/Titel"
@@ -46,13 +34,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/gerichttitel"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Bild" />
+        app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
 
     <TextView
         android:id="@+id/Preis"

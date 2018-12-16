@@ -53,6 +53,7 @@ public class FoodProfile extends AppCompatActivity {
     URL url;
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
+    String root_url = "http://www.s673993392.online.de/pictures/a";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,7 +224,7 @@ public class FoodProfile extends AppCompatActivity {
 
             try {
                 //Check if there is only one image available
-                if (urls[0]=="a"){
+                if (urls[0] == "a"){
                     defaultSliderView
                             .image(R.drawable.ic_restaurant_menu_black_24dp)
                             .setScaleType(BaseSliderView.ScaleType.Fit);

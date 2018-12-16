@@ -199,7 +199,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
         switch (day) {
             case Calendar.SUNDAY:
-                day_str="SO";
+                day_str="FR";
                 break;
             case Calendar.MONDAY:
                 day_str="MO";
@@ -217,7 +217,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 day_str="FR";
                 break;
             case Calendar.SATURDAY:
-                day_str="SA";
+                day_str="FR";
                 break;
         }
 
@@ -237,7 +237,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
         switch (day) {
             case Calendar.SUNDAY:
-                day_str="Sonntag";
+                day_str="Freitag";
                 break;
             case Calendar.MONDAY:
                 day_str="Montag";
@@ -255,7 +255,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 day_str="Freitag";
                 break;
             case Calendar.SATURDAY:
-                day_str="Samstag";
+                day_str="Freitag";
                 break;
         }
 
