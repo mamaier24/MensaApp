@@ -5,7 +5,7 @@ package de.hsulm.mensaapp;
  */
 public class Constants {
 
-    public static final String ROOT_URL = "http://www.s673993392.online.de/v1/";//"http://192.168.1.101/Android/v1/";
+    public static final String ROOT_URL = "http://www.s673993392.online.de/v1/";
     public static final String ROOT_URL_DB_OPS = "http://www.s673993392.online.de/v2/";
     public static final String ROOT_URL_PICTURES = "http://www.s673993392.online.de/pictures/";
     public static final String URL_REGISTER = ROOT_URL + "registerUser.php";
