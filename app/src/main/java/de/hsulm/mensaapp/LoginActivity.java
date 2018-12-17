@@ -31,12 +31,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editTextUsername, editTextPassword;
     private Button buttonLogin;
     private ProgressDialog progressDialog;
-    private ProgressBar progessBar_login;
-
-        private TextView registerLink;
+    private ProgressBar progressBar_login;
+    private TextView registerLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -49,18 +49,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextUsername = (EditText) findViewById(R.id.eTUsername);
         editTextPassword = (EditText) findViewById(R.id.eTPassword);
         buttonLogin = (Button) findViewById(R.id.bLogin);
-        progessBar_login = (ProgressBar)findViewById(R.id.progressBar_login);
-        progessBar_login.setVisibility(View.GONE);
-        buttonLogin.setTransformationMethod(null);
+        progressBar_login = (ProgressBar)findViewById(R.id.progressBar_login);
         registerLink = (TextView)findViewById(R.id.tVRegister);
+
+        progressBar_login.setVisibility(View.GONE);
+        buttonLogin.setTransformationMethod(null);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
+
         buttonLogin.setOnClickListener(this);
         registerLink.setOnClickListener(this);
 
     }
 
     private void userLogin(){
+
         final String username = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
@@ -128,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        progessBar_login.setVisibility(View.VISIBLE);
+        progressBar_login.setVisibility(View.VISIBLE);
 
         buttonLogin.setEnabled(false);
 
@@ -147,7 +151,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void run() {
                         buttonLogin.setEnabled(true);
-                        progessBar_login.setVisibility(View.GONE);
+                        progressBar_login.setVisibility(View.GONE);
                     }
                 });
             }
