@@ -3,6 +3,10 @@ package de.hsulm.mensaapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Created by Stephan Danz 05/12/2018
+ * Class necessary for creating all food objects throughout the application
+ */
 public class FoodClass implements Parcelable {
 
     private int id;
@@ -14,7 +18,7 @@ public class FoodClass implements Parcelable {
     private String price;
     private String uuid;
     private int rating;
-    private String mimgId;
+    private String imgID;
 
     public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId){
         this.id = id;
@@ -26,7 +30,7 @@ public class FoodClass implements Parcelable {
         this.price = price;
         this.uuid = uuid;
         this.rating = rating;
-        this.mimgId = mimgId;
+        this.imgID = mimgId;
     }
 
     protected FoodClass(Parcel in) {
@@ -39,7 +43,7 @@ public class FoodClass implements Parcelable {
         price = in.readString();
         uuid = in.readString();
         rating = in.readInt();
-        mimgId = in.readString();
+        imgID = in.readString();
     }
 
     public static final Creator<FoodClass> CREATOR = new Creator<FoodClass>() {
@@ -92,7 +96,7 @@ public class FoodClass implements Parcelable {
     public int getRating(){return rating;}
 
     public String getmimgId() {
-        return mimgId;
+        return imgID;
     }
 
     @Override
@@ -111,6 +115,6 @@ public class FoodClass implements Parcelable {
         dest.writeString(price);
         dest.writeString(uuid);
         dest.writeInt(rating);
-        dest.writeString(mimgId);
+        dest.writeString(imgID);
     }
 }
