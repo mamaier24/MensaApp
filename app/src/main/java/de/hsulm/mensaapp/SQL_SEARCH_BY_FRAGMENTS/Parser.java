@@ -53,7 +53,7 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
 
         if(integer==1)
         {
-            //BIND TO LISTVIEW
+
             ArrayAdapter adapter=new ArrayAdapter(c,android.R.layout.simple_list_item_1,names);
             lv.setAdapter(adapter);
 

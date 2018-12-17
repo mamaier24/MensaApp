@@ -18,11 +18,11 @@ import java.net.HttpURLConnection;
 
 public class SenderReceiver extends AsyncTask<Void,Void,String>{
 
-    Context c;
-    String urlAddress;
-    String query;
-    ListView lv;
-    ImageView noDataImg,noNetworkImg;
+    private Context c;
+    private String urlAddress;
+    private String query;
+    private ListView lv;
+    private ImageView noDataImg,noNetworkImg;
 
     ProgressDialog pd;
 
@@ -56,8 +56,7 @@ public class SenderReceiver extends AsyncTask<Void,Void,String>{
         super.onPostExecute(s);
 
         pd.dismiss();
-
-        //RESET LISTVIEW
+        
         lv.setAdapter(null);
 
         if(s != null)
