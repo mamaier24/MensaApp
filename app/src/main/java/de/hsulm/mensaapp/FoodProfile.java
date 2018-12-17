@@ -45,6 +45,7 @@ import java.util.HashMap;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
+import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsSetImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
@@ -53,22 +54,13 @@ public class FoodProfile extends AppCompatActivity {
     private SliderLayout sliderShow;
     private DefaultSliderView defaultSliderView;
     private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
-    InputStream inputStream;
-    Bitmap image;
-    ImageView placeholder;
-    ByteArrayOutputStream byteArrayOutputStream;
-    ProgressDialog progressDialog;
-    String imageTag = "image_tag";
-    String imageName = "image_data";
-    URL url;
-    HttpURLConnection httpURLConnection;
-    OutputStream outputStream;
-    String root_url = "http://www.s673993392.online.de/pictures/a";
-    private FoodClass food;
-
+    private Bitmap image;
+    private ImageView placeholder;
+    private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    private String root_url = "http://www.s673993392.online.de/pictures/a";
     private Spinner spinner;
-    private ArrayAdapter<CharSequence> adapter;     //Strings den Spinner füllen
-    String Standort=null;
+    private ArrayAdapter<CharSequence> adapter;
+    private String Standort=null;
 
 
     @Override
@@ -242,42 +234,14 @@ public class FoodProfile extends AppCompatActivity {
 
     public void UploadImageToServer(){
         image = this.getResizedBitmap(image,450,250);
-        image.compress(Bitmap.CompressFormat.JPEG,40,byteArrayOutputStream);
+        image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
-        final String convertImage = Base64.encodeToString(byteArray,Base64.DEFAULT);
-
-        class AsyncTaskUploadClass extends AsyncTask<Void,Void,String>{
-            @Override
-            protected void onPreExecute(){
-                super.onPreExecute();
-                progressDialog = ProgressDialog.show(FoodProfile.this,"Uploading","Pleas Wait");
-            }
-            @Override
-            protected void onPostExecute(String string1){
-                super.onPostExecute(string1);
-                progressDialog.dismiss();
-                Toast.makeText(FoodProfile.this,string1, Toast.LENGTH_LONG).show();
-            }
-            @Override
-            protected String doInBackground(Void...params){
-                ImageProcessClass imageProcessClass = new ImageProcessClass();
-                HashMap<String,String> HashMapParams = new HashMap<String,String>();
-                HashMapParams.put(imageTag,"test1");
-                HashMapParams.put(imageName,convertImage);
-                String FinalData = imageProcessClass.ImageHttpRequest(Constants.ROOT_URL_PICTURES,HashMapParams);
-                return FinalData;
-            }
-        }
-
-        AsyncTaskUploadClass AsyncTaskUploadClassOBJ = new AsyncTaskUploadClass();
-        AsyncTaskUploadClassOBJ.execute();
+        final String img_enc = Base64.encodeToString(byteArray,Base64.DEFAULT);
+        //DatabaseOperationsSetImages connection = new DatabaseOperationsSetImages(FoodProfile.this);
+        //connection.uploadImageToDB(img_enc, user_id, food_id);
+        //image = null;
     }
-
-    public class ImageProcessClass{
-        public String ImageHttpRequest(String requestURL,HashMap<String,String>PData){
-        return "OK";
-        }
-    }
+    
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
