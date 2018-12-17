@@ -3,7 +3,6 @@ package de.hsulm.mensaapp;
 /**
  * Created by Marcel Maier on 30/11/18.
  */
-
 public class Constants {
 
     public static final String ROOT_URL = "http://www.s673993392.online.de/v1/";//"http://192.168.1.101/Android/v1/";
