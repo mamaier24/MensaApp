@@ -1,9 +1,5 @@
 package de.hsulm.mensaapp;
 
-/**
- * Created by Marcel Maier on 30/11/18.
- */
-
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.net.Uri;
@@ -19,14 +15,17 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.ReturnDateOrID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecyclerView;
@@ -34,8 +33,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     private RecyclerView.LayoutManager mLayoutmanager;
     private SwipeRefreshLayout swipe_refresh;
     private DatabaseOperationsID operations = new DatabaseOperationsID(this);
-    private ArrayList<FoodClass> food_list2 = new ArrayList<>();
-    public final static String extraItem ="food";
+    private ReturnDateOrID time = new ReturnDateOrID();
 
 
     @Override
@@ -46,13 +44,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         swipe_refresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
         swipe_refresh.setOnRefreshListener(this);
 
-        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
-        calDe.setTime(new Date());
-        int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
-        int year = calDe.get(Calendar.YEAR);
-
         TextView mDate = (TextView) findViewById(R.id.mDate);
-        mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber + " " + "Tag: " + getDay());
+        mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
 
         initializeRecycler();
 
@@ -66,7 +59,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     public void initializeRecycler() {
 
-        operations.getFoodFromDB(getFoodID(), new IDatabaseOperationsID() {
+        operations.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsID() {
             @Override
             public void onSuccess(final ArrayList<FoodClass> food_list) {
 
@@ -160,24 +153,18 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         new Handler().postDelayed(new Runnable() {
 
             @Override public void run() {
-                mAdapter.clear();
-                initializeRecycler();
+            mAdapter.clear();
+            initializeRecycler();
 
-                Calendar calDe = Calendar.getInstance(Locale.GERMAN);
-                calDe.setTime(new Date());
-                int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
-                int year = calDe.get(Calendar.YEAR);
+            TextView mDate = (TextView) findViewById(R.id.mDate);
+            mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
 
-                TextView mDate = (TextView) findViewById(R.id.mDate);
-                mDate.setText("Jahr: " + year + " " + "Kalenderwoche: " + weekNumber + " " + "Tag: " + getDay());
-
-                if (swipe_refresh != null) {
-                    swipe_refresh.setRefreshing(false);
-                }
+            if (swipe_refresh != null) {
+                swipe_refresh.setRefreshing(false);
+            }
             }
 
         }, 4000);
-
     }
 
 
@@ -193,85 +180,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     public void onPause() {
         super.onPause();
     }
-
-
-    public String getFoodID() {
-
-        String day_str ="";
-        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
-        calDe.setTime(new Date());
-        int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
-        int year = calDe.get(Calendar.YEAR);
-        int day = calDe.get(Calendar.DAY_OF_WEEK);
-
-        switch (day) {
-            case Calendar.SUNDAY:
-                day_str="FR";
-                break;
-            case Calendar.MONDAY:
-                day_str="MO";
-                break;
-            case Calendar.TUESDAY:
-                day_str="DI";
-                break;
-            case Calendar.WEDNESDAY:
-                day_str="MI";
-                break;
-            case Calendar.THURSDAY:
-                day_str="DO";
-                break;
-            case Calendar.FRIDAY:
-                day_str="FR";
-                break;
-            case Calendar.SATURDAY:
-                day_str="FR";
-                break;
-        }
-
-
-        String food_id = "Y" + year + ":CW" + weekNumber + ":" + day_str;
-        return (food_id);
-
-    }
-
-
-    public String getDay(){
-
-        String day_str ="";
-        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
-        calDe.setTime(new Date());
-        int day = calDe.get(Calendar.DAY_OF_WEEK);
-
-        switch (day) {
-            case Calendar.SUNDAY:
-                day_str="Freitag";
-                break;
-            case Calendar.MONDAY:
-                day_str="Montag";
-                break;
-            case Calendar.TUESDAY:
-                day_str="Dienstag";
-                break;
-            case Calendar.WEDNESDAY:
-                day_str="Mittwoch";
-                break;
-            case Calendar.THURSDAY:
-                day_str="Donnerstag";
-                break;
-            case Calendar.FRIDAY:
-                day_str="Freitag";
-                break;
-            case Calendar.SATURDAY:
-                day_str="Freitag";
-                break;
-        }
-
-        return day_str;
-
-    }
-
-
-
 
 }
 
