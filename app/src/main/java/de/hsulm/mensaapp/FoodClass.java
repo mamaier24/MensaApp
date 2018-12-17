@@ -99,6 +99,8 @@ public class FoodClass implements Parcelable {
         return imgID;
     }
 
+    public String getCategory(){return category;}
+
     @Override
     public int describeContents() {
         return 0;

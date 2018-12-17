@@ -53,7 +53,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.mPreis.setText(currentItem.getPrice());
         holder.mBewertung.setText(((Integer)currentItem.getRating()).toString());
         holder.mRatingBar.setRating(currentItem.getRating());
-        holder.mCategory.setText(currentItem.category);
+        holder.mCategory.setText(currentItem.getCategory());
     }
 
 
