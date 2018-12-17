@@ -21,10 +21,11 @@ import java.util.*;
 import com.github.barteksc.pdfviewer.PDFView;
 
 public class MenuActivity extends AppCompatActivity {
+
     private String link;
     private PDFView pdfview;
     private Spinner spinner;
-    private ArrayAdapter<CharSequence> adapter;     //Strings den Spinner füllen
+    private ArrayAdapter<CharSequence> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,16 @@ public class MenuActivity extends AppCompatActivity {
 
         spinner = (Spinner)findViewById(R.id.spinnerStandort);
         pdfview =(PDFView)findViewById(R.id.pdfView);
+        
         adapter = ArrayAdapter.createFromResource(this, R.array.Standorte, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
                 String location = parent.getItemAtPosition(position).toString();
-
 
                 switch (location){
                     case "Prittwitzstraße diese Woche":
@@ -69,10 +71,12 @@ public class MenuActivity extends AppCompatActivity {
                         new RetrievePDFStream(link).execute();
                         break;
                 }
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent){
+
             }
 
         });
@@ -90,17 +94,17 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         protected InputStream doInBackground(String... strings) {
+
             InputStream inputStream = null;
+
             try {
                 URL test = new URL(pdfurl);
                 HttpURLConnection urlConnection =(HttpURLConnection)test.openConnection();
-                if(urlConnection.getResponseCode()==200)
-                {
+
+                if(urlConnection.getResponseCode()==200) {
                     inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 return inputStream = null;
             }
             return inputStream;
@@ -120,7 +124,6 @@ public class MenuActivity extends AppCompatActivity {
 
 
     public int getWeekNumber(){
-
         Calendar calDe = Calendar.getInstance(Locale.GERMAN);
         calDe.setTime(new Date());
         int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
