@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,56 +70,67 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String username = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        progressDialog.setMessage("Benutzer registrieren...");
-        progressDialog.show();
+        if (username.length() > 6 || username.isEmpty()) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                Constants.URL_REGISTER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
+            if (isValidEmail(email) || email.isEmpty()) {
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+                progressDialog.setMessage("Benutzer registrieren...");
+                progressDialog.show();
 
-                            Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                        Constants.URL_REGISTER,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                progressDialog.dismiss();
 
-                            if(jsonObject.getString("error") == "false"){
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
 
-                                onNotError();
+                                    Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+
+                                    if (jsonObject.getString("error") == "false") {
+
+                                        onNotError();
+
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                progressDialog.hide();
+                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+
 
                             }
 
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
+                        }) {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.hide();
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-
-
-
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("username", username);
+                        params.put("email", email);
+                        params.put("password", password);
+                        return params;
                     }
+                };
 
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("email", email);
-                params.put("password", password);
-                return params;
+
+                RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Fehlerhafte E-Mail-Adresse!", Toast.LENGTH_LONG).show();
             }
-        };
 
-
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+        } else {
+            Toast.makeText(getApplicationContext(), "Benutzername zu kurz!", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -154,9 +166,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void onNotError(){
-
         startActivity(new Intent(this, LoginActivity.class));
+    }
 
+
+    public boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
 }
