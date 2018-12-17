@@ -17,9 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +66,11 @@ public class FoodProfile extends AppCompatActivity {
     String root_url = "http://www.s673993392.online.de/pictures/a";
     private FoodClass food;
 
+    private Spinner spinner;
+    private ArrayAdapter<CharSequence> adapter;     //Strings den Spinner füllen
+    String Standort=null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +90,38 @@ public class FoodProfile extends AppCompatActivity {
         defaultSliderView = new DefaultSliderView(this);
         mCheckBox_vegan.setEnabled(false);
         mCheckBox_vegetarian.setEnabled(false);
+
+
+        spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
+        adapter = ArrayAdapter.createFromResource(this, R.array.StandorteMensa, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                String location = parent.getItemAtPosition(position).toString();
+
+                switch (location){
+                    case "Prittwitzstraße":
+                        Standort = "Prittwitzstraße";
+                        break;
+                    case "Böfingen":
+                        Standort = "Böfingen";
+                        break;
+                    case "Eselsberg":
+                        Standort = "Eselsberg";                         //String Standort kann nun z.b. mit klicken auf Button Bewertung absenden auch hochgeladen werden
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+
+        });
+
+
 
         final FoodClass food = getIntent().getParcelableExtra("food");
 

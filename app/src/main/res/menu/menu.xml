@@ -7,6 +7,10 @@
         android:title="@string/Speiseplan"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/Inhaltsstoffe"
+        android:title="@string/Inhaltsstoffe"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/Lob_Tadel"
         android:title="@string/Lob_Tadel"
         app:showAsAction="never"/>

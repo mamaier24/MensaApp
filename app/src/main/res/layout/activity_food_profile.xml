@@ -73,11 +73,11 @@
 
     <RatingBar
         android:id="@+id/ratingBar3"
-        android:layout_width="240dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="235dp"
+        android:layout_height="51dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
         android:scaleX="0.75"
         android:scaleY="0.75"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,8 +124,8 @@
         android:id="@+id/checkBox_vegetarian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="44dp"
         android:text="vegetarisch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkBox_vegan" />
@@ -134,12 +134,33 @@
         android:id="@+id/checkBox_vegan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="48dp"
         android:text="vegan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/tVStandort"
+        android:layout_width="167dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Standort der Mensa:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_vegan" />
+
+    <Spinner
+        android:id="@+id/fp_spinnerStandort"
+        android:layout_width="324dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tVStandort"
+        tools:layout_editor_absoluteY="485dp" />
 
 
 </android.support.constraint.ConstraintLayout>

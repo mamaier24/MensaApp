@@ -3,6 +3,7 @@
     //Wird für das Toolbarmenü benötigt
     <string name="app_name">MensaApp</string>
     <string name="Speiseplan">Speiseplan</string>
+    <string name="Inhaltsstoffe">Inhaltsstoffe</string>
     <string name="Lob_Tadel">Lob und Tadel</string>
     <string name="Abmelden">Abmelden</string>
     <string name="Suche">Suche</string>
@@ -27,6 +28,13 @@
         <item>Eselsberg diese Woche</item>
         <item>Eselsberg nächste Woche</item>
 
+    </string-array>
+
+    //Wird für den Spinner im FoodProfile benötigt
+    <string-array name="StandorteMensa">
+        <item>Prittwitzstraße</item>
+        <item>Böfingen</item>
+        <item>Eselsberg</item>
     </string-array>
 
 </resources>

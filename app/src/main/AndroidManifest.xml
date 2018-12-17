@@ -26,17 +26,24 @@
         <activity
             android:name=".RegisterActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".UserAreaActivity"
             android:screenOrientation="nosensor" />
+
         <activity
-            android:name=".MenuActivity"
+            android:name=".MenuActivity" />
+
+        <activity
+            android:name=".FoodProfile"
             android:screenOrientation="nosensor" />
-        <activity android:name=".FoodProfile"
-            android:screenOrientation="nosensor"/>
-        <activity android:name=".SearchActivity"
+
+        <activity
+            android:name=".SearchActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".IngredientsActivity"></activity>
     </application>
 
 </manifest>

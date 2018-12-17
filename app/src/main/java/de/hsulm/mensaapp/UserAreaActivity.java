@@ -107,6 +107,13 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 UserAreaActivity.this.startActivity(speiseplanIntent);
                 break;
 
+            case R.id.Inhaltsstoffe:
+                //Intent for "Speiseplan"
+                Intent InhaltsstoffeIntent = new Intent(UserAreaActivity.this, IngredientsActivity.class);
+                UserAreaActivity.this.startActivity(InhaltsstoffeIntent);
+                break;
+
+
             case R.id.Lob_Tadel:
                 //Intent for "Lob und Tadel"
                 Log.i("Want to Send Mail", "");
