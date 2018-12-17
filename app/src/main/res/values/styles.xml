@@ -36,7 +36,10 @@
             #ff99cc00
         </item>
         <item name="android:colorControlHighlight">
-            @color/colorPrimaryDark
+            #ff99cc00
+        </item>
+        <item name="android:colorControlActivated">
+            #ff99cc00
         </item>
     </style>
 

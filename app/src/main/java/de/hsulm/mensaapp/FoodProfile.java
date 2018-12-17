@@ -82,8 +82,8 @@ public class FoodProfile extends AppCompatActivity {
         ImageView btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         defaultSliderView = new DefaultSliderView(this);
-        mCheckBox_vegan.setEnabled(false);
-        mCheckBox_vegetarian.setEnabled(false);
+        mCheckBox_vegan.setClickable(false);
+        mCheckBox_vegetarian.setClickable(false);
 
 
         spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
@@ -114,7 +114,7 @@ public class FoodProfile extends AppCompatActivity {
             }
 
         });
-        
+
         final FoodClass food = getIntent().getParcelableExtra("food");
 
         int food_id = food.getId();
