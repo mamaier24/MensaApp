@@ -237,11 +237,13 @@ public class FoodProfile extends AppCompatActivity {
         image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         final String img_enc = Base64.encodeToString(byteArray,Base64.DEFAULT);
+
+        //@FELIX HERMANN ADD THESE LINES FOR IMAGE UPLOAD
         //DatabaseOperationsSetImages connection = new DatabaseOperationsSetImages(FoodProfile.this);
         //connection.uploadImageToDB(img_enc, user_id, food_id);
         //image = null;
     }
-    
+
 
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
