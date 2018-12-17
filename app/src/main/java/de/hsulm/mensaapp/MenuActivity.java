@@ -34,7 +34,7 @@ public class MenuActivity extends AppCompatActivity {
 
         spinner = (Spinner)findViewById(R.id.spinnerStandort);
         pdfview =(PDFView)findViewById(R.id.pdfView);
-        
+
         adapter = ArrayAdapter.createFromResource(this, R.array.Standorte, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -43,6 +43,7 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+
                 String location = parent.getItemAtPosition(position).toString();
 
                 switch (location){
