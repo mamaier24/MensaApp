@@ -56,7 +56,7 @@ public class SenderReceiver extends AsyncTask<Void,Void,String>{
         super.onPostExecute(s);
 
         pd.dismiss();
-        
+
         lv.setAdapter(null);
 
         if(s != null)

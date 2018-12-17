@@ -10,8 +10,9 @@ public class Constants {
 
     public static final String URL_REGISTER = ROOT_URL + "user_register.php";
     public static final String URL_LOGIN = ROOT_URL + "user_login.php";
-    public static final String URL_DB_OPS = ROOT_URL + "search_by_id.php";
-    public static final String URL_RATING = ROOT_URL + "user_rating.php";
+    public static final String URL_SEARCH_BY_ID = ROOT_URL + "search_by_id.php";
+    public static final String URL_SEARCH_BY_FRAGMENTS = ROOT_URL + "search_by_fragments.php";
+    public static final String URL_SET_RATING = ROOT_URL + "set_user_rating.php";
     public static final String URL_GET_RATING = ROOT_URL + "get_user_rating.php";
     public static final String URL_IMG_UPLOAD = ROOT_URL + "upload_img.php";
     public static final String URL_IMG_FETCH = ROOT_URL + "fetch_img.php";

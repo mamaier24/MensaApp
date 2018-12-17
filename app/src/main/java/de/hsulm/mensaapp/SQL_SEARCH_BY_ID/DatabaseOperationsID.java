@@ -38,7 +38,7 @@ public class DatabaseOperationsID {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_DB_OPS,
+                Constants.URL_SEARCH_BY_ID,
 
                 new Response.Listener<String>() {
 

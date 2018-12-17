@@ -41,7 +41,7 @@ public class DatabaseOperationsSetRating {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_RATING,
+                Constants.URL_SET_RATING,
 
                 new Response.Listener<String>() {
 

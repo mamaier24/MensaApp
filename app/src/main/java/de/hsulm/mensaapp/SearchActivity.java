@@ -11,8 +11,7 @@ import de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
 
 public class SearchActivity extends AppCompatActivity {
 
-    //TODO: Delete variable urlAddress and access it over class Constants
-    private String urlAddress="http:/s673993392.online.de/v1/searcher.php";
+    private String urlAddress=Constants.URL_SEARCH_BY_FRAGMENTS;
     private SearchView sv;
     private ListView lv;
     private ImageView noDataImg,noNetworkImg;
