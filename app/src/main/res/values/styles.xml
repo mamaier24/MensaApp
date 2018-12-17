@@ -24,4 +24,20 @@
         <item name="colorControlActivated">#7FB2E5</item>
     </style>
 
+    <style name="CustomCheckBox">
+        <item name="android:theme">@style/CheckBoxAppTheme</item>
+    </style>
+
+    <style name="CheckBoxAppTheme">
+        <item name="android:colorAccent">
+            #ff99cc00
+        </item>
+        <item name="android:colorControlNormal">
+            #ff99cc00
+        </item>
+        <item name="android:colorControlHighlight">
+            @color/colorPrimaryDark
+        </item>
+    </style>
+
 </resources>

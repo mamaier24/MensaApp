@@ -110,7 +110,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.0"
-        tools:buttonTint="@android:color/holo_green_light" />
+        style="@style/CustomCheckBox"/>
 
     <CheckBox
         android:id="@+id/checkBox_vegan"
@@ -120,7 +120,7 @@
         android:text="vegan"
         app:layout_constraintStart_toEndOf="@+id/checkBox_vegetarian"
         app:layout_constraintTop_toTopOf="@+id/checkBox_vegetarian"
-        tools:buttonTint="@android:color/holo_green_light" />
+        style="@style/CustomCheckBox"/>
 
     <TextView
         android:id="@+id/tVStandort"
