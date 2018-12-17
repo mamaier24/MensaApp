@@ -5,16 +5,16 @@ import android.os.Parcelable;
 
 public class FoodClass implements Parcelable {
 
-    public int id;
-    public String name;
-    public String category;
-    public String date;
-    public int vegan;
-    public int vegetarian;
-    public String price;
-    public String uuid;
-    public int rating;
-    public String mimgId;
+    private int id;
+    private String name;
+    private String category;
+    private String date;
+    private int vegan;
+    private int vegetarian;
+    private String price;
+    private String uuid;
+    private int rating;
+    private String mimgId;
 
     public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId){
         this.id = id;
