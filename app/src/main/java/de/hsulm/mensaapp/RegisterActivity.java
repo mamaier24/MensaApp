@@ -70,9 +70,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String username = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        if (username.length() > 6 || username.isEmpty()) {
+        if ((username.length() > 6 || username.isEmpty()) || email.isEmpty() || password.isEmpty()) {
 
-            if (isValidEmail(email) || email.isEmpty()) {
+            if (isValidEmail(email) || email.isEmpty() || password.isEmpty() || username.isEmpty()) {
 
                 progressDialog.setMessage("Benutzer registrieren...");
                 progressDialog.show();
