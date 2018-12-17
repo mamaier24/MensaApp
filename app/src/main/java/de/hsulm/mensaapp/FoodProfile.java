@@ -114,9 +114,7 @@ public class FoodProfile extends AppCompatActivity {
             }
 
         });
-
-
-
+        
         final FoodClass food = getIntent().getParcelableExtra("food");
 
         int food_id = food.getId();
