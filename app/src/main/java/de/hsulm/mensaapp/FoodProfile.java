@@ -39,13 +39,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
+import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsFetchImages;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsSetImages;
+import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.IDatabaseOperationsFetchImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
@@ -134,6 +137,14 @@ public class FoodProfile extends AppCompatActivity {
 
         mTitel.setText(name);
 
+        DatabaseOperationsFetchImages get_images = new DatabaseOperationsFetchImages(FoodProfile.this);
+        get_images.getImagesFromDB(food_id, new IDatabaseOperationsFetchImages() {
+            @Override
+            public void onSuccess(ArrayList img_id_list) {
+                //new DownloadProfileImage().execute(img_id_list);
+            }
+        });
+
         DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfile.this);
         get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
 
@@ -180,6 +191,8 @@ public class FoodProfile extends AppCompatActivity {
         }
 
     }
+
+
     private void takepicture() {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         AlertDialog.Builder imageDialog = new AlertDialog.Builder(this);
