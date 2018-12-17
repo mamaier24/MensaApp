@@ -103,13 +103,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="vegetarisch"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.0"
-        tools:buttonTint="@android:color/holo_green_light"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:buttonTint="@android:color/holo_green_light" />
 
     <CheckBox
         android:id="@+id/checkBox_vegan"
