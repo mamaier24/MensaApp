@@ -78,7 +78,6 @@ public class FoodProfile extends AppCompatActivity {
 
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
 
-        TextView mBewertung = (TextView) findViewById(R.id.Bewertung);
         TextView mTitel = (TextView) findViewById(R.id.Titel);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
@@ -132,8 +131,6 @@ public class FoodProfile extends AppCompatActivity {
         String imageRes = food.getmimgId();
         int vegetarian = food.isVegetarian();
         int vegan = food.isVegan();
-
-        mBewertung.setText(Integer.toString(rating));
         mRatingBar2.setRating(rating);
         mRatingBar2.setIsIndicator(true);
 
@@ -144,8 +141,6 @@ public class FoodProfile extends AppCompatActivity {
         mPreis.setText(price);
 
         mTitel.setText(name);
-
-        mBewertung.setText("Ø " + rating);
 
         DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfile.this);
         get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {

@@ -60,17 +60,6 @@
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
-    <TextView
-        android:id="@+id/Bewertung"
-        android:layout_width="85dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/bewertung"
-        android:textAppearance="@android:style/TextAppearance.Material.Small"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
-
     <RatingBar
         android:id="@+id/ratingBar3"
         android:layout_width="235dp"
@@ -99,17 +88,6 @@
         app:layout_constraintTop_toBottomOf="@+id/Titel" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="29dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Durchschnittsbewertung:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
-
-    <TextView
         android:id="@+id/textView5"
         android:layout_width="45dp"
         android:layout_height="25dp"
@@ -118,27 +96,30 @@
         android:text="Preis:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
 
     <CheckBox
         android:id="@+id/checkBox_vegetarian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginTop="8dp"
         android:text="vegetarisch"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox_vegan" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.0"
+        tools:buttonTint="@android:color/holo_green_light"
+        tools:layout_editor_absoluteX="8dp" />
 
     <CheckBox
         android:id="@+id/checkBox_vegan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginStart="8dp"
         android:text="vegan"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/checkBox_vegetarian"
+        app:layout_constraintTop_toTopOf="@+id/checkBox_vegetarian"
+        tools:buttonTint="@android:color/holo_green_light" />
 
     <TextView
         android:id="@+id/tVStandort"
@@ -153,14 +134,13 @@
 
     <Spinner
         android:id="@+id/fp_spinnerStandort"
-        android:layout_width="324dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tVStandort"
-        tools:layout_editor_absoluteY="485dp" />
+        app:layout_constraintStart_toEndOf="@+id/tVStandort"
+        app:layout_constraintTop_toTopOf="@+id/tVStandort" />
 
 
 </android.support.constraint.ConstraintLayout>
