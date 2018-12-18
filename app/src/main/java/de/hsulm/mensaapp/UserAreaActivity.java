@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.ReturnDateOrID;
+import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
@@ -32,7 +32,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     private RecyclerView.LayoutManager mLayoutmanager;
     private SwipeRefreshLayout swipe_refresh;
     private DatabaseOperationsID operations = new DatabaseOperationsID(this);
-    private ReturnDateOrID time = new ReturnDateOrID();
+    private DateID time = new DateID();
 
 
     @Override

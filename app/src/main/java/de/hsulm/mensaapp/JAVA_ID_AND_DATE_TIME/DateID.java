@@ -5,7 +5,7 @@ import android.icu.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ReturnDateOrID {
+public class DateID {
 
     public String getFoodID() {
 
