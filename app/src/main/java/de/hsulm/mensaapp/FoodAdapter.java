@@ -51,7 +51,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         new DownloadRecyclerImage(holder.mImage).execute(Constants.ROOT_URL_PICTURES + currentItem.getmimgId());
         holder.mTitel.setText(currentItem.getName());
         holder.mPreis.setText(currentItem.getPrice());
-        holder.mBewertung.setText(((Integer)currentItem.getRating()).toString());
+        holder.mBewertung.setText(((Float)(((Integer)currentItem.getRating()).floatValue())).toString());
         holder.mRatingBar.setRating(currentItem.getRating());
         holder.mCategory.setText(currentItem.getCategory());
     }
