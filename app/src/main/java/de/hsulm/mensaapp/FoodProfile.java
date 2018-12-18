@@ -130,7 +130,7 @@ public class FoodProfile extends AppCompatActivity {
 
         new DownloadProfileImage().execute(urls_test);
 
-        mRatingBar.setRating(rating);
+        mRatingBar.setRating(0);
 
         mPreis.setText(price);
 
