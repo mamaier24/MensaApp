@@ -36,11 +36,12 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:padding="5dp"
+            android:background="@drawable/image_border"
+            android:padding="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_restaurant_menu_black_24dp" />
+            app:srcCompat="@mipmap/ic_restaurant_menu_black_24dp" />
 
         <TextView
             android:id="@+id/tvPreis"
@@ -133,7 +134,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="68dp"
             android:background="#b8424242"
             android:text="x Wochen "
             android:textColor="@color/cardview_light_background"
