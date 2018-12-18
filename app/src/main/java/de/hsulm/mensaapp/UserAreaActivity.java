@@ -1,7 +1,9 @@
 package de.hsulm.mensaapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,17 +43,25 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
-        swipe_refresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipe_refresh.setOnRefreshListener(this);
 
-        TextView mDate = (TextView) findViewById(R.id.mDate);
-        mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
+        if(isOnline()) {
 
-        initializeRecycler();
+            TextView mDate = (TextView) findViewById(R.id.mDate);
+            mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
 
-        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
+            initializeRecycler();
+
+            if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+
+        }else{
+            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+            TextView mDate = (TextView) findViewById(R.id.mDate);
+            mDate.setText("Offline");
         }
 
     }
@@ -72,9 +82,19 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
-                        Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
-                        intent.putExtra("food", food_list.get(position));
-                        startActivity(intent);
+                        if(isOnline()) {
+                            Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
+                            intent.putExtra("food", food_list.get(position));
+                            startActivity(intent);
+                        }else{
+                            if(mAdapter != null) {
+                                mAdapter.clear();
+                            }
+
+                            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+                            TextView mDate = (TextView) findViewById(R.id.mDate);
+                            mDate.setText("Offline");
+                        }
                     }
                 });
 
@@ -150,35 +170,88 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
 
-            @Override public void run() {
-            mAdapter.clear();
-            initializeRecycler();
+        if(isOnline()) {
 
-            TextView mDate = (TextView) findViewById(R.id.mDate);
-            mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
+            new Handler().postDelayed(new Runnable() {
 
-            if (swipe_refresh != null) {
-                swipe_refresh.setRefreshing(false);
-            }
-            }
+                @Override
+                public void run() {
 
-        }, 4000);
+                    if (mAdapter != null) {
+                        mAdapter.clear();
+                    }
+
+                    initializeRecycler();
+
+                    TextView mDate = (TextView) findViewById(R.id.mDate);
+                    mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
+
+                    if (swipe_refresh != null) {
+                        swipe_refresh.setRefreshing(false);
+                    }
+
+                }
+
+            }, 4000);
+
+        }else{
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    if(mAdapter != null) {
+                        mAdapter.clear();
+                    }
+
+                    Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+                    TextView mDate = (TextView) findViewById(R.id.mDate);
+                    mDate.setText("Offline");
+
+                    if (swipe_refresh != null) {
+                        swipe_refresh.setRefreshing(false);
+                    }
+                }
+
+            }, 4000);
+
+        }
     }
 
 
     @Override
     public void onRestart() {
-        super.onRestart();
-        mAdapter.clear();
-        initializeRecycler();
+        if(isOnline()) {
+            super.onRestart();
+            mAdapter.clear();
+            initializeRecycler();
+        }else{
+            super.onRestart();
+            if (mAdapter != null) {
+                mAdapter.clear();
+            }
+            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+            TextView mDate = (TextView) findViewById(R.id.mDate);
+            mDate.setText("Offline");
+        }
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+
+    public boolean isOnline() {
+        boolean var = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ( cm.getActiveNetworkInfo() != null ) {
+            var = true;
+        }
+        return var;
     }
 
 }
