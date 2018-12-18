@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/Programme/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_add_a_photo_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/Programme/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_watch_later_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -47,7 +47,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="outputName" value="ic_camera_alt" />
+                                      <entry key="outputName" value="ic_last_time" />
                                     </map>
                                   </option>
                                 </PersistentState>

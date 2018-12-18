@@ -62,12 +62,12 @@
             android:layout_height="49dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:text="Essenstitel"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivFavorite" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -118,6 +118,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="#b8424242"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:srcCompat="@mipmap/ic_last_time" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:background="#b8424242"
+            android:text="x Wochen "
+            android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mCategory" />
     </android.support.constraint.ConstraintLayout>
 
 
