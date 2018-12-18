@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextUsername, editTextPassword;
@@ -132,31 +134,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        progressBar_login.setVisibility(View.VISIBLE);
-
-        buttonLogin.setEnabled(false);
-
-        if(view == buttonLogin)
-            userLogin();
         if (view == registerLink)
-             startActivity(new Intent(this, RegisterActivity.class));
+            startActivity(new Intent(this, RegisterActivity.class));
 
-        Timer buttonTimer = new Timer();
-        buttonTimer.schedule(new TimerTask() {
+        else if(Connection.getInstance().isOnline(this)) {
 
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
+            progressBar_login.setVisibility(View.VISIBLE);
 
-                    @Override
-                    public void run() {
-                        buttonLogin.setEnabled(true);
-                        progressBar_login.setVisibility(View.GONE);
-                    }
-                });
-            }
+            buttonLogin.setEnabled(false);
 
-        }, 5000);
+            if (view == buttonLogin)
+                userLogin();
+
+            Timer buttonTimer = new Timer();
+            buttonTimer.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            buttonLogin.setEnabled(true);
+                            progressBar_login.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+            }, 5000);
+
+        }else{
+            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+        }
 
     }
 

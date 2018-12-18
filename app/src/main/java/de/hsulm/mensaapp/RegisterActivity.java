@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -138,29 +140,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
 
-        progessBar_register.setVisibility(View.VISIBLE);
-        buttonRegister.setEnabled(false);
+        if (Connection.getInstance().isOnline(this)) {
 
-        if (view == buttonRegister){
-            registerUser();
-        }
+            progessBar_register.setVisibility(View.VISIBLE);
+            buttonRegister.setEnabled(false);
 
-        Timer buttonTimer = new Timer();
-        buttonTimer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        buttonRegister.setEnabled(true);
-                        progessBar_register.setVisibility(View.GONE);
-                    }
-                });
+            if (view == buttonRegister) {
+                registerUser();
             }
 
-        }, 5000);
+            Timer buttonTimer = new Timer();
+            buttonTimer.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            buttonRegister.setEnabled(true);
+                            progessBar_register.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+            }, 5000);
+
+        }else{
+            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+        }
 
     }
 
