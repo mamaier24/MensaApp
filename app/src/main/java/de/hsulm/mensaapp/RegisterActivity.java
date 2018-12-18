@@ -72,66 +72,72 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String username = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        if ((username.length() > 6 || username.isEmpty()) || email.isEmpty() || password.isEmpty()) {
+        if (username.length() > 5 || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
 
-            if (isValidEmail(email) || email.isEmpty() || password.isEmpty() || username.isEmpty()) {
+            if ( password.length() > 5 || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
 
-                progressDialog.setMessage("Benutzer registrieren...");
-                progressDialog.show();
+                if (isValidEmail(email) || email.isEmpty() || password.isEmpty() || username.isEmpty()) {
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                        Constants.URL_REGISTER,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                progressDialog.dismiss();
+                    progressDialog.setMessage("Benutzer registrieren...");
+                    progressDialog.show();
 
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                            Constants.URL_REGISTER,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    progressDialog.dismiss();
 
-                                    Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
 
-                                    if (jsonObject.getString("error") == "false") {
+                                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
 
-                                        onNotError();
+                                        if (jsonObject.getString("error") == "false") {
 
+                                            onNotError();
+
+                                        }
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                progressDialog.hide();
-                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    progressDialog.hide();
+                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
 
 
-                            }
+                                }
 
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("username", username);
-                        params.put("email", email);
-                        params.put("password", password);
-                        return params;
-                    }
-                };
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("username", username);
+                            params.put("email", email);
+                            params.put("password", password);
+                            return params;
+                        }
+                    };
 
 
-                RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+                    RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
-            } else {
-                Toast.makeText(getApplicationContext(), "Fehlerhafte E-Mail-Adresse!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Fehlerhafte E-Mail-Adresse!", Toast.LENGTH_LONG).show();
+                }
+
+            }else {
+                Toast.makeText(getApplicationContext(), "Passwort zu kurz! Min. 6 Zeichen!", Toast.LENGTH_LONG).show();
             }
 
         } else {
-            Toast.makeText(getApplicationContext(), "Benutzername zu kurz!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Benutzername zu kurz! Min. 6 Zeichen!", Toast.LENGTH_LONG).show();
         }
 
     }
