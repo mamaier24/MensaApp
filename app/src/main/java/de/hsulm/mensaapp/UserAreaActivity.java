@@ -1,9 +1,7 @@
 package de.hsulm.mensaapp;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.icu.util.Calendar;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,14 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+
 
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.ReturnDateOrID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
+import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
 
 /**
  * Created by Marcel Maier on 30/11/18.
@@ -46,7 +43,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipe_refresh.setOnRefreshListener(this);
 
-        if(isOnline()) {
+        if(Connection.getInstance().isOnline(this)) {
 
             TextView mDate = (TextView) findViewById(R.id.mDate);
             mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
@@ -82,7 +79,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
-                        if(isOnline()) {
+                        if(Connection.getInstance().isOnline(UserAreaActivity.this)) {
                             Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
                             intent.putExtra("food", food_list.get(position));
                             startActivity(intent);
@@ -171,7 +168,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onRefresh() {
 
-        if(isOnline()) {
+        if(Connection.getInstance().isOnline(this)) {
 
             new Handler().postDelayed(new Runnable() {
 
@@ -223,7 +220,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public void onRestart() {
-        if(isOnline()) {
+        if(Connection.getInstance().isOnline(this)) {
             super.onRestart();
             mAdapter.clear();
             initializeRecycler();
@@ -242,16 +239,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-
-    public boolean isOnline() {
-        boolean var = false;
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if ( cm.getActiveNetworkInfo() != null ) {
-            var = true;
-        }
-        return var;
     }
 
 }
