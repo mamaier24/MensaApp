@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
             android:background="#b8424242"
-            android:text="x Wochen "
+            android:text="x Woche(n) "
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
