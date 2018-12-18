@@ -55,7 +55,6 @@ import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 public class FoodProfile extends AppCompatActivity {
 
     private SliderLayout sliderShow;
-    private DefaultSliderView defaultSliderView;
     private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
     private Bitmap image;
     private ImageView placeholder;
@@ -81,7 +80,6 @@ public class FoodProfile extends AppCompatActivity {
         final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
         ImageView btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
-        defaultSliderView = new DefaultSliderView(this);
         mCheckBox_vegan.setClickable(false);
         mCheckBox_vegetarian.setClickable(false);
 
@@ -126,8 +124,11 @@ public class FoodProfile extends AppCompatActivity {
         int vegan = food.isVegan();
         mRatingBar2.setRating(rating);
         mRatingBar2.setIsIndicator(true);
+        String[] urls_test = new String[2];
+        urls_test[0] = Constants.ROOT_URL_PICTURES + "MA_PIC_ID_A1XX.png";
+        urls_test[1] = Constants.ROOT_URL_PICTURES + "MA_PIC_ID_B2XXX.png";
 
-        new DownloadProfileImage().execute(Constants.ROOT_URL_PICTURES + imageRes);
+        new DownloadProfileImage().execute(urls_test);
 
         mRatingBar.setRating(rating);
 
@@ -285,11 +286,9 @@ public class FoodProfile extends AppCompatActivity {
             try {
                 //Check if there is only one image available
 
-                 if(urls[0].equals(root_url)){
+                if (urls.length <2 ){
 
-                 }
-
-                 else if (urls.length <2 ){
+                    DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
 
                      runOnUiThread(new Runnable() {
 
@@ -302,9 +301,8 @@ public class FoodProfile extends AppCompatActivity {
                          }
                      });
 
-                    defaultSliderView
-                            .image(urls[0])
-                            .setScaleType(BaseSliderView.ScaleType.Fit);
+                    defaultSliderView.image(urls[0]);
+                    defaultSliderView.setScaleType(BaseSliderView.ScaleType.Fit);
                     sliderShow.addSlider(defaultSliderView);
                     //Deactivate autocycle and swipe gesture
                     sliderShow.stopAutoCycle();
@@ -313,18 +311,33 @@ public class FoodProfile extends AppCompatActivity {
                         protected void onTransform(View view, float position) {
                         }
                     });
+
                 }else {
-                    //Load every image fore this max. 10
-                    for (int i = 0; i<urls.length;i++){
-                        defaultSliderView
-                                .image(urls[i])
-                                .setScaleType(BaseSliderView.ScaleType.Fit);
+
+                     runOnUiThread(new Runnable() {
+
+                         @Override
+                         public void run() {
+
+                             ImageView placeholder = (ImageView)findViewById(R.id.placeholder);
+                             placeholder.setVisibility(View.GONE);
+
+                         }
+                     });
+
+                    for (int i = 0; i < urls.length; i++){
+                        DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
+                        defaultSliderView.image(urls[i]);
+                        defaultSliderView.setScaleType(BaseSliderView.ScaleType.Fit);
                         sliderShow.addSlider(defaultSliderView);
                         sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+
+
                         if (i == 10) {
                             break;
                         }
                     }
+
                 }
             } catch (Exception e) {
 
