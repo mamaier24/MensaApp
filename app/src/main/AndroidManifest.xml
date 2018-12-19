@@ -45,7 +45,8 @@
         <activity
             android:name=".SearchActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
 
         <activity android:name=".IngredientsActivity"></activity>
 

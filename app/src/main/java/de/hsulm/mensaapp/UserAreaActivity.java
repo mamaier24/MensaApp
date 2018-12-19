@@ -2,6 +2,7 @@ package de.hsulm.mensaapp;
 
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -45,6 +48,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
         if(Connection.getInstance().isOnline(this)) {
 
+            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            noserver.setVisibility(View.INVISIBLE);
+
             TextView mDate = (TextView) findViewById(R.id.mDate);
             mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
 
@@ -56,8 +62,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             }
 
         }else{
-            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
             TextView mDate = (TextView) findViewById(R.id.mDate);
+            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            noserver.setVisibility(View.VISIBLE);
             mDate.setText("Offline");
         }
 
@@ -88,7 +95,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                                 mAdapter.clear();
                             }
 
-                            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+                            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+                            noserver.setVisibility(View.VISIBLE);
                             TextView mDate = (TextView) findViewById(R.id.mDate);
                             mDate.setText("Offline");
                         }
@@ -175,6 +183,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 @Override
                 public void run() {
 
+                    ImageView noserver = (ImageView)findViewById(R.id.noserver);
+                    noserver.setVisibility(View.INVISIBLE);
+
                     if (mAdapter != null) {
                         mAdapter.clear();
                     }
@@ -203,8 +214,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                         mAdapter.clear();
                     }
 
-                    Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
                     TextView mDate = (TextView) findViewById(R.id.mDate);
+                    ImageView noserver = (ImageView)findViewById(R.id.noserver);
+                    noserver.setVisibility(View.VISIBLE);
                     mDate.setText("Offline");
 
                     if (swipe_refresh != null) {
@@ -222,6 +234,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     public void onRestart() {
         if(Connection.getInstance().isOnline(this)) {
             super.onRestart();
+            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            noserver.setVisibility(View.INVISIBLE);
             mAdapter.clear();
             initializeRecycler();
         }else{
@@ -229,8 +243,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             if (mAdapter != null) {
                 mAdapter.clear();
             }
-            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
             TextView mDate = (TextView) findViewById(R.id.mDate);
+            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            noserver.setVisibility(View.VISIBLE);
             mDate.setText("Offline");
         }
     }
