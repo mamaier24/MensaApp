@@ -45,16 +45,25 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private MultiAutoCompleteTextView MultiTextComment;
     private Button pushRating;
     private ProgressDialog progressDialog;
+    private ProgressBar progessBar_register;
 
     //IDs etc. mit in tabelle hochladen UN,Standort,Datum würde ich auch gleich mitgeben...mySQL Tabelle anpassen!
     int user_id = SharedPrefManager.getInstance(this).getUserId();
     String s_user_id = Integer.toString(user_id);
     String username = SharedPrefManager.getInstance(this).getUsername();
 
-    final FoodClass food = getIntent().getParcelableExtra("food");
-    int food_id = food.getId();
+    int food_id = 1;
+
+    //Intent intentReceived = getIntent();
+    //Bundle data = intentReceived.getExtras();
+    //if(data != null){
+     //   food_id = data.getInt("food_id");
+    //}else{
+     //   food_id = 0;
+    //}
+
     String s_food_id = Integer.toString(food_id);
-    String date = new DateID().getDate();
+    //String date = new DateID().getDate();
 
 
     @Override
@@ -75,6 +84,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 String location = parent.getItemAtPosition(position).toString();
 
                 switch (location){
+                    case "none":
+                        Standort = "none";
+                        break;
                     case "Prittwitzstraße":
                         Standort = "Prittwitzstraße";
                         break;
@@ -96,9 +108,13 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         MultiTextComment = (MultiAutoCompleteTextView) findViewById(R.id.mACTComment);
         pushRating = (Button) findViewById(R.id.bpushRating);
 
+        progessBar_register = (ProgressBar)findViewById(R.id.progressBar_register);
+        progessBar_register.setVisibility(View.GONE);
+
         progressDialog = new ProgressDialog(this);
 
         pushRating.setOnClickListener(this);
+        pushRating.setTransformationMethod(null);
 
     }
 
@@ -107,7 +123,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         final String Comment = MultiTextComment.getText().toString().trim();
 
 
-        if (Standort.isEmpty()) {
+        if (Standort.length() > 5) {
 
                     progressDialog.setMessage("Bewertung abgeben...");
                     progressDialog.show();
@@ -173,6 +189,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         if (Connection.getInstance().isOnline(this)) {
 
+            progessBar_register.setVisibility(View.VISIBLE);
             pushRating.setEnabled(false);
 
             if (view == pushRating) {
@@ -189,7 +206,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void run() {
                             pushRating.setEnabled(true);
-
+                            progessBar_register.setVisibility(View.GONE);
                         }
                     });
                 }

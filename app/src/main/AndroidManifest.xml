@@ -30,7 +30,8 @@
         <activity
             android:name=".UserAreaActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".MenuActivity" />
+        <activity
+            android:name=".MenuActivity" />
         <activity
             android:name=".FoodProfile"
             android:screenOrientation="nosensor" />
@@ -39,8 +40,11 @@
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity android:name=".IngredientsActivity" />
-        <activity android:name=".CommentActivity"></activity>
+        <activity
+            android:name=".IngredientsActivity" />
+        <activity
+            android:name=".CommentActivity"
+            android:screenOrientation="nosensor" />
     </application>
 
 </manifest>

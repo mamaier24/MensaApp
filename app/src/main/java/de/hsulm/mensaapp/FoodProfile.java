@@ -50,8 +50,10 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     private ImageView placeholder;
     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     private String root_url = "http://www.s673993392.online.de/pictures/a";
+    private Button button_comment;
+    private ImageView btnCamera;
 
-
+    public int pFood_ID;
 
 
     @Override
@@ -67,20 +69,21 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
         final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
         final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
-        ImageView btnCamera  = (ImageView)findViewById(R.id.btnCamera);
+
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         mCheckBox_vegan.setClickable(false);
         mCheckBox_vegetarian.setClickable(false);
 
-                                                    Button comment = (Button)findViewById(R.id.bWroteComment);
-                                                    comment.setOnClickListener(this);
+                                                    button_comment = (Button)findViewById(R.id.bWroteComment);
+                                                    btnCamera  = (ImageView)findViewById(R.id.btnCamera);
+
 
 
         final FoodClass food = getIntent().getParcelableExtra("food");
 
         int food_id = food.getId();
         String price = food.getPrice();
-        String name = food.getName();
+        String name = food.getName()+"*";
         int rating = food.getRating();
         String imageRes = food.getmimgId();
         int vegetarian = food.isVegetarian();
@@ -139,10 +142,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
         });
 
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {takepicture();}
-        });
+
 
         if(vegetarian == 1){
             mCheckBox_vegetarian.setChecked(true);
@@ -152,6 +152,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
             mCheckBox_vegan.setChecked(true);
         }
 
+        btnCamera.setOnClickListener(this);
+        button_comment.setOnClickListener(this);
+        pFood_ID = food.getId();
     }
 
 
@@ -244,8 +247,18 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     }
 
                                     @Override
-                                    public void onClick(View v) {
-                                         startActivity(new Intent(this, CommentActivity.class));
+                                    public void onClick(View view) {
+
+                                        if(view == button_comment) {
+                                            //startActivity(new Intent(this, CommentActivity.class));
+
+                                            Intent CommentIntent = new Intent(FoodProfile.this, CommentActivity.class);
+                                            Bundle data = new Bundle();
+                                            data.putInt("food_id", pFood_ID);
+                                            CommentIntent.putExtras(data);
+                                            FoodProfile.this.startActivity(CommentIntent);
+
+                                        }else if(view == btnCamera) {takepicture();}
                                     }
 
     private class DownloadProfileImage extends AsyncTask<String, Void, Void> {

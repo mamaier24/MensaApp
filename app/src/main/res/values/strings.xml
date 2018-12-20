@@ -32,6 +32,7 @@
 
     //Wird für den Spinner im FoodProfile benötigt
     <string-array name="StandorteMensa">
+        <item>none</item>
         <item>Prittwitzstraße</item>
         <item>Böfingen</item>
         <item>Eselsberg</item>
