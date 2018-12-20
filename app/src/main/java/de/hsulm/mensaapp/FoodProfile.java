@@ -1,6 +1,5 @@
 package de.hsulm.mensaapp;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,8 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -19,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -31,28 +29,20 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsFetchImages;
-import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsSetImages;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.IDatabaseOperationsFetchImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
-public class FoodProfile extends AppCompatActivity {
+public class FoodProfile extends AppCompatActivity implements View.OnClickListener{
 
     private SliderLayout sliderShow;
     private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
@@ -60,9 +50,8 @@ public class FoodProfile extends AppCompatActivity {
     private ImageView placeholder;
     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     private String root_url = "http://www.s673993392.online.de/pictures/a";
-    private Spinner spinner;
-    private ArrayAdapter<CharSequence> adapter;
-    private String Standort=null;
+
+
 
 
     @Override
@@ -72,7 +61,7 @@ public class FoodProfile extends AppCompatActivity {
 
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
 
-        TextView mTitel = (TextView) findViewById(R.id.Titel);
+        TextView mTitel = (TextView) findViewById(R.id.tVComment);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
         CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
@@ -83,35 +72,9 @@ public class FoodProfile extends AppCompatActivity {
         mCheckBox_vegan.setClickable(false);
         mCheckBox_vegetarian.setClickable(false);
 
+                                                    Button comment = (Button)findViewById(R.id.bWroteComment);
+                                                    comment.setOnClickListener(this);
 
-        spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
-        adapter = ArrayAdapter.createFromResource(this, R.array.StandorteMensa, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-                String location = parent.getItemAtPosition(position).toString();
-
-                switch (location){
-                    case "Prittwitzstraße":
-                        Standort = "Prittwitzstraße";
-                        break;
-                    case "Böfingen":
-                        Standort = "Böfingen";
-                        break;
-                    case "Eselsberg":
-                        Standort = "Eselsberg";                         //String Standort kann nun z.b. mit klicken auf Button Bewertung absenden auch hochgeladen werden
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent){
-            }
-
-        });
 
         final FoodClass food = getIntent().getParcelableExtra("food");
 
@@ -279,6 +242,11 @@ public class FoodProfile extends AppCompatActivity {
         sliderShow.stopAutoCycle();
         super.onStop();
     }
+
+                                    @Override
+                                    public void onClick(View v) {
+                                         startActivity(new Intent(this, CommentActivity.class));
+                                    }
 
     private class DownloadProfileImage extends AsyncTask<String, Void, Void> {
         protected Void doInBackground(String... urls) {

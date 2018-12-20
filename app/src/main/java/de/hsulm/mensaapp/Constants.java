@@ -16,5 +16,5 @@ public class Constants {
     public static final String URL_GET_RATING = ROOT_URL + "get_user_rating.php";
     public static final String URL_IMG_UPLOAD = ROOT_URL + "upload_img.php";
     public static final String URL_IMG_FETCH = ROOT_URL + "fetch_img.php";
-
+    public static final String URL_PUSH_COMMENT = ROOT_URL + "push_Comment.php";
 }
