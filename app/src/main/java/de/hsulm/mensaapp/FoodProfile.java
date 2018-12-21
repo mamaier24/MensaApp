@@ -53,7 +53,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     private Button button_comment;
     private ImageView btnCamera;
 
-    public int pFood_ID;
+    public int pFood_id;
 
 
     @Override
@@ -154,7 +154,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
         btnCamera.setOnClickListener(this);
         button_comment.setOnClickListener(this);
-        pFood_ID = food.getId();
+        pFood_id = food.getId();
     }
 
 
@@ -248,14 +248,13 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                                     @Override
                                     public void onClick(View view) {
-
+                                        int food_id = pFood_id;
+                                        String sfood_id = Integer.toString(food_id);
                                         if(view == button_comment) {
                                             //startActivity(new Intent(this, CommentActivity.class));
 
                                             Intent CommentIntent = new Intent(FoodProfile.this, CommentActivity.class);
-                                            Bundle data = new Bundle();
-                                            data.putInt("food_id", pFood_ID);
-                                            CommentIntent.putExtras(data);
+                                            CommentIntent.putExtra("food_id", sfood_id);
                                             FoodProfile.this.startActivity(CommentIntent);
 
                                         }else if(view == btnCamera) {takepicture();}

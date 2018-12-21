@@ -34,7 +34,7 @@ import java.util.TimerTask;
 
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
-
+import de.hsulm.mensaapp.FoodClass;
 
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -49,21 +49,15 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     //IDs etc. mit in tabelle hochladen UN,Standort,Datum würde ich auch gleich mitgeben...mySQL Tabelle anpassen!
     int user_id = SharedPrefManager.getInstance(this).getUserId();
-    String s_user_id = Integer.toString(user_id);
-    String username = SharedPrefManager.getInstance(this).getUsername();
 
-    int food_id = 1;
+    String Username = SharedPrefManager.getInstance(this).getUsername();
 
-    //Intent intentReceived = getIntent();
-    //Bundle data = intentReceived.getExtras();
-    //if(data != null){
-     //   food_id = data.getInt("food_id");
-    //}else{
-     //   food_id = 0;
-    //}
+    //Intent getCommentIntent = getIntent();
+    //String food_id = getCommentIntent.getStringExtra("food_id");
 
-    String s_food_id = Integer.toString(food_id);
-    //String date = new DateID().getDate();
+    //final FoodClass food_id = getIntent().getParcelableExtra("food");
+    //int i_food_id = food_id.getId();
+    int i_food_id = 1; //Test Parcelable funktioniert nicht...
 
 
     @Override
@@ -119,9 +113,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void pushComment() {
-
+        final String s_user_id = Integer.toString(user_id);
+        final String s_food_id = Integer.toString(i_food_id);
         final String Comment = MultiTextComment.getText().toString().trim();
-
+        final String standort = Standort;
+        final String username = Username;
 
         if (Standort.length() > 5) {
 
@@ -168,7 +164,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                             params.put("user_id", s_user_id);
                             params.put("food_id", s_food_id);
                             params.put("comments", Comment);
-                            params.put("location", Standort);
+                            params.put("location", standort);
                             params.put("username", username);
                             //params.put("date", date);
                             return params;
