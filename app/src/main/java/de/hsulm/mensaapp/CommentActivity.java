@@ -216,7 +216,10 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void onNotError(){
-        startActivity(new Intent(this, FoodProfile.class));
+
+        Intent Intent = new Intent(CommentActivity.this, FoodProfile.class);
+        CommentActivity.this.startActivity(Intent);
+
     }
 
 

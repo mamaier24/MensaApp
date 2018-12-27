@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +34,8 @@ import com.daimajia.slider.library.Transformers.BaseTransformer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
@@ -52,8 +56,14 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     private String root_url = "http://www.s673993392.online.de/pictures/a";
     private Button button_comment;
     private ImageView btnCamera;
+    private TextView ratingAvg;
 
     public int pFood_id;
+
+
+                                                private RecyclerView recyclerView;
+                                                private RecyclerView.Adapter adapter;
+                                                private List<CommentsClass> listItems;
 
 
     @Override
@@ -63,6 +73,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
 
+        ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
         TextView mTitel = (TextView) findViewById(R.id.tVComment);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
@@ -76,7 +87,28 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                                                     button_comment = (Button)findViewById(R.id.bWroteComment);
                                                     btnCamera  = (ImageView)findViewById(R.id.btnCamera);
+                                                    recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
+                                                    recyclerView.setHasFixedSize(true);
+                                                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+                                                    //final CommentsClass comments = getIntent().getParcelableExtra("user_comments");
+
+                                                    listItems = new ArrayList<>();
+
+                                                    for(int i = 0;i<=10;i++){
+                                                        CommentsClass listItem =new CommentsClass(
+                                                                "user "+ (i+1),
+                                                                 "stars "+ (i+1),
+                                                                "Böfingen "+ (i+1),
+                                                                "12.12 "+ (i+1),
+                                                                "sehr gutes essen"
+                                                        );
+
+                                                        listItems.add(listItem);
+                                                    }
+                                                    //listItems.add(comments);
+                                                    adapter = new CommentsAdapter(listItems, this);
+                                                    recyclerView.setAdapter(adapter);
 
 
         final FoodClass food = getIntent().getParcelableExtra("food");
@@ -97,6 +129,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         new DownloadProfileImage().execute(urls_test);
 
         mRatingBar.setRating(0);
+        ratingAvg.setText(String.valueOf(rating));
 
         mPreis.setText(price);
 
@@ -328,4 +361,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
             return null;
         }
     }
+
+
+
+
+
 }
