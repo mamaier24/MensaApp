@@ -16,13 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +32,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
+import de.hsulm.mensaapp.SQL_Download_Comments.DatabaseOperationsComments;
+import de.hsulm.mensaapp.SQL_Download_Comments.IDatabaseOperationsComments;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
@@ -45,6 +43,7 @@ import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsFetchImages;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.IDatabaseOperationsFetchImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
+import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 
 public class FoodProfile extends AppCompatActivity implements View.OnClickListener{
 
@@ -64,7 +63,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                                                 private RecyclerView recyclerView;
                                                 private RecyclerView.Adapter adapter;
                                                 private List<CommentsClass> listItems;
-
+                                                private DateID time = new DateID();
+                                                private DatabaseOperationsComments operations = new DatabaseOperationsComments(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,28 +87,31 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                                                     button_comment = (Button)findViewById(R.id.bWroteComment);
                                                     btnCamera  = (ImageView)findViewById(R.id.btnCamera);
-                                                    recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
-                                                    recyclerView.setHasFixedSize(true);
-                                                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+                                                    //recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
+                                                    //recyclerView.setHasFixedSize(true);
+                                                    //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
                                                     //final CommentsClass comments = getIntent().getParcelableExtra("user_comments");
 
-                                                    listItems = new ArrayList<>();
+                                                    //listItems = new ArrayList<>();
 
-                                                    for(int i = 0;i<=10;i++){
-                                                        CommentsClass listItem =new CommentsClass(
-                                                                "user "+ (i+1),
-                                                                 "stars "+ (i+1),
-                                                                "Böfingen "+ (i+1),
-                                                                "12.12 "+ (i+1),
-                                                                "sehr gutes essen"
-                                                        );
+                                                    //for(int i = 0;i<=10;i++){
+                                                    //    CommentsClass listItem =new CommentsClass(
+                                                    //            "user "+ (i+1),
+                                                    //             "stars "+ (i+1),
+                                                    //            "Böfingen "+ (i+1),
+                                                    //            "12.12 "+ (i+1),
+                                                    //            "sehr gutes essen"
+                                                    //    );
 
-                                                        listItems.add(listItem);
-                                                    }
+                                                    //    listItems.add(listItem);
+                                                    //}
                                                     //listItems.add(comments);
-                                                    adapter = new CommentsAdapter(listItems, this);
-                                                    recyclerView.setAdapter(adapter);
+                                                    //adapter = new CommentsAdapter(listItems, this);
+                                                    //recyclerView.setAdapter(adapter);
+                                                    initializeRecyclerComments();
 
 
         final FoodClass food = getIntent().getParcelableExtra("food");
@@ -363,7 +366,47 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     }
 
 
+    public void initializeRecyclerComments() {
 
+        operations.getCommentsFromDB(time.getFoodID(), new IDatabaseOperationsComments() {
+            @Override
+            public void onSuccess(final ArrayList<CommentsClass> comments_list) {
+
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
+                adapter = new CommentsAdapter(comments_list, FoodProfile.this);
+                recyclerView.setAdapter(adapter);
+
+
+            }
+        });
+
+    }
 
 
 }
+
+//recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
+//recyclerView.setHasFixedSize(true);
+//recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+//final CommentsClass comments = getIntent().getParcelableExtra("user_comments");
+
+//listItems = new ArrayList<>();
+
+//for(int i = 0;i<=10;i++){
+//    CommentsClass listItem =new CommentsClass(
+//            "user "+ (i+1),
+//             "stars "+ (i+1),
+//            "Böfingen "+ (i+1),
+//            "12.12 "+ (i+1),
+//            "sehr gutes essen"
+//    );
+
+//    listItems.add(listItem);
+//}
+//listItems.add(comments);
+//adapter = new CommentsAdapter(listItems, this);
+//recyclerView.setAdapter(adapter);
