@@ -80,6 +80,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         mCheckBox_vegetarian.setClickable(false);
 
         button_comment = (Button)findViewById(R.id.bWroteComment);
+        button_comment.setTransformationMethod(null);
         btnCamera  = (ImageView)findViewById(R.id.btnCamera);
 
         food_id = food.getId();
