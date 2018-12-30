@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/tVComment_user"
-            android:layout_width="327dp"
+            android:layout_width="0dp"
             android:layout_height="18dp"
             android:background="#b8424242"
             android:text="User"
@@ -45,9 +45,9 @@
             android:id="@+id/tVComment_stars"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginEnd="8dp"
             android:background="#b8424242"
             android:text="stars"
+            android:textAlignment="textEnd"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -57,9 +57,8 @@
 
         <TextView
             android:id="@+id/tVComment_location"
-            android:layout_width="327dp"
+            android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginEnd="8dp"
             android:background="#b8424242"
             android:text="Location"
             android:textColor="@color/cardview_light_background"
@@ -73,9 +72,9 @@
             android:id="@+id/tVComment_date"
             android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginEnd="8dp"
             android:background="#b8424242"
             android:text="date"
+            android:textAlignment="textEnd"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"

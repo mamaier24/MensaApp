@@ -179,6 +179,7 @@
         android:layout_marginStart="156dp"
         android:layout_marginBottom="8dp"
         android:text="0.0"
+        android:textColor="#0066CC"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
         app:layout_constraintStart_toStartOf="parent" />
