@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -35,7 +36,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private ArrayAdapter<CharSequence> adapter;
     public String Standort=null;
 
-    private MultiAutoCompleteTextView MultiTextComment;
+    private EditText MultiTextComment;
     private Button pushRating;
     private ProgressDialog progressDialog;
     private ProgressBar progessBar_register;
@@ -86,11 +87,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         });
 
-        MultiTextComment = (MultiAutoCompleteTextView) findViewById(R.id.mACTComment);
+        MultiTextComment = (EditText) findViewById(R.id.mACTComment);
         pushRating = (Button) findViewById(R.id.bpushRating);
-
-        progessBar_register = (ProgressBar)findViewById(R.id.progressBar_register);
-        progessBar_register.setVisibility(View.GONE);
 
         progressDialog = new ProgressDialog(this);
 
@@ -172,29 +170,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         if (Connection.getInstance().isOnline(this)) {
 
-            progessBar_register.setVisibility(View.VISIBLE);
-            pushRating.setEnabled(false);
-
             if (view == pushRating) {
                 pushComment();
             }
-
-            Timer buttonTimer = new Timer();
-            buttonTimer.schedule(new TimerTask() {
-
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            pushRating.setEnabled(true);
-                            progessBar_register.setVisibility(View.GONE);
-                        }
-                    });
-                }
-
-            }, 5000);
 
         }else{
             Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();

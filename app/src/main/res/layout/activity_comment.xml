@@ -10,10 +10,10 @@
         android:id="@+id/tVComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="Bewertung"
+        android:text="Kommentar verfassen"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,56 +41,30 @@
         app:layout_constraintStart_toEndOf="@+id/tVStandort"
         app:layout_constraintTop_toTopOf="@+id/tVStandort" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/mACTComment"
-        android:layout_width="365dp"
-        android:layout_height="338dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Bitte geben sie einen Kommentar zu Ihrem Essen ab und vergessen Sie nicht den Standort anzugeben"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tVStandort" />
-
     <Button
         android:id="@+id/bpushRating"
-        android:layout_width="306dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Kommentar abschicken"
-        app:layout_constraintEnd_toStartOf="@+id/progressBar_register_background"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mACTComment" />
 
-    <ProgressBar
-        android:id="@+id/progressBar_register_background"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+    <EditText
+        android:id="@+id/mACTComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progressbar_register_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mACTComment" />
-
-    <ProgressBar
-        android:id="@+id/progressBar_register"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="48dp"
-        android:layout_height="49dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:indeterminateDrawable="@drawable/progressbar_register_foregound"
+        android:ems="10"
+        android:maxLength="254"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/bpushRating"
-        app:layout_constraintTop_toBottomOf="@+id/mACTComment" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tVStandort" />
 
 
 </android.support.constraint.ConstraintLayout>
