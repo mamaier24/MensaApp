@@ -62,8 +62,8 @@ public class DatabaseOperationsComments {
                                                                 comments_obj.getString("comments"),
                                                                 comments_obj.getString("date"),
                                                                 comments_obj.getString("location"),
-                                                                comments_obj.getString("username"));
-                                                                //comments_obj.getString("stars"),
+                                                                comments_obj.getString("username"),
+                                                                comments_obj.getString("user_rating"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

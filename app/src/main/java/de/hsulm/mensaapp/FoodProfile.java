@@ -56,6 +56,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     private RecyclerView recyclerView;
     private FoodClass food = null;
     private int food_id;
+    private RatingBar mRatingBar;
     private RecyclerView.Adapter adapter;
     private DatabaseOperationsComments operations = new DatabaseOperationsComments(this);
 
@@ -72,7 +73,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
         CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
-        final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
+        mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
         final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
 
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
@@ -81,6 +82,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
         button_comment = (Button)findViewById(R.id.bWroteComment);
         button_comment.setTransformationMethod(null);
+        button_comment.setEnabled(false);
         btnCamera  = (ImageView)findViewById(R.id.btnCamera);
 
         food_id = food.getId();
@@ -136,6 +138,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                 if(user_rating<1){
                     mRatingBar.setRating(1);
                 }
+                if(!button_comment.isEnabled()){
+                    button_comment.setEnabled(true);
+                }
                 int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
                 int food_id = food.getId();
                 DatabaseOperationsSetRating new_rating = new DatabaseOperationsSetRating(FoodProfile.this);
@@ -186,11 +191,13 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         imageDialog.show();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         initializeRecyclerComments(food_id);
     }
+
 
     private void choseImageFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -224,7 +231,6 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
 
 
     public void UploadImageToServer(){
@@ -273,6 +279,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
             Intent CommentIntent = new Intent(FoodProfile.this, CommentActivity.class);
             CommentIntent.putExtra("food_id", food_id);
+            CommentIntent.putExtra("user_rating", mRatingBar.getRating());
             FoodProfile.this.startActivity(CommentIntent);
 
         }else if(view == btnCamera) {takepicture();}
@@ -366,29 +373,4 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
     }
 
-
 }
-
-//recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
-//recyclerView.setHasFixedSize(true);
-//recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-//final CommentsClass comments = getIntent().getParcelableExtra("user_comments");
-
-//listItems = new ArrayList<>();
-
-//for(int i = 0;i<=10;i++){
-//    CommentsClass listItem =new CommentsClass(
-//            "user "+ (i+1),
-//             "stars "+ (i+1),
-//            "Böfingen "+ (i+1),
-//            "12.12 "+ (i+1),
-//            "sehr gutes essen"
-//    );
-
-//    listItems.add(listItem);
-//}
-//listItems.add(comments);
-//adapter = new CommentsAdapter(listItems, this);
-//recyclerView.setAdapter(adapter);

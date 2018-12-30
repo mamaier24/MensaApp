@@ -40,6 +40,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private Button pushRating;
     private ProgressDialog progressDialog;
     private ProgressBar progessBar_register;
+    private String user_rating;
 
     //IDs etc. mit in tabelle hochladen UN,Standort,Datum würde ich auch gleich mitgeben...mySQL Tabelle anpassen!
     int user_id = SharedPrefManager.getInstance(this).getUserId();
@@ -53,7 +54,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         i_food_id = getIntent().getIntExtra("food_id", 0);
-
+        user_rating = Integer.toString(Math.round(getIntent().getFloatExtra("user_rating", 0.0f)));
 
         spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
         adapter = ArrayAdapter.createFromResource(this, R.array.StandorteMensa, android.R.layout.simple_spinner_item);
@@ -66,8 +67,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 String location = parent.getItemAtPosition(position).toString();
 
                 switch (location){
-                    case "none":
-                        Standort = "none";
+                    case "-":
+                        Standort = "-";
                         break;
                     case "Prittwitzstraße":
                         Standort = "Prittwitzstraße";
@@ -151,7 +152,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                             params.put("comments", Comment);
                             params.put("location", standort);
                             params.put("username", username);
-                            //params.put("date", date);
+                            params.put("user_rating", user_rating);
                             return params;
                         }
                     };

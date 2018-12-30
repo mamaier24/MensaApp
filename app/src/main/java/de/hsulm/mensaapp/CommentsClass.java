@@ -12,9 +12,9 @@ public class CommentsClass implements Parcelable {
     private String date;
     private String location;
     private String username;
-    //private String stars;
+    private String user_rating;
 
-    public CommentsClass(int user_id, int food_id, int comment_id, String comments, String cdate, String location, String username) //String stars hinzufügen
+    public CommentsClass(int user_id, int food_id, int comment_id, String comments, String cdate, String location, String username, String user_rating) //String stars hinzufügen
     {
         this.user_id = user_id;
         this.food_id = food_id;
@@ -23,7 +23,7 @@ public class CommentsClass implements Parcelable {
         this.date = cdate;
         this.location = location;
         this.username = username;
-        //this.stars = stars;
+        this.user_rating = user_rating;
 
     }
 
@@ -36,6 +36,7 @@ public class CommentsClass implements Parcelable {
         date = in.readString();
         location = in.readString();
         username = in.readString();
+        user_rating = in.readString();
     }
 
 
@@ -54,10 +55,6 @@ public class CommentsClass implements Parcelable {
     public String getUser() {
         return username;
     }
-
-    //public String getStars() {
-    // return stars;
-    //}
 
     public String getLocation() {
         return location;
@@ -83,6 +80,8 @@ public class CommentsClass implements Parcelable {
         return comment_id;
     }
 
+    public String getUserRating() { return user_rating; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -97,5 +96,6 @@ public class CommentsClass implements Parcelable {
         dest.writeString(date);
         dest.writeString(location);
         dest.writeString(username);
+        dest.writeString(user_rating);
     }
 }

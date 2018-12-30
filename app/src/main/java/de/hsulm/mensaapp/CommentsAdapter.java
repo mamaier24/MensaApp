@@ -36,6 +36,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         holder.tVComment_location.setText(commentsClass.getLocation());
         holder.tVComment_date.setText(commentsClass.getCDate());
         holder.tVComment_foodProfile.setText(commentsClass.getComment());
+        holder.tVComment_rating.setText(commentsClass.getUserRating());
 
     }
 
@@ -48,7 +49,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tVComment_user;
-        public TextView tVComment_stars;
+        public TextView tVComment_rating;
         public TextView tVComment_location;
         public TextView tVComment_date;
         public TextView tVComment_foodProfile;
@@ -57,7 +58,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             super(itemView);
 
             tVComment_user = (TextView) itemView.findViewById(R.id.tVComment_user);
-            tVComment_stars = (TextView) itemView.findViewById(R.id.tVComment_stars);
+            tVComment_rating = (TextView) itemView.findViewById(R.id.tVComment_stars);
             tVComment_location = (TextView) itemView.findViewById(R.id.tVComment_location);
             tVComment_date = (TextView) itemView.findViewById(R.id.tVComment_date);
             tVComment_foodProfile = (TextView) itemView.findViewById(R.id.tvComment_foodProfile);
