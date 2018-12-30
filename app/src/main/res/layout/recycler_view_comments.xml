@@ -42,13 +42,12 @@
             android:id="@+id/tVComment_user"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginStart="8dp"
             android:text="User"
             android:textAlignment="textStart"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
             app:layout_constraintTop_toTopOf="@+id/btn_capture_photo" />
 
         <TextView
@@ -56,27 +55,25 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_marginEnd="8dp"
-            android:text="stars"
+            android:text="rating"
             android:textAlignment="textEnd"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_capture_photo" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tVComment_location"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginStart="8dp"
+
             android:text="Location"
             android:textAlignment="textStart"
-
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tVComment_user" />
+            app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
+            app:layout_constraintStart_toEndOf="@+id/imageView3" />
 
         <TextView
             android:id="@+id/tVComment_date"
@@ -95,10 +92,33 @@
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/tVComment_stars"
             app:layout_constraintTop_toTopOf="@+id/btn_capture_photo"
             app:srcCompat="@drawable/rating_star_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
+            app:layout_constraintStart_toStartOf="@+id/btn_capture_photo"
+            app:srcCompat="@drawable/location_icon_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            app:layout_constraintStart_toStartOf="@+id/btn_capture_photo"
+            app:layout_constraintTop_toTopOf="@+id/btn_capture_photo"
+            app:srcCompat="@drawable/user_icon_24dp" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="24dp"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
+            app:layout_constraintEnd_toStartOf="@+id/tVComment_date"
+            app:srcCompat="@mipmap/ic_last_time" />
 
 
     </android.support.constraint.ConstraintLayout>
