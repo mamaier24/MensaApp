@@ -2,14 +2,12 @@ package de.hsulm.mensaapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -24,17 +22,12 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
-import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
-import de.hsulm.mensaapp.FoodClass;
 
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -50,21 +43,15 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     //IDs etc. mit in tabelle hochladen UN,Standort,Datum würde ich auch gleich mitgeben...mySQL Tabelle anpassen!
     int user_id = SharedPrefManager.getInstance(this).getUserId();
 
-    String Username = SharedPrefManager.getInstance(this).getUsername();
-
-    //Intent getCommentIntent = getIntent();
-    //String food_id = getCommentIntent.getStringExtra("food_id");
-
-    //final FoodClass food_id = getIntent().getParcelableExtra("food");
-    //int i_food_id = food_id.getId();
-    int i_food_id = 1; //Test Parcelable funktioniert nicht...
+    String username = SharedPrefManager.getInstance(this).getUsername();
+    int i_food_id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
-
+        i_food_id = getIntent().getIntExtra("food_id", 0);
 
 
         spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
@@ -117,7 +104,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         final String s_food_id = Integer.toString(i_food_id);
         final String Comment = MultiTextComment.getText().toString().trim();
         final String standort = Standort;
-        final String username = Username;
+        final String username = this.username;
 
         if (Standort.length() > 5) {
 
@@ -217,8 +204,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     public void onNotError(){
 
-        Intent Intent = new Intent(CommentActivity.this, FoodProfile.class);
-        CommentActivity.this.startActivity(Intent);
+        finish();
 
     }
 

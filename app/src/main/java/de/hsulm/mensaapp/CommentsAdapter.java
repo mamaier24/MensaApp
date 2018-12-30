@@ -1,6 +1,5 @@
 package de.hsulm.mensaapp;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

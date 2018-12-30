@@ -31,12 +31,11 @@ import com.daimajia.slider.library.Transformers.BaseTransformer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
-import de.hsulm.mensaapp.SQL_Download_Comments.DatabaseOperationsComments;
-import de.hsulm.mensaapp.SQL_Download_Comments.IDatabaseOperationsComments;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT.DatabaseOperationsComments;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT.IDatabaseOperationsComments;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
@@ -44,28 +43,21 @@ import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsFetchImages;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.IDatabaseOperationsFetchImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
-import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 
 public class FoodProfile extends AppCompatActivity implements View.OnClickListener{
 
     private SliderLayout sliderShow;
     private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
     private Bitmap image;
-    private ImageView placeholder;
     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    private String root_url = "http://www.s673993392.online.de/pictures/a";
     private Button button_comment;
     private ImageView btnCamera;
     private TextView ratingAvg;
-
-    public int pFood_id;
-
-
-                                                private RecyclerView recyclerView;
-                                                private RecyclerView.Adapter adapter;
-                                                private List<CommentsClass> listItems;
-                                                private DateID time = new DateID();
-                                                private DatabaseOperationsComments operations = new DatabaseOperationsComments(this);
+    private RecyclerView recyclerView;
+    private FoodClass food = null;
+    private int food_id;
+    private RecyclerView.Adapter adapter;
+    private DatabaseOperationsComments operations = new DatabaseOperationsComments(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +65,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         setContentView(activity_food_profile);
 
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+        final FoodClass food = getIntent().getParcelableExtra("food");
 
         ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
         TextView mTitel = (TextView) findViewById(R.id.tVComment);
@@ -86,38 +79,10 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         mCheckBox_vegan.setClickable(false);
         mCheckBox_vegetarian.setClickable(false);
 
-                                                    button_comment = (Button)findViewById(R.id.bWroteComment);
-                                                    btnCamera  = (ImageView)findViewById(R.id.btnCamera);
+        button_comment = (Button)findViewById(R.id.bWroteComment);
+        btnCamera  = (ImageView)findViewById(R.id.btnCamera);
 
-                                                    //recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
-                                                    //recyclerView.setHasFixedSize(true);
-                                                    //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-                                                    //final CommentsClass comments = getIntent().getParcelableExtra("user_comments");
-
-                                                    //listItems = new ArrayList<>();
-
-                                                    //for(int i = 0;i<=10;i++){
-                                                    //    CommentsClass listItem =new CommentsClass(
-                                                    //            "user "+ (i+1),
-                                                    //             "stars "+ (i+1),
-                                                    //            "Böfingen "+ (i+1),
-                                                    //            "12.12 "+ (i+1),
-                                                    //            "sehr gutes essen"
-                                                    //    );
-
-                                                    //    listItems.add(listItem);
-                                                    //}
-                                                    //listItems.add(comments);
-                                                    //adapter = new CommentsAdapter(listItems, this);
-                                                    //recyclerView.setAdapter(adapter);
-
-
-
-        final FoodClass food = getIntent().getParcelableExtra("food");
-
-        int food_id = food.getId();
+        food_id = food.getId();
         String price = food.getPrice();
         String name = food.getName()+"*";
         int rating = food.getRating();
@@ -191,16 +156,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
         btnCamera.setOnClickListener(this);
         button_comment.setOnClickListener(this);
-        pFood_id = food.getId();
-        String sFood_id = Integer.toString(pFood_id);
 
         if(Connection.getInstance().isOnline(this)) {
-            initializeRecyclerComments(sFood_id);
-            if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
-            }
-
+            initializeRecyclerComments(food.getId());
         }
     }
 
@@ -227,15 +185,24 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         imageDialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeRecyclerComments(food_id);
+    }
+
     private void choseImageFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent,GALLERY_REQUEST);
     }
+
+
     private void takeImageFromCamera(){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent,CAMERA_REQUEST);
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -256,6 +223,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+
+
 
     public void UploadImageToServer(){
         image = this.getResizedBitmap(image,450,250);
@@ -286,6 +255,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         bm.recycle();
         return resizedBitmap;
     }
+
+
     //onStop method imageSlider
     @Override
     protected void onStop() {
@@ -293,19 +264,19 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         super.onStop();
     }
 
-                                    @Override
-                                    public void onClick(View view) {
-                                        int food_id = pFood_id;
-                                        String sfood_id = Integer.toString(food_id);
-                                        if(view == button_comment) {
-                                            //startActivity(new Intent(this, CommentActivity.class));
 
-                                            Intent CommentIntent = new Intent(FoodProfile.this, CommentActivity.class);
-                                            CommentIntent.putExtra("food_id", sfood_id);
-                                            FoodProfile.this.startActivity(CommentIntent);
+    @Override
+    public void onClick(View view) {
+        if(view == button_comment) {
+            //startActivity(new Intent(this, CommentActivity.class));
 
-                                        }else if(view == btnCamera) {takepicture();}
-                                    }
+            Intent CommentIntent = new Intent(FoodProfile.this, CommentActivity.class);
+            CommentIntent.putExtra("food_id", food_id);
+            FoodProfile.this.startActivity(CommentIntent);
+
+        }else if(view == btnCamera) {takepicture();}
+    }
+
 
     private class DownloadProfileImage extends AsyncTask<String, Void, Void> {
         protected Void doInBackground(String... urls) {
@@ -377,9 +348,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public void initializeRecyclerComments(String sFood_id) {
+    public void initializeRecyclerComments(int food_id) {
 
-        operations.getCommentsFromDB(sFood_id, new IDatabaseOperationsComments() {
+        operations.getCommentsFromDB(Integer.toString(food_id), new IDatabaseOperationsComments() {
             @Override
             public void onSuccess(final ArrayList<CommentsClass> comments_list) {
 
@@ -388,7 +359,6 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                 recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
                 adapter = new CommentsAdapter(comments_list, FoodProfile.this);
                 recyclerView.setAdapter(adapter);
-
 
             }
         });

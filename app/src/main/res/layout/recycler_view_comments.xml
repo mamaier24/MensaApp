@@ -14,6 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="350dp">
 
+        <ImageView
+            android:id="@+id/btn_capture_photo"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:src="@drawable/recycler_comment_rectangle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvComment_foodProfile"
@@ -31,56 +39,66 @@
 
         <TextView
             android:id="@+id/tVComment_user"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:background="#b8424242"
+            android:layout_marginStart="8dp"
             android:text="User"
+            android:textAlignment="textStart"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/btn_capture_photo" />
 
         <TextView
             android:id="@+id/tVComment_stars"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:background="#b8424242"
+            android:layout_marginEnd="8dp"
             android:text="stars"
             android:textAlignment="textEnd"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tVComment_user"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/btn_capture_photo" />
 
         <TextView
             android:id="@+id/tVComment_location"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:background="#b8424242"
+            android:layout_marginStart="8dp"
             android:text="Location"
+            android:textAlignment="textStart"
+
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tVComment_user" />
 
         <TextView
             android:id="@+id/tVComment_date"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:background="#b8424242"
+            android:layout_marginEnd="8dp"
             android:text="date"
             android:textAlignment="textEnd"
             android:textColor="@color/cardview_light_background"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tVComment_location"
-            app:layout_constraintTop_toBottomOf="@+id/tVComment_user" />
+            app:layout_constraintTop_toBottomOf="@+id/tVComment_stars" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/tVComment_stars"
+            app:layout_constraintTop_toTopOf="@+id/btn_capture_photo"
+            app:srcCompat="@drawable/rating_star_24dp" />
+
 
     </android.support.constraint.ConstraintLayout>
 

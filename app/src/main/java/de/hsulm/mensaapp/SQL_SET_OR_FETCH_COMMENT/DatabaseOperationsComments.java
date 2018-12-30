@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.SQL_Download_Comments;
+package de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT;
 
 
 import android.content.Context;
@@ -19,7 +19,6 @@ import java.util.Map;
 import de.hsulm.mensaapp.Constants;
 import de.hsulm.mensaapp.RequestHandler;
 import de.hsulm.mensaapp.CommentsClass;
-import de.hsulm.mensaapp.SQL_Download_Comments.IDatabaseOperationsComments;
 
 /**
  * Created by Marcel Maier 30/12/2018
@@ -61,7 +60,7 @@ public class DatabaseOperationsComments {
                                                                 comments_obj.getInt("food_id"),
                                                                 comments_obj.getInt("comment_id"),
                                                                 comments_obj.getString("comments"),
-                                                                comments_obj.getString("cdate"),
+                                                                comments_obj.getString("date"),
                                                                 comments_obj.getString("location"),
                                                                 comments_obj.getString("username"));
                                                                 //comments_obj.getString("stars"),
