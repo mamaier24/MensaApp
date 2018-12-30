@@ -1,6 +1,5 @@
 package de.hsulm.mensaapp;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,19 +9,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,39 +28,36 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
+import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT.DatabaseOperationsComments;
+import de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT.IDatabaseOperationsComments;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsFetchImages;
-import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsSetImages;
 import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.IDatabaseOperationsFetchImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
-public class FoodProfile extends AppCompatActivity {
+public class FoodProfile extends AppCompatActivity implements View.OnClickListener{
 
     private SliderLayout sliderShow;
     private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
     private Bitmap image;
-    private ImageView placeholder;
     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    private String root_url = "http://www.s673993392.online.de/pictures/a";
-    private Spinner spinner;
-    private ArrayAdapter<CharSequence> adapter;
-    private String Standort=null;
-
+    private Button button_comment;
+    private ImageView btnCamera;
+    private TextView ratingAvg;
+    private RecyclerView recyclerView;
+    private FoodClass food = null;
+    private int food_id;
+    private RecyclerView.Adapter adapter;
+    private DatabaseOperationsComments operations = new DatabaseOperationsComments(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,53 +65,27 @@ public class FoodProfile extends AppCompatActivity {
         setContentView(activity_food_profile);
 
         int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+        final FoodClass food = getIntent().getParcelableExtra("food");
 
-        TextView mTitel = (TextView) findViewById(R.id.Titel);
+        ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
+        TextView mTitel = (TextView) findViewById(R.id.tVComment);
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
         CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
         final RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
         final RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
-        ImageView btnCamera  = (ImageView)findViewById(R.id.btnCamera);
+
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         mCheckBox_vegan.setClickable(false);
         mCheckBox_vegetarian.setClickable(false);
 
+        button_comment = (Button)findViewById(R.id.bWroteComment);
+        button_comment.setTransformationMethod(null);
+        btnCamera  = (ImageView)findViewById(R.id.btnCamera);
 
-        spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
-        adapter = ArrayAdapter.createFromResource(this, R.array.StandorteMensa, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-                String location = parent.getItemAtPosition(position).toString();
-
-                switch (location){
-                    case "Prittwitzstraße":
-                        Standort = "Prittwitzstraße";
-                        break;
-                    case "Böfingen":
-                        Standort = "Böfingen";
-                        break;
-                    case "Eselsberg":
-                        Standort = "Eselsberg";                         //String Standort kann nun z.b. mit klicken auf Button Bewertung absenden auch hochgeladen werden
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent){
-            }
-
-        });
-
-        final FoodClass food = getIntent().getParcelableExtra("food");
-
-        int food_id = food.getId();
+        food_id = food.getId();
         String price = food.getPrice();
-        String name = food.getName();
+        String name = food.getName()+"*";
         int rating = food.getRating();
         String imageRes = food.getmimgId();
         int vegetarian = food.isVegetarian();
@@ -131,6 +99,7 @@ public class FoodProfile extends AppCompatActivity {
         new DownloadProfileImage().execute(urls_test);
 
         mRatingBar.setRating(0);
+        ratingAvg.setText(String.valueOf(rating));
 
         mPreis.setText(price);
 
@@ -176,10 +145,7 @@ public class FoodProfile extends AppCompatActivity {
 
         });
 
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {takepicture();}
-        });
+
 
         if(vegetarian == 1){
             mCheckBox_vegetarian.setChecked(true);
@@ -189,6 +155,12 @@ public class FoodProfile extends AppCompatActivity {
             mCheckBox_vegan.setChecked(true);
         }
 
+        btnCamera.setOnClickListener(this);
+        button_comment.setOnClickListener(this);
+
+        if(Connection.getInstance().isOnline(this)) {
+            initializeRecyclerComments(food.getId());
+        }
     }
 
 
@@ -214,15 +186,24 @@ public class FoodProfile extends AppCompatActivity {
         imageDialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeRecyclerComments(food_id);
+    }
+
     private void choseImageFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent,GALLERY_REQUEST);
     }
+
+
     private void takeImageFromCamera(){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent,CAMERA_REQUEST);
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -243,6 +224,8 @@ public class FoodProfile extends AppCompatActivity {
             }
         }
     }
+
+
 
     public void UploadImageToServer(){
         image = this.getResizedBitmap(image,450,250);
@@ -273,12 +256,28 @@ public class FoodProfile extends AppCompatActivity {
         bm.recycle();
         return resizedBitmap;
     }
+
+
     //onStop method imageSlider
     @Override
     protected void onStop() {
         sliderShow.stopAutoCycle();
         super.onStop();
     }
+
+
+    @Override
+    public void onClick(View view) {
+        if(view == button_comment) {
+            //startActivity(new Intent(this, CommentActivity.class));
+
+            Intent CommentIntent = new Intent(FoodProfile.this, CommentActivity.class);
+            CommentIntent.putExtra("food_id", food_id);
+            FoodProfile.this.startActivity(CommentIntent);
+
+        }else if(view == btnCamera) {takepicture();}
+    }
+
 
     private class DownloadProfileImage extends AsyncTask<String, Void, Void> {
         protected Void doInBackground(String... urls) {
@@ -348,4 +347,48 @@ public class FoodProfile extends AppCompatActivity {
             return null;
         }
     }
+
+
+    public void initializeRecyclerComments(int food_id) {
+
+        operations.getCommentsFromDB(Integer.toString(food_id), new IDatabaseOperationsComments() {
+            @Override
+            public void onSuccess(final ArrayList<CommentsClass> comments_list) {
+
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
+                adapter = new CommentsAdapter(comments_list, FoodProfile.this);
+                recyclerView.setAdapter(adapter);
+
+            }
+        });
+
+    }
+
+
 }
+
+//recyclerView = (RecyclerView)findViewById(R.id.recyclerViewComments);
+//recyclerView.setHasFixedSize(true);
+//recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+//final CommentsClass comments = getIntent().getParcelableExtra("user_comments");
+
+//listItems = new ArrayList<>();
+
+//for(int i = 0;i<=10;i++){
+//    CommentsClass listItem =new CommentsClass(
+//            "user "+ (i+1),
+//             "stars "+ (i+1),
+//            "Böfingen "+ (i+1),
+//            "12.12 "+ (i+1),
+//            "sehr gutes essen"
+//    );
+
+//    listItems.add(listItem);
+//}
+//listItems.add(comments);
+//adapter = new CommentsAdapter(listItems, this);
+//recyclerView.setAdapter(adapter);

@@ -47,6 +47,7 @@ public class DateID {
     }
 
 
+
     public String getDay(){
 
         String day_str ="";
@@ -98,6 +99,20 @@ public class DateID {
         String week = Integer.toString(calDe.get(Calendar.WEEK_OF_YEAR));
 
         return week;
+    }
+
+    public String getDate() {
+
+        String date ="";
+        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+        calDe.setTime(new Date());
+        int month = calDe.get(Calendar.MONTH);
+        int year = calDe.get(Calendar.YEAR);
+        int day = calDe.get(Calendar.DAY_OF_MONTH);
+
+        date = "" + day + "." + month + "." + year;
+        return (date);
+
     }
 
 }
