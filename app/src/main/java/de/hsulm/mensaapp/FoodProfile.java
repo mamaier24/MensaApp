@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
 import de.hsulm.mensaapp.SQL_Download_Comments.DatabaseOperationsComments;
 import de.hsulm.mensaapp.SQL_Download_Comments.IDatabaseOperationsComments;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
@@ -111,7 +112,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                                                     //listItems.add(comments);
                                                     //adapter = new CommentsAdapter(listItems, this);
                                                     //recyclerView.setAdapter(adapter);
-                                                    initializeRecyclerComments();
+
 
 
         final FoodClass food = getIntent().getParcelableExtra("food");
@@ -191,6 +192,16 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         btnCamera.setOnClickListener(this);
         button_comment.setOnClickListener(this);
         pFood_id = food.getId();
+        String sFood_id = Integer.toString(pFood_id);
+
+        if(Connection.getInstance().isOnline(this)) {
+            initializeRecyclerComments(sFood_id);
+            if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+
+        }
     }
 
 
@@ -366,9 +377,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public void initializeRecyclerComments() {
+    public void initializeRecyclerComments(String sFood_id) {
 
-        operations.getCommentsFromDB(time.getFoodID(), new IDatabaseOperationsComments() {
+        operations.getCommentsFromDB(sFood_id, new IDatabaseOperationsComments() {
             @Override
             public void onSuccess(final ArrayList<CommentsClass> comments_list) {
 

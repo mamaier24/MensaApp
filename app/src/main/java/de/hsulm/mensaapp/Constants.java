@@ -18,6 +18,6 @@ public class Constants {
     public static final String URL_IMG_FETCH = ROOT_URL + "fetch_img.php";
     public static final String URL_PUSH_COMMENT = ROOT_URL + "push_Comment.php";
 
-    public static final String URL_DOWNLOAD_COMMENT = ROOT_URL + "download_Comment.php";
+    public static final String URL_DOWNLOAD_COMMENT = ROOT_URL + "download_Comments.php";
 
 }

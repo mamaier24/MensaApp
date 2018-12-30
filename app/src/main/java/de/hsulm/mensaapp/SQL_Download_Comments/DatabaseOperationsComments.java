@@ -22,7 +22,7 @@ import de.hsulm.mensaapp.CommentsClass;
 import de.hsulm.mensaapp.SQL_Download_Comments.IDatabaseOperationsComments;
 
 /**
- * Created by Stephan Danz 05/12/2018
+ * Created by Marcel Maier 30/12/2018
  * Class necessary for handling all DB operations such as getting food
  */
 public class DatabaseOperationsComments {
@@ -57,9 +57,14 @@ public class DatabaseOperationsComments {
 
                                 try {
                                     JSONObject comments_obj = comments_arr.getJSONObject(i);
-                                    comment = new CommentsClass(comments_obj.getString("user"), comments_obj.getString("stars"),
-                                            comments_obj.getString("location"), comments_obj.getString("date"),
-                                            comments_obj.getString("comment"));
+                                    comment = new CommentsClass(comments_obj.getInt("user_id"),
+                                                                comments_obj.getInt("food_id"),
+                                                                comments_obj.getInt("comment_id"),
+                                                                comments_obj.getString("comments"),
+                                                                comments_obj.getString("cdate"),
+                                                                comments_obj.getString("location"),
+                                                                comments_obj.getString("username"));
+                                                                //comments_obj.getString("stars"),
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

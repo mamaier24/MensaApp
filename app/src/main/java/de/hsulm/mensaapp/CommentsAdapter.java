@@ -33,10 +33,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         CommentsClass commentsClass = listItems.get(position);
 
         holder.tVComment_user.setText(commentsClass.getUser());
-        holder.tVComment_stars.setText(commentsClass.getStars());
+        //holder.tVComment_stars.setText(commentsClass.getStars());
         holder.tVComment_location.setText(commentsClass.getLocation());
-        holder.tVComment_date.setText(commentsClass.getDate());
+        holder.tVComment_date.setText(commentsClass.getCDate());
         holder.tVComment_foodProfile.setText(commentsClass.getComment());
+
     }
 
     @Override
