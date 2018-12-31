@@ -5,6 +5,8 @@ import de.hsulm.mensaapp.CommentsClass;
 
 public interface IDatabaseOperationsComments {
 
-    void onSuccess(ArrayList<CommentsClass> comments_list);
+    void onSuccess(boolean isDefault);
+
+    void onSuccess(boolean isDefault, ArrayList<CommentsClass> comments_list);
 
 }

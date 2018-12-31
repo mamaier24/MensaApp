@@ -360,16 +360,27 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
         operations.getCommentsFromDB(Integer.toString(food_id), new IDatabaseOperationsComments() {
             @Override
-            public void onSuccess(final ArrayList<CommentsClass> comments_list) {
+            public void onSuccess(final boolean isDefault, final ArrayList<CommentsClass> comments_list) {
 
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
-                adapter = new CommentsAdapter(comments_list, FoodProfile.this);
+                adapter = new CommentsAdapter(false, FoodProfile.this, comments_list);
                 recyclerView.setAdapter(adapter);
 
             }
+
+            @Override
+            public void onSuccess(final boolean isDefault) {
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setNestedScrollingEnabled(false);
+                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
+                adapter = new CommentsAdapter(true, FoodProfile.this);
+                recyclerView.setAdapter(adapter);
+            }
+
         });
 
     }

@@ -50,29 +50,36 @@ public class DatabaseOperationsComments {
                         CommentsClass comment = null;
 
                         try {
+
                             JSONArray comments_arr = new JSONArray(response);
 
-                            for (int i = 0; i < comments_arr.length(); i++) {
+                            if(comments_arr.length() > 0) {
 
-                                try {
-                                    JSONObject comments_obj = comments_arr.getJSONObject(i);
-                                    comment = new CommentsClass(comments_obj.getInt("user_id"),
-                                                                comments_obj.getInt("food_id"),
-                                                                comments_obj.getInt("comment_id"),
-                                                                comments_obj.getString("comments"),
-                                                                comments_obj.getString("date"),
-                                                                comments_obj.getString("location"),
-                                                                comments_obj.getString("username"),
-                                                                comments_obj.getString("user_rating"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                for (int i = 0; i < comments_arr.length(); i++) {
+
+                                    try {
+                                        JSONObject comments_obj = comments_arr.getJSONObject(i);
+                                        comment = new CommentsClass(comments_obj.getInt("user_id"),
+                                                comments_obj.getInt("food_id"),
+                                                comments_obj.getInt("comment_id"),
+                                                comments_obj.getString("comments"),
+                                                comments_obj.getString("date"),
+                                                comments_obj.getString("location"),
+                                                comments_obj.getString("username"),
+                                                comments_obj.getString("user_rating"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    comments_list.add(comment);
+
                                 }
 
-                                comments_list.add(comment);
+                                callback.onSuccess(false, comments_list);
 
+                            }else{
+                                callback.onSuccess(true);
                             }
-
-                            callback.onSuccess(comments_list);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

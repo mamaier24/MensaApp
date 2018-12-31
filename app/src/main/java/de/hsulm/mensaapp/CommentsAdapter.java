@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,11 +15,20 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
     private List<CommentsClass> listItems;
     private Context context;
+    private boolean isDefault;
 
-    public CommentsAdapter(List<CommentsClass> listItems, Context context) {
-        this.listItems = listItems;
+    public CommentsAdapter(boolean isDefault, Context context) {
+        this.isDefault = isDefault;
         this.context = context;
     }
+
+
+    public CommentsAdapter(boolean isDefault, Context context, List<CommentsClass> listItems) {
+        this.isDefault = isDefault;
+        this.context = context;
+        this.listItems = listItems;
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,20 +39,38 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CommentsClass commentsClass = listItems.get(position);
 
-        holder.tVComment_user.setText(commentsClass.getUser());
-        //holder.tVComment_stars.setText(commentsClass.getStars());
-        holder.tVComment_location.setText(commentsClass.getLocation());
-        holder.tVComment_date.setText(commentsClass.getCDate());
-        holder.tVComment_foodProfile.setText(commentsClass.getComment());
-        holder.tVComment_rating.setText(commentsClass.getUserRating());
+
+        if(isDefault == true) {
+
+            holder.tVComment_user.setText("");
+            holder.tVComment_location.setText("");
+            holder.tVComment_date.setText("");
+            holder.tVComment_foodProfile.setText("Noch kein Kommentar vorhanden! Sei der erste der ein Kommentar abgibt!");
+            holder.tVComment_rating.setText("");
+            holder.tvComment_userPicture.setVisibility(View.GONE);
+            holder.tvComment_datePicture.setVisibility(View.GONE);
+            holder.tvComment_locationPicture.setVisibility(View.GONE);
+            holder.tvComment_ratingPicture.setVisibility(View.GONE);
+
+        }else{
+            CommentsClass commentsClass = listItems.get(position);
+            holder.tVComment_user.setText(commentsClass.getUser());
+            holder.tVComment_location.setText(commentsClass.getLocation());
+            holder.tVComment_date.setText(commentsClass.getCDate());
+            holder.tVComment_foodProfile.setText(commentsClass.getComment());
+            holder.tVComment_rating.setText(commentsClass.getUserRating());
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return listItems.size();
+        if (isDefault == true){
+            return 1;
+        }else {
+            return listItems.size();
+        }
     }
 
 
@@ -53,6 +81,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         public TextView tVComment_location;
         public TextView tVComment_date;
         public TextView tVComment_foodProfile;
+        public ImageView tvComment_userPicture;
+        public ImageView tvComment_datePicture;
+        public ImageView tvComment_locationPicture;
+        public ImageView tvComment_ratingPicture;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,6 +94,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             tVComment_location = (TextView) itemView.findViewById(R.id.tVComment_location);
             tVComment_date = (TextView) itemView.findViewById(R.id.tVComment_date);
             tVComment_foodProfile = (TextView) itemView.findViewById(R.id.tvComment_foodProfile);
+            tvComment_userPicture = (ImageView) itemView.findViewById(R.id.imageView6);
+            tvComment_datePicture = (ImageView) itemView.findViewById(R.id.imageView7);
+            tvComment_locationPicture = (ImageView) itemView.findViewById(R.id.imageView3);
+            tvComment_ratingPicture = (ImageView) itemView.findViewById(R.id.imageView4);
         }
     }
 
