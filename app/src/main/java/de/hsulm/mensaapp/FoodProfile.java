@@ -364,6 +364,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
                 recyclerView.setHasFixedSize(true);
+                recyclerView.setNestedScrollingEnabled(false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
                 adapter = new CommentsAdapter(comments_list, FoodProfile.this);
                 recyclerView.setAdapter(adapter);
