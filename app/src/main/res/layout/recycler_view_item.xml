@@ -125,7 +125,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView4"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="@+id/textView4"
-            app:srcCompat="@mipmap/ic_last_time" />
+            app:srcCompat="@drawable/ic_restore_black_24dp" />
 
         <TextView
             android:id="@+id/textView4"
