@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.SQL_UPLOAD_IMAGE;
+package de.hsulm.mensaapp.SQL_UPLOAD_OR_FETCH_IMAGE;
 
 import android.content.Context;
 

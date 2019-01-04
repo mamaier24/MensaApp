@@ -6,7 +6,7 @@ package de.hsulm.mensaapp;
 public class Constants {
 
     public static final String ROOT_URL = "http://www.s673993392.online.de/v1/";
-    public static final String ROOT_URL_PICTURES = "http://www.s673993392.online.de/pictures/";
+    public static final String ROOT_URL_PICTURES = "http://www.s673993392.online.de/v1/upload/";
 
     public static final String URL_REGISTER = ROOT_URL + "user_register.php";
     public static final String URL_LOGIN = ROOT_URL + "user_login.php";

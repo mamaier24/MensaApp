@@ -7,8 +7,10 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,8 +31,12 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
@@ -39,15 +45,16 @@ import de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT.IDatabaseOperationsComments;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsFetchRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.DatabaseOperationsSetRating;
 import de.hsulm.mensaapp.SQL_SET_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
-import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.DatabaseOperationsFetchImages;
-import de.hsulm.mensaapp.SQL_UPLOAD_IMAGE.IDatabaseOperationsFetchImages;
+import de.hsulm.mensaapp.SQL_UPLOAD_OR_FETCH_IMAGE.DatabaseOperationsFetchImages;
+import de.hsulm.mensaapp.SQL_UPLOAD_OR_FETCH_IMAGE.DatabaseOperationsSetImages;
+import de.hsulm.mensaapp.SQL_UPLOAD_OR_FETCH_IMAGE.IDatabaseOperationsFetchImages;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
 public class FoodProfile extends AppCompatActivity implements View.OnClickListener{
 
     private SliderLayout sliderShow;
-    private static final int CAMERA_REQUEST = 1, GALLERY_REQUEST = 0;
+    private static final int REQUEST_CAPTURE_IMAGE  = 100, GALLERY_REQUEST = 0;
     private Bitmap image;
     private ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     private Button button_comment;
@@ -55,6 +62,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     private TextView ratingAvg;
     private RecyclerView recyclerView;
     private FoodClass food = null;
+    int user_id;
+    String imageFilePath;
     private int food_id;
     private RatingBar mRatingBar;
     private RecyclerView.Adapter adapter;
@@ -65,7 +74,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(activity_food_profile);
 
-        int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+        user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
         final FoodClass food = getIntent().getParcelableExtra("food");
 
         ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
@@ -94,11 +103,6 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         int vegan = food.isVegan();
         mRatingBar2.setRating(rating);
         mRatingBar2.setIsIndicator(true);
-        String[] urls_test = new String[2];
-        urls_test[0] = Constants.ROOT_URL_PICTURES + "MA_PIC_ID_A1XX.png";
-        urls_test[1] = Constants.ROOT_URL_PICTURES + "MA_PIC_ID_B2XXX.png";
-
-        new DownloadProfileImage().execute(urls_test);
 
         mRatingBar.setRating(0);
         ratingAvg.setText(String.valueOf(rating));
@@ -110,8 +114,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         DatabaseOperationsFetchImages get_images = new DatabaseOperationsFetchImages(FoodProfile.this);
         get_images.getImagesFromDB(food_id, new IDatabaseOperationsFetchImages() {
             @Override
-            public void onSuccess(ArrayList img_id_list) {
-                //new DownloadProfileImage().execute(img_id_list);
+            public void onSuccess(ArrayList<String> img_id_list) {
+                new DownloadProfileImage().execute(img_id_list);
             }
         });
 
@@ -200,25 +204,53 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
 
     private void choseImageFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent,GALLERY_REQUEST);
     }
 
 
     private void takeImageFromCamera(){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent,CAMERA_REQUEST);
+
+        if(cameraIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "de.hsulm.mensaapp.provider", photoFile);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(cameraIntent,REQUEST_CAPTURE_IMAGE);
+            }
+        }
     }
 
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName,  ".jpg",  storageDir);
+        imageFilePath = image.getAbsolutePath();
+
+        return image;
+    }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == this.RESULT_CANCELED){
             return;
         }
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null){
-            image = (Bitmap)data.getExtras().get("data");
+        if (requestCode == REQUEST_CAPTURE_IMAGE && resultCode == RESULT_OK){
+                Uri contentURI = Uri.fromFile(new File(imageFilePath));
+            try {
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(),contentURI);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             this.UploadImageToServer();
         }else if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK && data != null){
             Uri contentURI = data.getData();
@@ -234,15 +266,13 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
 
     public void UploadImageToServer(){
-        image = this.getResizedBitmap(image,450,250);
-        image.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        image = this.getResizedBitmap(image,1080 ,1080);
+        image.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         final String img_enc = Base64.encodeToString(byteArray,Base64.DEFAULT);
-
-        //@FELIX HERMANN ADD THESE LINES FOR IMAGE UPLOAD
-        //DatabaseOperationsSetImages connection = new DatabaseOperationsSetImages(FoodProfile.this);
-        //connection.uploadImageToDB(img_enc, user_id, food_id);
-        //image = null;
+        DatabaseOperationsSetImages connection = new DatabaseOperationsSetImages(FoodProfile.this);
+        connection.uploadImageToDB(img_enc, user_id, food_id);
+        image = null;
     }
 
 
@@ -286,15 +316,14 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    private class DownloadProfileImage extends AsyncTask<String, Void, Void> {
-        protected Void doInBackground(String... urls) {
+    private class DownloadProfileImage extends AsyncTask<ArrayList<String>, Void, Void> {
+        protected Void doInBackground(final ArrayList<String>... images) {
 
             try {
                 //Check if there is only one image available
+                if (images[0].size() <2 ){
 
-                if (urls.length <2 ){
-
-                    DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
+                    final DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
 
                      runOnUiThread(new Runnable() {
 
@@ -303,20 +332,22 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                              ImageView placeholder = (ImageView)findViewById(R.id.placeholder);
                              placeholder.setVisibility(View.GONE);
+                             String url = Constants.ROOT_URL_PICTURES + images[0].get(0);
+                             defaultSliderView.image(url);
+                             defaultSliderView.setScaleType(BaseSliderView.ScaleType.Fit);
+                             sliderShow.addSlider(defaultSliderView);
+                             //Deactivate autocycle and swipe gesture
+                             sliderShow.stopAutoCycle();
+                             sliderShow.setPagerTransformer(false, new BaseTransformer() {
+                                 @Override
+                                 protected void onTransform(View view, float position) {
+                                 }
+                             });
 
                          }
                      });
 
-                    defaultSliderView.image(urls[0]);
-                    defaultSliderView.setScaleType(BaseSliderView.ScaleType.Fit);
-                    sliderShow.addSlider(defaultSliderView);
-                    //Deactivate autocycle and swipe gesture
-                    sliderShow.stopAutoCycle();
-                    sliderShow.setPagerTransformer(false, new BaseTransformer() {
-                        @Override
-                        protected void onTransform(View view, float position) {
-                        }
-                    });
+
 
                 }else {
 
@@ -328,21 +359,22 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                              ImageView placeholder = (ImageView)findViewById(R.id.placeholder);
                              placeholder.setVisibility(View.GONE);
 
+                             for (int i = 0; i < images[0].size(); i++){
+                                 DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
+                                 String url = Constants.ROOT_URL_PICTURES + images[0].get(i);
+                                 defaultSliderView.image(url);
+                                 defaultSliderView.setScaleType(BaseSliderView.ScaleType.Fit);
+                                 sliderShow.addSlider(defaultSliderView);
+                                 sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+
+
+                                 if (i == 10) {
+                                     break;
+                                 }
+                             }
+
                          }
                      });
-
-                    for (int i = 0; i < urls.length; i++){
-                        DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
-                        defaultSliderView.image(urls[i]);
-                        defaultSliderView.setScaleType(BaseSliderView.ScaleType.Fit);
-                        sliderShow.addSlider(defaultSliderView);
-                        sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-
-
-                        if (i == 10) {
-                            break;
-                        }
-                    }
 
                 }
             } catch (Exception e) {
