@@ -48,7 +48,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
         FoodClass currentItem = mexampleList.get(position);
-        new DownloadRecyclerImage(holder.mImage).execute(Constants.ROOT_URL_PICTURES + currentItem.getmimgId());
+        String url = Constants.ROOT_URL_PICTURES + currentItem.getmimgId();
+        new DownloadRecyclerImage(holder.mImage).execute(url);
         holder.mTitel.setText(currentItem.getName());
         holder.mPreis.setText(currentItem.getPrice());
         holder.mBewertung.setText(((Float)(((Integer)currentItem.getRating()).floatValue())).toString());

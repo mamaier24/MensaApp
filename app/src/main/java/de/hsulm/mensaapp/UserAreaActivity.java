@@ -89,6 +89,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                         if(Connection.getInstance().isOnline(UserAreaActivity.this)) {
                             Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
                             intent.putExtra("food", food_list.get(position));
+                            intent.putExtra("intent", "UserAreaActivity");
                             startActivity(intent);
                         }else{
                             if(mAdapter != null) {

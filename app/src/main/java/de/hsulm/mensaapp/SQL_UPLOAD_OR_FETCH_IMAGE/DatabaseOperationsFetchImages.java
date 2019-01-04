@@ -43,21 +43,22 @@ public class DatabaseOperationsFetchImages {
 
                         try {
 
-                                JSONArray img_ids_arr = new JSONArray(response);
+                            JSONArray img_ids_arr = new JSONArray(response);
 
-                                for (int i = 0; i < img_ids_arr.length(); i++) {
-                                    JSONObject img_id_obj = img_ids_arr.getJSONObject(i);
-                                    String img_id = img_id_obj.getString("img_id");
-                                    img_id_list.add(img_id);
-                                }
+                            for (int i = 0; i < img_ids_arr.length(); i++) {
+                                JSONObject img_id_obj = img_ids_arr.getJSONObject(i);
+                                String img_id = img_id_obj.getString("img_id");
+                                img_id_list.add(img_id);
+                            }
 
                             callback.onSuccess(img_id_list);
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            callback.onSuccess(img_id_list);
                         }
 
-                    }
+                }
+
                 },
                 new Response.ErrorListener() {
                     @Override

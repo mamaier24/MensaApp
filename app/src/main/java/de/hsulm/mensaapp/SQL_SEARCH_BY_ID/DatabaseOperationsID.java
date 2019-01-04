@@ -59,7 +59,7 @@ public class DatabaseOperationsID {
                                               food_obj.getString("name"), food_obj.getString("category"),
                                               food_obj.getInt("vegan"),
                                               food_obj.getInt("vegetarian"), food_obj.getString("price"),
-                                              food_obj.getString("uuid"), food_obj.getInt("rating"), food_obj.getString("picID"));
+                                              food_obj.getString("uuid"), food_obj.getInt("rating"), food_obj.getString("img_id_cover"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
