@@ -254,7 +254,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="125dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="9dp"
         android:text="(no_rating)"
         android:textColor="#0066CC"
         android:textSize="18sp"
