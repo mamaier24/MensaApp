@@ -114,7 +114,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     });
             } else {
-                Toast.makeText(getApplicationContext(), "Bitte location auswählen!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Bitte Standort auswählen!", Toast.LENGTH_LONG).show();
             }
 
         }else{
