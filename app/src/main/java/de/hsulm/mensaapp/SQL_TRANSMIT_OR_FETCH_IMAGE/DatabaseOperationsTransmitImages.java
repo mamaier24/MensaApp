@@ -11,8 +11,8 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
 /**
  * Created by Stephan Danz 05/12/2018
@@ -35,7 +35,7 @@ public class DatabaseOperationsTransmitImages {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_TRANSMIT_IMG,
+                URLS.URL_TRANSMIT_IMG,
 
                 new Response.Listener<String>() {
 

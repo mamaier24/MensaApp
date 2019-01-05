@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import de.hsulm.mensaapp.CONSTANTS.URLS;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
 
 /**
@@ -14,7 +15,7 @@ import de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
  */
 public class SearchActivity extends AppCompatActivity {
 
-    private String urlAddress=Constants.URL_SEARCH_BY_FRAGMENTS;
+    private String urlAddress= URLS.URL_SEARCH_BY_FRAGMENTS;
     private SearchView sv;
     private ListView lv;
     private ImageView noDataImg,noNetworkImg;

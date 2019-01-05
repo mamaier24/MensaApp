@@ -15,8 +15,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
-import de.hsulm.mensaapp.FoodProfile;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
+import de.hsulm.mensaapp.FoodProfileActivity;
 
 public class Parser extends AsyncTask<Void,Void,Integer> {
 
@@ -58,7 +58,7 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                     String item = (String) lv.getItemAtPosition(position);
-                    Intent intent = new Intent(c, FoodProfile.class);
+                    Intent intent = new Intent(c, FoodProfileActivity.class);
                     intent.putExtra("food", food_list.get(position));
                     c.startActivity(intent);
                 }

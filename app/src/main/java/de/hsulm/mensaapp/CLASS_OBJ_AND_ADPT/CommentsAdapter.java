@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp;
+package de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
+import de.hsulm.mensaapp.R;
 
 /**
  * Created by Marcel Maier on 30/11/18.

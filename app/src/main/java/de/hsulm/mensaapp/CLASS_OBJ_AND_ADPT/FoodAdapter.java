@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp;
+package de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +14,8 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.R;
 
 /**
  * Created by Marcel Maier on 30/11/18.
@@ -52,7 +53,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
         FoodClass currentItem = mexampleList.get(position);
-        String url = Constants.ROOT_URL_PICTURES + currentItem.getmimgId();
+        String url = URLS.ROOT_URL_PICTURES + currentItem.getmimgId();
         new DownloadRecyclerImage(holder.mImage).execute(url);
         holder.mTitel.setText(currentItem.getName());
         holder.mPreis.setText(currentItem.getPrice());

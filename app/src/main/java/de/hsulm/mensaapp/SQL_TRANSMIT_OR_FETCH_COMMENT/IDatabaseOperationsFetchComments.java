@@ -1,7 +1,7 @@
 package de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT;
 
 import java.util.ArrayList;
-import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsClass;
 
 public interface IDatabaseOperationsFetchComments {
 

@@ -24,6 +24,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
 
 /**
  * Created by Marcel Maier on 30/11/18.
@@ -80,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     progressDialog.show();
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                            Constants.URL_REGISTER,
+                            URLS.URL_REGISTER,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {

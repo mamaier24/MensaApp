@@ -19,8 +19,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodAdapter;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
@@ -87,7 +89,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     @Override
                     public void OnItemClick(int position) {
                         if(Connection.getInstance().isOnline(UserAreaActivity.this)) {
-                            Intent intent = new Intent(UserAreaActivity.this, FoodProfile.class);
+                            Intent intent = new Intent(UserAreaActivity.this, FoodProfileActivity.class);
                             intent.putExtra("food", food_list.get(position));
                             intent.putExtra("intent", "UserAreaActivity");
                             startActivity(intent);

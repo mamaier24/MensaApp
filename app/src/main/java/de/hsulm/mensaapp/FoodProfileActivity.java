@@ -37,8 +37,11 @@ import java.util.Date;
 import java.util.Locale;
 
 
-import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
-import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsAdapter;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsClass;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.DatabaseOperationsFetchComments;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.IDatabaseOperationsFetchComments;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.DatabaseOperationsFetchRating;
@@ -54,7 +57,7 @@ import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 /**
  * Created by Marcel Maier on 30/11/18.
  */
-public class FoodProfile extends AppCompatActivity implements View.OnClickListener{
+public class FoodProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
     private int user_id;
     private int food_id;
@@ -94,7 +97,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
          * @user_id Needs to be initialized in onCreate()-method because it needs the app context.
          */
         food_id = food.getId();
-        user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+        user_id = SharedPrefManager.getInstance(FoodProfileActivity.this).getUserId();
 
 
         /**
@@ -191,10 +194,10 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
 
         if(view == btnComment) {
-            Intent commentIntent = new Intent(FoodProfile.this, CommentActivity.class);
+            Intent commentIntent = new Intent(FoodProfileActivity.this, CommentActivity.class);
             commentIntent.putExtra("food_id", food_id);
             commentIntent.putExtra("user_rating", mRatingBar.getRating());
-            FoodProfile.this.startActivity(commentIntent);
+            FoodProfileActivity.this.startActivity(commentIntent);
         }else if(view == btnCamera) {
             addPicture();
         }
@@ -293,7 +296,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
             try {
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(),contentURI);
             } catch (IOException e) {
-                Toast.makeText(FoodProfile.this,"Upload fehlgeschlagen!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FoodProfileActivity.this,"Upload fehlgeschlagen!",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
             this.UploadImageToServer();
@@ -303,7 +306,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(),contentURI);
                 this.UploadImageToServer();
             }catch (IOException e){
-                Toast.makeText(FoodProfile.this,"Upload fehlgeschlagen!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FoodProfileActivity.this,"Upload fehlgeschlagen!",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
@@ -318,7 +321,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         image.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         final String img_enc = Base64.encodeToString(byteArray,Base64.DEFAULT);
-        DatabaseOperationsTransmitImages connection = new DatabaseOperationsTransmitImages(FoodProfile.this);
+        DatabaseOperationsTransmitImages connection = new DatabaseOperationsTransmitImages(FoodProfileActivity.this);
 
         connection.uploadImageToDB(img_enc, user_id, food_id, new IDatabaseOperationsTransmitImages() {
             @Override
@@ -357,7 +360,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                 if (images[0].size() <2 && images[0].size() != 0){
 
-                    final DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
+                    final DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfileActivity.this);
 
                      runOnUiThread(new Runnable() {
 
@@ -366,7 +369,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
 
                              sliderShow.setVisibility(View.INVISIBLE);
                              sliderShow.removeAllSliders();
-                             String url = Constants.ROOT_URL_PICTURES + images[0].get(0);
+                             String url = URLS.ROOT_URL_PICTURES + images[0].get(0);
                              defaultSliderView.image(url);
                              defaultSliderView.setScaleType(BaseSliderView.ScaleType.CenterCrop);
                              sliderShow.addSlider(defaultSliderView);
@@ -400,8 +403,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                                      break;
                                  }
 
-                                 DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfile.this);
-                                 String url = Constants.ROOT_URL_PICTURES + images[0].get(i);
+                                 DefaultSliderView defaultSliderView = new DefaultSliderView(FoodProfileActivity.this);
+                                 String url = URLS.ROOT_URL_PICTURES + images[0].get(i);
                                  defaultSliderView.image(url);
                                  defaultSliderView.setScaleType(BaseSliderView.ScaleType.CenterCrop);
                                  sliderShow.addSlider(defaultSliderView);
@@ -449,7 +452,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                DatabaseOperationsFetchImages get_images = new DatabaseOperationsFetchImages(FoodProfile.this);
+                DatabaseOperationsFetchImages get_images = new DatabaseOperationsFetchImages(FoodProfileActivity.this);
                 get_images.getImagesFromDB(food_id, new IDatabaseOperationsFetchImages() {
                     @Override
                     public void onSuccess(ArrayList<String> img_id_list) {
@@ -475,8 +478,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setNestedScrollingEnabled(false);
-                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
-                adapter = new CommentsAdapter(false, FoodProfile.this, comments_list);
+                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfileActivity.this));
+                adapter = new CommentsAdapter(false, FoodProfileActivity.this, comments_list);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -487,8 +490,8 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerViewComments);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setNestedScrollingEnabled(false);
-                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfile.this));
-                adapter = new CommentsAdapter(true, FoodProfile.this);
+                recyclerView.setLayoutManager(new LinearLayoutManager(FoodProfileActivity.this));
+                adapter = new CommentsAdapter(true, FoodProfileActivity.this);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -505,7 +508,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
         /**
          * Fetches the unique user rating from DB.
          */
-        DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfile.this);
+        DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(FoodProfileActivity.this);
         get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
 
             @Override
@@ -532,9 +535,9 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
                 if(!btnComment.isEnabled()){
                     btnComment.setEnabled(true);
                 }
-                int user_id = SharedPrefManager.getInstance(FoodProfile.this).getUserId();
+                int user_id = SharedPrefManager.getInstance(FoodProfileActivity.this).getUserId();
                 int food_id = food.getId();
-                DatabaseOperationsTransmitRating new_rating = new DatabaseOperationsTransmitRating(FoodProfile.this);
+                DatabaseOperationsTransmitRating new_rating = new DatabaseOperationsTransmitRating(FoodProfileActivity.this);
                 new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()));
             }
 
@@ -548,7 +551,7 @@ public class FoodProfile extends AppCompatActivity implements View.OnClickListen
      */
     public void initializeImageSlider(){
 
-        DatabaseOperationsFetchImages get_images = new DatabaseOperationsFetchImages(FoodProfile.this);
+        DatabaseOperationsFetchImages get_images = new DatabaseOperationsFetchImages(FoodProfileActivity.this);
         get_images.getImagesFromDB(food_id, new IDatabaseOperationsFetchImages() {
 
             @Override

@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
-import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsClass;
 
 /**
  * Created by Marcel Maier 30/12/2018
@@ -39,7 +39,7 @@ public class DatabaseOperationsFetchComments {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_FETCH_COMMENT,
+                URLS.URL_FETCH_COMMENT,
 
                 new Response.Listener<String>() {
 

@@ -40,7 +40,7 @@
             android:name=".MenuActivity" />
 
         <activity
-            android:name=".FoodProfile"
+            android:name=".FoodProfileActivity"
             android:screenOrientation="nosensor" />
 
         <activity

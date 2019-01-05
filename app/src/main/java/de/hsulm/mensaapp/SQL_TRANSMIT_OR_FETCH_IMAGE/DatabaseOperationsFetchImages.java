@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
 public class DatabaseOperationsFetchImages {
 
@@ -32,7 +32,7 @@ public class DatabaseOperationsFetchImages {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_FETCH_IMG,
+                URLS.URL_FETCH_IMG,
 
                 new Response.Listener<String>() {
 

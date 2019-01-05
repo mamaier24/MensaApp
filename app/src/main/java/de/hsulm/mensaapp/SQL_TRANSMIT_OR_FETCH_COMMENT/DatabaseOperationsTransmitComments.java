@@ -13,8 +13,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
 
 /**
@@ -32,7 +32,7 @@ public class DatabaseOperationsTransmitComments {
     public void transmitCommentToDB(final String user_id_str, final String  food_id_str, final String  comment, final String location,
                                     final String username, final String user_rating_str, final ProgressDialog progressDialog, final IDatabaseOperationsTransmitComments callback) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_TRANSMIT_COMMENT,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLS.URL_TRANSMIT_COMMENT,
                 new Response.Listener<String>() {
 
                     @Override

@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp;
+package de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER;
 
 import android.content.Context;
 

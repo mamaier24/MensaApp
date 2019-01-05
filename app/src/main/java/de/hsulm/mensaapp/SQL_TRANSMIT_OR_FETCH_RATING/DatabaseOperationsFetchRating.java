@@ -14,8 +14,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
 public class DatabaseOperationsFetchRating {
 
@@ -32,7 +32,7 @@ public class DatabaseOperationsFetchRating {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_FETCH_RATING,
+                URLS.URL_FETCH_RATING,
 
                 new Response.Listener<String>() {
 

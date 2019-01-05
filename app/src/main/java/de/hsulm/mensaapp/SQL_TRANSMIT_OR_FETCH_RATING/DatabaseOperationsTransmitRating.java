@@ -15,8 +15,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
 public class DatabaseOperationsTransmitRating {
 
@@ -41,7 +41,7 @@ public class DatabaseOperationsTransmitRating {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_TRANSMIT_RATING,
+                URLS.URL_TRANSMIT_RATING,
 
                 new Response.Listener<String>() {
 

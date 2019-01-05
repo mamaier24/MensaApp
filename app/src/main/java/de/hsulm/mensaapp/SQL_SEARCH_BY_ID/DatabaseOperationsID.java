@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hsulm.mensaapp.Constants;
-import de.hsulm.mensaapp.RequestHandler;
-import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
+import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 
 /**
  * Created by Stephan Danz 05/12/2018
@@ -38,7 +38,7 @@ public class DatabaseOperationsID {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_SEARCH_BY_ID,
+                URLS.URL_SEARCH_BY_ID,
 
                 new Response.Listener<String>() {
 

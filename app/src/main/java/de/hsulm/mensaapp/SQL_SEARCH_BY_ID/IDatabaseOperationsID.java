@@ -1,7 +1,7 @@
 package de.hsulm.mensaapp.SQL_SEARCH_BY_ID;
 
 import java.util.ArrayList;
-import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
+import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 
 public interface IDatabaseOperationsID {
 
