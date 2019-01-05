@@ -90,7 +90,7 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
                         jo.getString("name"), jo.getString("category"),
                         jo.getInt("vegan"),
                         jo.getInt("vegetarian"), jo.getString("price"),
-                        jo.getString("uuid"), jo.getInt("rating"), jo.getString("picID"));
+                        jo.getString("uuid"), jo.getInt("rating"), jo.getString("img_id_cover"));
 
                 food_list.add(food);
 
