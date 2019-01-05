@@ -18,7 +18,7 @@ import java.util.Map;
 
 import de.hsulm.mensaapp.Constants;
 import de.hsulm.mensaapp.RequestHandler;
-import de.hsulm.mensaapp.CommentsClass;
+import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
 
 /**
  * Created by Marcel Maier 30/12/2018

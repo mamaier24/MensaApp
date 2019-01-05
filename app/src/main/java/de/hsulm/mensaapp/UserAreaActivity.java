@@ -2,7 +2,6 @@ package de.hsulm.mensaapp;
 
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
+import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;

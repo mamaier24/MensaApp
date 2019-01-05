@@ -37,6 +37,8 @@ import java.util.Date;
 import java.util.Locale;
 
 
+import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
+import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.DatabaseOperationsFetchComments;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.IDatabaseOperationsFetchComments;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.DatabaseOperationsFetchRating;

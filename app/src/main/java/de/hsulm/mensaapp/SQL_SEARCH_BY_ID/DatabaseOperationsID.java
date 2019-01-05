@@ -17,7 +17,7 @@ import java.util.Map;
 
 import de.hsulm.mensaapp.Constants;
 import de.hsulm.mensaapp.RequestHandler;
-import de.hsulm.mensaapp.FoodClass;
+import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
 
 /**
  * Created by Stephan Danz 05/12/2018

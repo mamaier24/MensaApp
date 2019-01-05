@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.hsulm.mensaapp.CLASS_OBJ.CommentsClass;
+
 /**
  * Created by Marcel Maier on 30/11/18.
  */

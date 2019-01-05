@@ -1,10 +1,11 @@
-package de.hsulm.mensaapp;
+package de.hsulm.mensaapp.CLASS_OBJ;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Marcel Maier on 30/11/18.
+ * Created by Stephan Danz 05/12/2018
+ * Class necessary for creating comments and parcing it back to the mainactivity
  */
 public class CommentsClass implements Parcelable {
 

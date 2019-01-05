@@ -15,11 +15,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import de.hsulm.mensaapp.FoodAdapter;
-import de.hsulm.mensaapp.FoodClass;
+import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
 import de.hsulm.mensaapp.FoodProfile;
-import de.hsulm.mensaapp.SearchActivity;
-import de.hsulm.mensaapp.UserAreaActivity;
 
 public class Parser extends AsyncTask<Void,Void,Integer> {
 

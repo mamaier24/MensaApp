@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp;
+package de.hsulm.mensaapp.CLASS_OBJ;
 
 import android.os.Parcel;
 import android.os.Parcelable;

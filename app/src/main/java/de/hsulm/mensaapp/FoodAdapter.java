@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import de.hsulm.mensaapp.CLASS_OBJ.FoodClass;
 
 /**
  * Created by Marcel Maier on 30/11/18.
