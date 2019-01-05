@@ -25,7 +25,7 @@ import com.github.barteksc.pdfviewer.PDFView;
  */
 public class MenuActivity extends AppCompatActivity {
 
-    private String link;
+    String link = null;
     private PDFView pdfview;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;
@@ -55,7 +55,7 @@ public class MenuActivity extends AppCompatActivity {
                         new RetrievePDFStream(link).execute();
                         break;
                     case "Prittwitzstraße nächste Woche":
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + (getWeekNumber() + 1) +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/Prittwitzstr" + getNextWeekNumber() +".pdf";
                         new RetrievePDFStream(link).execute();
                         break;
                     case "Böfingen diese Woche":
@@ -63,7 +63,7 @@ public class MenuActivity extends AppCompatActivity {
                         new RetrievePDFStream(link).execute();
                         break;
                     case "Böfingen nächste Woche":
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/BÖ" + (getWeekNumber() + 1) +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/BÖ" + getNextWeekNumber() +".pdf";
                         new RetrievePDFStream(link).execute();
                         break;
                     case "Eselsberg diese Woche":
@@ -71,7 +71,7 @@ public class MenuActivity extends AppCompatActivity {
                         new RetrievePDFStream(link).execute();
                         break;
                     case "Eselsberg nächste Woche":
-                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/OE"  + (getWeekNumber() + 1) +".pdf";
+                        link = "https://studierendenwerk-ulm.de/wp-content/uploads/speiseplaene/OE"  + getNextWeekNumber() +".pdf";
                         new RetrievePDFStream(link).execute();
                         break;
                 }
@@ -127,12 +127,35 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    public int getWeekNumber(){
+    public String getWeekNumber(){
+        String weekNumber_str;
         Calendar calDe = Calendar.getInstance(Locale.GERMAN);
         calDe.setTime(new Date());
         int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR);
 
-        return(weekNumber);
+        if(weekNumber<10){
+            weekNumber_str = "0" + Integer.toString(calDe.get(Calendar.WEEK_OF_YEAR));
+        }else{
+            weekNumber_str = Integer.toString(calDe.get(Calendar.WEEK_OF_YEAR));
+        }
+
+        return(weekNumber_str);
+    }
+
+
+    public String getNextWeekNumber(){
+        String weekNumber_str;
+        Calendar calDe = Calendar.getInstance(Locale.GERMAN);
+        calDe.setTime(new Date());
+        int weekNumber = calDe.get(Calendar.WEEK_OF_YEAR) + 1;
+
+        if(weekNumber<10){
+            weekNumber_str = "0" + Integer.toString(calDe.get(Calendar.WEEK_OF_YEAR) + 1);
+        }else{
+            weekNumber_str = Integer.toString(calDe.get(Calendar.WEEK_OF_YEAR));
+        }
+
+        return(weekNumber_str);
     }
 
 }

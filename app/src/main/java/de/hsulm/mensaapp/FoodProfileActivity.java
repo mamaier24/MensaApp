@@ -16,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -187,6 +190,67 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         sliderShow.stopAutoCycle();
         super.onStop();
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Speiseplan:
+                Intent menuIntent = new Intent(this, MenuActivity.class);
+                this.startActivity(menuIntent);
+                break;
+
+            case R.id.Inhaltsstoffe:
+                Intent InhaltsstoffeIntent = new Intent(this, IngredientsActivity.class);
+                this.startActivity(InhaltsstoffeIntent);
+                break;
+
+
+            case R.id.Lob_Tadel:
+                Log.i("Want to Send Mail", "");
+                String[] TO = {"mensa@studierendenwerk-ulm.de"};//Email
+                String[] CC = new String[]{SharedPrefManager.getInstance(this).getUserEmail()};
+                String UN = SharedPrefManager.getInstance(this).getUsername();
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Bitte geben sie Ihre Speise(n) an:\n");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hier ist Platz für Lob und konstruktive Kritik:\n\n\n\nViele Grüße " + UN);
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Wählen Sie eine Email-App aus..."));
+                    finish();
+                    Log.i("Mail gesendet", "");
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "Mail is not initiated", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+            case R.id.Suche:
+                //Intent zum Suchen
+                Intent sucheIntent = new Intent(this, SearchActivity.class);
+                this.startActivity(sucheIntent);
+                break;
+
+            case R.id.Abmelden:
+                SharedPrefManager.getInstance(this).logout();
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+
+        }
+        return true;
     }
 
 
