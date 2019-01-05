@@ -19,8 +19,9 @@ public class FoodClass implements Parcelable {
     private String uuid;
     private int rating;
     private String imgID;
+    private int number_rating;
 
-    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId){
+    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId, int number_rating){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -31,6 +32,7 @@ public class FoodClass implements Parcelable {
         this.uuid = uuid;
         this.rating = rating;
         this.imgID = mimgId;
+        this.number_rating = number_rating;
     }
 
     protected FoodClass(Parcel in) {
@@ -44,6 +46,7 @@ public class FoodClass implements Parcelable {
         uuid = in.readString();
         rating = in.readInt();
         imgID = in.readString();
+        number_rating = in.readInt();
     }
 
     public static final Creator<FoodClass> CREATOR = new Creator<FoodClass>() {
@@ -101,6 +104,8 @@ public class FoodClass implements Parcelable {
 
     public String getCategory(){return category;}
 
+    public int getNumberRating(){return number_rating;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -118,5 +123,6 @@ public class FoodClass implements Parcelable {
         dest.writeString(uuid);
         dest.writeInt(rating);
         dest.writeString(imgID);
+        dest.writeInt(number_rating);
     }
 }

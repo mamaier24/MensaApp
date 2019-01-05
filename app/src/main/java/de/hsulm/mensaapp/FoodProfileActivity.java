@@ -72,6 +72,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     private Button btnComment;
     private ImageView btnCamera;
     private TextView ratingAvg;
+    private TextView uiE_number_rating;
     private RecyclerView recyclerView;
     private RatingBar mRatingBar;
     private SliderLayout sliderShow;
@@ -109,6 +110,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         String price = food.getPrice();
         String name = food.getName()+"*";
         String imageRes = food.getmimgId();
+        int number_rating = food.getNumberRating();
         int rating = food.getRating();
         int vegetarian = food.isVegetarian();
         int vegan = food.isVegan();
@@ -132,6 +134,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         btnComment = (Button)findViewById(R.id.bWroteComment);
+        uiE_number_rating = (TextView)findViewById(R.id.uiE_number_rating);
 
 
         /**
@@ -150,6 +153,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         ratingAvg.setText(String.valueOf(rating));
         mPreis.setText(price);
         mTitel.setText(name);
+        uiE_number_rating.setText("( " + String.valueOf(number_rating) + " )");
 
         if(vegetarian == 1){
             mCheckBox_vegetarian.setChecked(true);
