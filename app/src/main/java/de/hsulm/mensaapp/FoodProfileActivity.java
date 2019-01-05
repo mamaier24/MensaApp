@@ -162,7 +162,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         /**
          * Fetches all images from DB if the previous intent was UserAreaActivity.
          */
-        if(prev_intent.equals("UserAreaActivity")) {
+        if(prev_intent.equals("UserAreaActivity") || prev_intent.equals("SearchActivity")) {
             initializeImageSlider();
         }
 
@@ -229,10 +229,8 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
 
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Wählen Sie eine Email-App aus..."));
-                    finish();
-                    Log.i("Mail gesendet", "");
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(this, "Mail is not initiated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Kein Mailprogramm gefunden!", Toast.LENGTH_SHORT).show();
                 }
 
                 break;

@@ -60,6 +60,7 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
                     String item = (String) lv.getItemAtPosition(position);
                     Intent intent = new Intent(c, FoodProfileActivity.class);
                     intent.putExtra("food", food_list.get(position));
+                    intent.putExtra("intent", "SearchActivity");
                     c.startActivity(intent);
                 }
             });
