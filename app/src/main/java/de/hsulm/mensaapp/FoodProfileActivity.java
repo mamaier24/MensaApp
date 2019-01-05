@@ -80,7 +80,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView.Adapter adapter;
     private FoodClass food = null;
     private DatabaseOperationsFetchComments operations = new DatabaseOperationsFetchComments(this);
-
+    private String prev_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
          * Get extras from intent.
          */
         food = getIntent().getParcelableExtra("food");
-        final String prev_intent = getIntent().getStringExtra("intent");
+        prev_intent = getIntent().getStringExtra("intent");
 
 
         /**
@@ -195,8 +195,13 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+        if (prev_intent.equals("SearchActivity")) {
+            getMenuInflater().inflate(R.menu.menu_w_o_search, menu);
+            return true;
+        }else {
+            getMenuInflater().inflate(R.menu.menu, menu);
+            return true;
+        }
     }
 
 

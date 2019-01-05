@@ -14,10 +14,6 @@
         android:title="@string/Lob_Tadel"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/Suche"
-        android:title="@string/Suche"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/Abmelden"
         android:title="@string/Abmelden"
         app:showAsAction="never"/>
