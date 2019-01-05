@@ -44,7 +44,10 @@ import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsAdapter;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsClass;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.DatabaseOperationsFetchComments;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.IDatabaseOperationsFetchComments;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.DatabaseOperationsFetchRating;
@@ -64,6 +67,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
 
     private int user_id;
     private int food_id;
+    private int position;
     private static final int REQUEST_CAPTURE_IMAGE  = 100;
     private static final int GALLERY_REQUEST = 0;
     private String imageFilePath;
@@ -75,12 +79,15 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     private TextView uiE_number_rating;
     private RecyclerView recyclerView;
     private RatingBar mRatingBar;
+    private RatingBar mRatingBar2;
     private SliderLayout sliderShow;
     private Bitmap image;
 
     private RecyclerView.Adapter adapter;
     private FoodClass food = null;
     private DatabaseOperationsFetchComments operations = new DatabaseOperationsFetchComments(this);
+    private DatabaseOperationsID operationsID = new DatabaseOperationsID(this);
+    private DateID time = new DateID();
     private String prev_intent;
 
     @Override
@@ -94,6 +101,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
          */
         food = getIntent().getParcelableExtra("food");
         prev_intent = getIntent().getStringExtra("intent");
+        position = getIntent().getIntExtra("position", 0);
 
 
         /**
@@ -123,7 +131,6 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         TextView mPreis = (TextView) findViewById(R.id.Preis);
         CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
         CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
-        RatingBar mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
 
 
         /**
@@ -131,6 +138,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
          */
         ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
+        mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         btnComment = (Button)findViewById(R.id.bWroteComment);
@@ -610,6 +618,24 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                 int food_id = food.getId();
                 DatabaseOperationsTransmitRating new_rating = new DatabaseOperationsTransmitRating(FoodProfileActivity.this);
                 new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()));
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        operationsID.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsID() {
+                            @Override
+                            public void onSuccess(final ArrayList<FoodClass> food_list) {
+                                FoodClass refreshed_food = food_list.get(position);
+                                int number_rating = refreshed_food.getNumberRating();
+                                int rating = refreshed_food.getRating();
+                                mRatingBar2.setRating(rating);
+                                uiE_number_rating.setText("( " + String.valueOf(number_rating) + " )");
+                            }
+                        });
+                    }
+                }, 11000);
+
             }
 
         });

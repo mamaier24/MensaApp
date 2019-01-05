@@ -44,9 +44,13 @@ public class DateID {
         }
 
 
-        String food_id = "Y" + year + ":CW" + weekNumber + ":" + day_str;
-        return (food_id);
-
+        if(weekNumber<10) {
+            String food_id = "Y" + year + ":CW0" + weekNumber + ":" + day_str;
+            return (food_id);
+        }else{
+            String food_id = "Y" + year + ":CW" + weekNumber + ":" + day_str;
+            return (food_id);
+        }
     }
 
 
