@@ -5,6 +5,9 @@ import android.icu.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Created by Stephan Danz 05/12/2018
+ */
 public class DateID {
 
     public String getFoodID() {
@@ -47,7 +50,6 @@ public class DateID {
     }
 
 
-
     public String getDay(){
 
         String day_str ="";
@@ -85,21 +87,26 @@ public class DateID {
 
 
     public  String returnYear(){
+
         Calendar calDe = Calendar.getInstance(Locale.GERMAN);
         calDe.setTime(new Date());
         String year = Integer.toString(calDe.get(Calendar.YEAR));
 
         return year;
+
     }
 
 
     public  String returnWeek(){
+
         Calendar calDe = Calendar.getInstance(Locale.GERMAN);
         calDe.setTime(new Date());
         String week = Integer.toString(calDe.get(Calendar.WEEK_OF_YEAR));
 
         return week;
+
     }
+
 
     public String getDate() {
 
