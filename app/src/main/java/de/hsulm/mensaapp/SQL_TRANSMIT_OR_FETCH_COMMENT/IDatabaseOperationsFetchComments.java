@@ -1,9 +1,9 @@
-package de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT;
+package de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT;
 
 import java.util.ArrayList;
 import de.hsulm.mensaapp.CommentsClass;
 
-public interface IDatabaseOperationsComments {
+public interface IDatabaseOperationsFetchComments {
 
     void onSuccess(boolean isDefault);
 

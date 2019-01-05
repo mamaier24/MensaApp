@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.SQL_UPLOAD_OR_FETCH_IMAGE;
+package de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE;
 
 import android.content.Context;
 
@@ -18,16 +18,16 @@ import de.hsulm.mensaapp.RequestHandler;
  * Created by Stephan Danz 05/12/2018
  * Class necessary for handling all DB operations such as getting food
  */
-public class DatabaseOperationsSetImages {
+public class DatabaseOperationsTransmitImages {
 
     private Context mContext;
 
-    public DatabaseOperationsSetImages(Context context) {
+    public DatabaseOperationsTransmitImages(Context context) {
         mContext = context;
     }
 
 
-    public void uploadImageToDB(final String img_enc, final int user_id, final int food_id, final IDatabaseOperationsSetImages callback) {
+    public void uploadImageToDB(final String img_enc, final int user_id, final int food_id, final IDatabaseOperationsTransmitImages callback) {
 
         //Need to be converted to String because Parsing-Hashmap only takes Strings
         final String user_id_str = ((Integer)user_id).toString();
@@ -35,7 +35,7 @@ public class DatabaseOperationsSetImages {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_IMG_UPLOAD,
+                Constants.URL_TRANSMIT_IMG,
 
                 new Response.Listener<String>() {
 

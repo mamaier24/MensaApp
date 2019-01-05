@@ -3,6 +3,9 @@ package de.hsulm.mensaapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class CommentsClass implements Parcelable {
 
     private int user_id;

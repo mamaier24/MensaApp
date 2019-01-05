@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
-
 
     private List<CommentsClass> listItems;
     private Context context;

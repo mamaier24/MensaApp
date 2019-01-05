@@ -1,25 +1,19 @@
 package de.hsulm.mensaapp;
 
-import android.icu.util.Calendar;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import java.util.*;
-
 import com.github.barteksc.pdfviewer.PDFView;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class IngredientsActivity extends AppCompatActivity {
 
     private String link;

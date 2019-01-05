@@ -9,6 +9,9 @@ import android.widget.ListView;
 
 import de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class SearchActivity extends AppCompatActivity {
 
     private String urlAddress=Constants.URL_SEARCH_BY_FRAGMENTS;

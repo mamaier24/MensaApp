@@ -1,13 +1,11 @@
 package de.hsulm.mensaapp;
 
-/**
- * Created by Marcel Maier on 30/11/18.
- */
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class SharedPrefManager {
 
     private static SharedPrefManager mInstance;

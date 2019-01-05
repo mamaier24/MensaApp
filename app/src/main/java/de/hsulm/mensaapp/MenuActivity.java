@@ -20,6 +20,9 @@ import java.util.*;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class MenuActivity extends AppCompatActivity {
 
     private String link;

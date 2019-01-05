@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.SQL_UPLOAD_OR_FETCH_IMAGE;
+package de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE;
 
 import android.content.Context;
 
@@ -32,7 +32,7 @@ public class DatabaseOperationsFetchImages {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_IMG_FETCH,
+                Constants.URL_FETCH_IMG,
 
                 new Response.Listener<String>() {
 

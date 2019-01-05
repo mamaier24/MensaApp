@@ -1,9 +1,5 @@
 package de.hsulm.mensaapp;
 
-/**
- * Created by Marcel Maier on 30/11/18.
- */
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +24,9 @@ import java.util.TimerTask;
 
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextUsername, editTextPassword;

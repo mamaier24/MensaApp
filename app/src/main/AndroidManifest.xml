@@ -17,6 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="nosensor">
@@ -26,27 +27,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".RegisterActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".UserAreaActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".MenuActivity" />
+
         <activity
             android:name=".FoodProfile"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".SearchActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustPan" />
+
         <activity
             android:name=".IngredientsActivity" />
+
         <activity
             android:name=".CommentActivity"
             android:screenOrientation="nosensor" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -57,6 +66,7 @@
                 android:resource="@xml/file_paths">
             </meta-data>
         </provider>
+
     </application>
 
 </manifest>

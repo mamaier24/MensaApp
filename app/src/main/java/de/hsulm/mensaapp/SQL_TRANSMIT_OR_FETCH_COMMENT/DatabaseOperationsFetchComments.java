@@ -1,4 +1,4 @@
-package de.hsulm.mensaapp.SQL_SET_OR_FETCH_COMMENT;
+package de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT;
 
 
 import android.content.Context;
@@ -24,22 +24,22 @@ import de.hsulm.mensaapp.CommentsClass;
  * Created by Marcel Maier 30/12/2018
  * Class necessary for handling all DB operations such as getting food
  */
-public class DatabaseOperationsComments {
+public class DatabaseOperationsFetchComments {
 
-    private Context Context;
+    private Context context;
 
-    public DatabaseOperationsComments(Context context) {
-        Context = context;
+    public DatabaseOperationsFetchComments(Context context) {
+        this.context = context;
     }
 
 
-    public void getCommentsFromDB(final String searchQuery, final IDatabaseOperationsComments callback) {
+    public void getCommentsFromDB(final String searchQuery, final IDatabaseOperationsFetchComments callback) {
 
         final String Comments_object = null;
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_DOWNLOAD_COMMENT,
+                Constants.URL_FETCH_COMMENT,
 
                 new Response.Listener<String>() {
 
@@ -50,11 +50,9 @@ public class DatabaseOperationsComments {
                         CommentsClass comment = null;
 
                         try {
-
                             JSONArray comments_arr = new JSONArray(response);
 
                             if(comments_arr.length() > 0) {
-
                                 for (int i = 0; i < comments_arr.length(); i++) {
 
                                     try {
@@ -72,35 +70,36 @@ public class DatabaseOperationsComments {
                                     }
 
                                     comments_list.add(comment);
-
                                 }
 
                                 callback.onSuccess(false, comments_list);
-
                             }else{
                                 callback.onSuccess(true);
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },
                 new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
                     }
 
-                }) {
+                }
+        ) {
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
                 params.put("searchQuery", searchQuery);
                 return params;
             }
+
         };
 
-        RequestHandler.getInstance(Context).addToRequestQueue(arrayRequest);
+        RequestHandler.getInstance(context).addToRequestQueue(arrayRequest);
 
     }
 

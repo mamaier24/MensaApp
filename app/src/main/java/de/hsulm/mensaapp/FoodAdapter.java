@@ -15,6 +15,9 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
     private ArrayList<FoodClass> mexampleList;
     private OnItemClickListener mListener;

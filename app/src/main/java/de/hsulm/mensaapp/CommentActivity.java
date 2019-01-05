@@ -1,7 +1,6 @@
 package de.hsulm.mensaapp;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,75 +8,66 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.DatabaseOperationsTransmitComments;
+import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.IDatabaseOperationsTransmitComments;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ */
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;
-    public String Standort=null;
 
     private EditText MultiTextComment;
-    private Button pushRating;
+    private Button btnTransmitComment;
     private ProgressDialog progressDialog;
-    private ProgressBar progessBar_register;
-    private String user_rating;
 
-    //IDs etc. mit in tabelle hochladen UN,Standort,Datum würde ich auch gleich mitgeben...mySQL Tabelle anpassen!
-    int user_id = SharedPrefManager.getInstance(this).getUserId();
-
-    String username = SharedPrefManager.getInstance(this).getUsername();
-    int i_food_id;
+    private String user_id_str = Integer.toString(SharedPrefManager.getInstance(this).getUserId());
+    private String food_id_str;
+    private String comment;
+    private String location =null;
+    private String username = SharedPrefManager.getInstance(this).getUsername();
+    private String user_rating_str;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
-        i_food_id = getIntent().getIntExtra("food_id", 0);
-        user_rating = Integer.toString(Math.round(getIntent().getFloatExtra("user_rating", 0.0f)));
 
+        food_id_str = Integer.toString(getIntent().getIntExtra("food_id", 0));
+        user_rating_str = Integer.toString(Math.round(getIntent().getFloatExtra("user_rating", 0.0f)));
+
+        MultiTextComment = (EditText) findViewById(R.id.mACTComment);
+        btnTransmitComment = (Button) findViewById(R.id.bpushRating);
         spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
+
         adapter = ArrayAdapter.createFromResource(this, R.array.StandorteMensa, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
                 String location = parent.getItemAtPosition(position).toString();
 
                 switch (location){
                     case "-":
-                        Standort = "-";
+                        CommentActivity.this.location = "-";
                         break;
                     case "Prittwitzstraße":
-                        Standort = "Prittwitzstraße";
+                        CommentActivity.this.location = "Prittwitzstraße";
                         break;
                     case "Böfingen":
-                        Standort = "Böfingen";
+                        CommentActivity.this.location = "Böfingen";
                         break;
                     case "Eselsberg":
-                        Standort = "Eselsberg";                         //String Standort kann nun z.b. mit klicken auf Button Bewertung absenden auch hochgeladen werden
+                        CommentActivity.this.location = "Eselsberg";
                         break;
                 }
             }
@@ -88,91 +78,42 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         });
 
-        MultiTextComment = (EditText) findViewById(R.id.mACTComment);
-        pushRating = (Button) findViewById(R.id.bpushRating);
-
         progressDialog = new ProgressDialog(this);
 
-        pushRating.setOnClickListener(this);
-        pushRating.setTransformationMethod(null);
+        btnTransmitComment.setOnClickListener(this);
+        btnTransmitComment.setTransformationMethod(null);
 
-    }
-
-    private void pushComment() {
-        final String s_user_id = Integer.toString(user_id);
-        final String s_food_id = Integer.toString(i_food_id);
-        final String Comment = MultiTextComment.getText().toString().trim();
-        final String standort = Standort;
-        final String username = this.username;
-
-        if (Standort.length() > 5) {
-
-                    progressDialog.setMessage("Bewertung abgeben...");
-                    progressDialog.show();
-
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                            Constants.URL_PUSH_COMMENT,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    progressDialog.dismiss();
-
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(response);
-
-                                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
-
-                                        if (jsonObject.getString("error") == "false") {
-
-                                            onNotError();
-
-                                        }
-
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    progressDialog.hide();
-                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-
-
-                                }
-
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<>();
-                            params.put("user_id", s_user_id);
-                            params.put("food_id", s_food_id);
-                            params.put("comments", Comment);
-                            params.put("location", standort);
-                            params.put("username", username);
-                            params.put("user_rating", user_rating);
-                            return params;
-                        }
-                    };
-
-
-                    RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Bitte Standort auswählen!", Toast.LENGTH_LONG).show();
-                }
     }
 
 
     @Override
     public void onClick(View view) {
 
-        if (Connection.getInstance().isOnline(this)) {
+        if (view == btnTransmitComment) {
+            transmitComment();
+        }
 
-            if (view == pushRating) {
-                pushComment();
+    }
+
+
+    private void transmitComment() {
+
+        comment = MultiTextComment.getText().toString().trim();
+
+        if (Connection.getInstance().isOnline(this)) {
+            if (location.length() > 5) {
+                    progressDialog.setMessage("Bewertung abgeben...");
+                    progressDialog.show();
+                    DatabaseOperationsTransmitComments new_comment = new DatabaseOperationsTransmitComments(this);
+
+                    new_comment.transmitCommentToDB(user_id_str, food_id_str, comment, location, username, user_rating_str, progressDialog, new IDatabaseOperationsTransmitComments() {
+                        @Override
+                        public void onSuccess() {
+                            finish();
+                        }
+                    });
+            } else {
+                Toast.makeText(getApplicationContext(), "Bitte location auswählen!", Toast.LENGTH_LONG).show();
             }
 
         }else{
@@ -180,12 +121,5 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
-
-    public void onNotError(){
-
-        finish();
-
-    }
-
 
 }
