@@ -21,6 +21,9 @@ public class FoodClass implements Parcelable {
     private String imgID;
     private int number_rating;
 
+
+    public FoodClass(){ }
+
     public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId, int number_rating){
         this.id = id;
         this.name = name;

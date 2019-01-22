@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     private FoodAdapter mAdapter = null;
     private RecyclerView.LayoutManager mLayoutmanager;
     private SwipeRefreshLayout swipe_refresh;
+    private TabLayout tabLayout;
     private DatabaseOperationsID operations = new DatabaseOperationsID(this);
     private DateID time = new DateID();
 
@@ -45,6 +47,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
+        tabLayout = (TabLayout)findViewById(R.id.tabs);
         swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipe_refresh.setOnRefreshListener(this);
 
@@ -53,9 +56,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             ImageView noserver = (ImageView)findViewById(R.id.noserver);
             noserver.setVisibility(View.INVISIBLE);
 
-            TextView mDate = (TextView) findViewById(R.id.mDate);
-            mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
-
+            initializeTabLayout();
             initializeRecycler();
 
             if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -72,6 +73,33 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     }
 
+    public void initializeTabLayout(){
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if (mAdapter != null) {
+                    mAdapter.clear();
+                }
+
+                initializeRecycler();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
+
+    }
+
 
     public void initializeRecycler() {
 
@@ -81,7 +109,40 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
                 mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                 mLayoutmanager = new LinearLayoutManager(UserAreaActivity.this);
-                mAdapter = new FoodAdapter(food_list);
+
+                //Doesnt check for vegan or vegetarian
+                if (tabLayout.getSelectedTabPosition() == 0){
+                    mAdapter = new FoodAdapter(food_list);
+                }
+
+                //Checks for vegetarian food if tab is selected
+                if(tabLayout.getSelectedTabPosition() == 1){
+
+                    for(int i=0; i<food_list.size();i++){
+                        if(food_list.get(i).isVegetarian() != 1){
+                            food_list.remove(i);
+                            i = i - 1;
+                        }
+                    }
+
+                    mAdapter = new FoodAdapter(food_list);
+
+                }
+
+                //Checks for vegan food if tab is selected
+                if (tabLayout.getSelectedTabPosition() == 2){
+                    for(int i=0; i<food_list.size();i++){
+                        if(food_list.get(i).isVegan() == 0){
+                            food_list.remove(i);
+                            i = i - 1;
+                        }
+                    }
+                    
+                    mAdapter = new FoodAdapter(food_list);
+                }
+
+
+
                 mRecyclerView.setLayoutManager(mLayoutmanager);
                 mRecyclerView.setAdapter(mAdapter);
 

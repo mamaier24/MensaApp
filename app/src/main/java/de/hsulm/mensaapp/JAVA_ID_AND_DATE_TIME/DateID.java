@@ -121,7 +121,10 @@ public class DateID {
         int year = calDe.get(Calendar.YEAR);
         int day = calDe.get(Calendar.DAY_OF_MONTH);
 
-        date = "" + day + "." + month + "." + year;
+        String[] german_months = {"Januar", "Februar", "März", "April", "Mai", "Juni",
+                "Juli", "August","September", "Oktober", "November", "Dezember"};
+
+        date =  day + "." + " " + german_months[month] + " " + year;
         return (date);
 
     }

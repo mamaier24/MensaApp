@@ -15,23 +15,31 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 import de.hsulm.mensaapp.R;
 
 /**
  * Created by Marcel Maier on 30/11/18.
  */
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
+public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FoodClass> mexampleList;
     private OnItemClickListener mListener;
+    private static ImageView mImage;
+    private static TextView mTitel;
+    private static TextView mPreis;
+    private static TextView mBewertung;
+    private static RatingBar mRatingBar;
+    private static TextView mCategory;
+    private static TextView mDate;
+    private static DateID time = new DateID();
 
-    public FoodAdapter(ArrayList<FoodClass> exampleList)
-    {
+    public FoodAdapter(ArrayList<FoodClass> exampleList) {
         this.mexampleList = exampleList;
+        mexampleList.add(0, new FoodClass());
     }
 
 
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
@@ -42,30 +50,60 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
 
     @Override
-    public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem= layoutInflater.inflate(R.layout.recycler_view_item, parent, false);
-        FoodViewHolder mFoodViewHolder = new FoodViewHolder(listItem, mListener);
-        return mFoodViewHolder;
+        View listItem = null;
+
+        switch (viewType) {
+
+            case 1:
+            listItem = layoutInflater.inflate(R.layout.recycler_date_view, parent, false);
+            DateViewHolder mDateViewHolder = new DateViewHolder(listItem);
+            return mDateViewHolder;
+
+            case 2:
+            listItem = layoutInflater.inflate(R.layout.recycler_view_item, parent, false);
+            FoodViewHolder mFoodViewHolder = new FoodViewHolder(listItem, mListener);
+            return mFoodViewHolder;
+
+        }
+
+        return null;
     }
 
 
     @Override
-    public void onBindViewHolder(FoodViewHolder holder, int position) {
-        FoodClass currentItem = mexampleList.get(position);
-        String url = URLS.ROOT_URL_PICTURES + currentItem.getmimgId();
-        new DownloadRecyclerImage(holder.mImage).execute(url);
-        holder.mTitel.setText(currentItem.getName());
-        holder.mPreis.setText(currentItem.getPrice());
-        holder.mBewertung.setText(((Float)(((Integer)currentItem.getRating()).floatValue())).toString());
-        holder.mRatingBar.setRating(currentItem.getRating());
-        holder.mCategory.setText(currentItem.getCategory());
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        if(holder.getItemViewType()==1){
+            mDate.setText(time.getDate() + " - " + time.getDay());
+        }else {
+            FoodClass currentItem = mexampleList.get(position);
+            String url = URLS.ROOT_URL_PICTURES + currentItem.getmimgId();
+            new DownloadRecyclerImage(mImage).execute(url);
+            mTitel.setText(currentItem.getName());
+            mPreis.setText(currentItem.getPrice());
+            mBewertung.setText(((Float) (((Integer) currentItem.getRating()).floatValue())).toString());
+            mRatingBar.setRating(currentItem.getRating());
+            mCategory.setText(currentItem.getCategory());
+        }
     }
 
 
     @Override
     public int getItemCount() {
         return mexampleList.size();
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if(position==0){
+            return 1;
+        } else{
+            return 2;
+        }
     }
 
 
@@ -77,12 +115,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
-            ImageView mImage;
-            TextView mTitel;
-            TextView mPreis;
-            TextView mBewertung;
-            RatingBar mRatingBar;
-            TextView mCategory;
 
             public FoodViewHolder(View itemView, final OnItemClickListener listener) {
                 super(itemView);
@@ -106,6 +138,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                     }
                 });
             }
+    }
+
+    public static class DateViewHolder extends RecyclerView.ViewHolder {
+
+        public DateViewHolder(View itemView) {
+            super(itemView);
+
+            mDate = (TextView) itemView.findViewById(R.id.mDate);
+        }
     }
 
 
