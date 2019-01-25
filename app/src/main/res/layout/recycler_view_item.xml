@@ -65,7 +65,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/mLastTime" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -122,18 +122,18 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="#b8424242"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toBottomOf="@+id/mLastTime"
+            app:layout_constraintEnd_toStartOf="@+id/mLastTime"
+            app:layout_constraintTop_toTopOf="@+id/mLastTime"
             app:srcCompat="@drawable/ic_restore_black_24dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/mLastTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
             android:background="#b8424242"
-            android:text="x Woche(n) "
+            android:text="x Tag(en) "
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

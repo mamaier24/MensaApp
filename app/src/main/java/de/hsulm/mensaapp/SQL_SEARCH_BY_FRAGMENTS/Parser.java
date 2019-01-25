@@ -88,10 +88,18 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
                 names.add(name);
 
                 food = new FoodClass(jo.getInt("id"),
-                        jo.getString("name"), jo.getString("category"),
+                        jo.getString("name"),
+                        jo.getString("category"),
                         jo.getInt("vegan"),
-                        jo.getInt("vegetarian"), jo.getString("price"),
-                        jo.getString("uuid"), jo.getInt("rating"), jo.getString("img_id_cover"), jo.getInt("number_rating"));
+                        jo.getInt("vegetarian"),
+                        jo.getString("price"),
+                        jo.getString("uuid"),
+                        jo.getInt("rating"),
+                        jo.getString("img_id_cover"),
+                        jo.getInt("number_rating"),
+                        jo.getString("daydiff")
+
+                );
 
                 food_list.add(food);
 

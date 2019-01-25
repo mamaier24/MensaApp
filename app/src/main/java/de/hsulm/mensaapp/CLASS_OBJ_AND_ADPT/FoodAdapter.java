@@ -31,6 +31,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static RatingBar mRatingBar;
     private static TextView mCategory;
     private static TextView mDate;
+    private static TextView mLastTime;
     private static DateID time = new DateID();
 
     public FoodAdapter(ArrayList<FoodClass> exampleList) {
@@ -87,6 +88,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mBewertung.setText(((Float) (((Integer) currentItem.getRating()).floatValue())).toString());
             mRatingBar.setRating(currentItem.getRating());
             mCategory.setText(currentItem.getCategory());
+            mLastTime.setText(currentItem.getLastTime() + " Tag(en)");
         }
     }
 
@@ -125,6 +127,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
                 mRatingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
                 mCategory = (TextView) itemView.findViewById(R.id.mCategory);
+                mLastTime = (TextView) itemView.findViewById(R.id.mLastTime);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

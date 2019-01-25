@@ -255,9 +255,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
                     initializeRecycler();
 
-                    TextView mDate = (TextView) findViewById(R.id.mDate);
-                    mDate.setText("Jahr: " + time.returnYear() + " " + "Kalenderwoche: " + time.returnWeek() + " " + "Tag: " + time.getDay());
-
                     if (swipe_refresh != null) {
                         swipe_refresh.setRefreshing(false);
                     }

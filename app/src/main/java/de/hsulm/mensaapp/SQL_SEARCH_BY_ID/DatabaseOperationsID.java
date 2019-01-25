@@ -64,7 +64,8 @@ public class DatabaseOperationsID {
                                               food_obj.getString("uuid"),
                                               food_obj.getInt("rating"),
                                               food_obj.getString("img_id_cover"),
-                                              food_obj.getInt("number_rating"));
+                                              food_obj.getInt("number_rating"),
+                                              food_obj.getString("daydiff") );
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
