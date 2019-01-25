@@ -57,6 +57,7 @@ import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.DatabaseOperationsFetchImag
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.DatabaseOperationsTransmitImages;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.IDatabaseOperationsFetchImages;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.IDatabaseOperationsTransmitImages;
+import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.IDatabaseOperationsTransmitRating;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
@@ -617,24 +618,26 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                 int user_id = SharedPrefManager.getInstance(FoodProfileActivity.this).getUserId();
                 int food_id = food.getId();
                 DatabaseOperationsTransmitRating new_rating = new DatabaseOperationsTransmitRating(FoodProfileActivity.this);
-                new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()));
 
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()), new IDatabaseOperationsTransmitRating() {
+
                     @Override
-                    public void run() {
+                    public void onSuccess() {
+
                         operationsID.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsID() {
                             @Override
                             public void onSuccess(final ArrayList<FoodClass> food_list) {
-                                FoodClass refreshed_food = food_list.get(position);
+                                FoodClass refreshed_food = food_list.get(position-1);
                                 int number_rating = refreshed_food.getNumberRating();
                                 int rating = refreshed_food.getRating();
                                 mRatingBar2.setRating(rating);
                                 uiE_number_rating.setText("( " + String.valueOf(number_rating) + " )");
                             }
                         });
+
                     }
-                }, 11000);
+
+                });
 
             }
 
