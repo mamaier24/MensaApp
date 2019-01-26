@@ -84,7 +84,6 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
             {
                 jo=ja.getJSONObject(i);
                 String name=jo.getString("name");
-                int id = jo.getInt("id");
                 names.add(name);
 
                 food = new FoodClass(jo.getInt("id"),
@@ -98,7 +97,6 @@ public class Parser extends AsyncTask<Void,Void,Integer> {
                         jo.getString("img_id_cover"),
                         jo.getInt("number_rating"),
                         jo.getString("daydiff")
-
                 );
 
                 food_list.add(food);

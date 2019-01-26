@@ -41,8 +41,8 @@ public class SenderReceiver extends AsyncTask<Void,Void,String>{
         super.onPreExecute();
 
         pd=new ProgressDialog(c);
-        pd.setTitle("Search");
-        pd.setMessage("Searching...Please wait");
+        pd.setTitle("Suche");
+        pd.setMessage("Suche...Bitte warten!");
         pd.show();
     }
 
@@ -98,20 +98,15 @@ public class SenderReceiver extends AsyncTask<Void,Void,String>{
 
             bw.flush();
 
-            //RELEASE RES
             bw.close();
             os.close();
 
-            //SOME RESPONSE ????
             int responseCode=con.getResponseCode();
 
-            //DECODE
             if(responseCode==con.HTTP_OK)
             {
-                //RETURN SOME DATA stream
                 InputStream is=con.getInputStream();
 
-                //READ IT
                 BufferedReader br=new BufferedReader(new InputStreamReader(is));
                 String line;
                 StringBuffer response=new StringBuffer();

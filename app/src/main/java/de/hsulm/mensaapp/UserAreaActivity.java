@@ -24,8 +24,8 @@ import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodAdapter;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.DatabaseOperationsID;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_ID.IDatabaseOperationsID;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_DATEID.DatabaseOperationsDateID;
+import de.hsulm.mensaapp.SQL_SEARCH_BY_DATEID.IDatabaseOperationsDateID;
 import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
 
 /**
@@ -38,7 +38,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     private RecyclerView.LayoutManager mLayoutmanager;
     private SwipeRefreshLayout swipe_refresh;
     private TabLayout tabLayout;
-    private DatabaseOperationsID operations = new DatabaseOperationsID(this);
+    private DatabaseOperationsDateID operations = new DatabaseOperationsDateID(this);
     private DateID time = new DateID();
 
 
@@ -103,7 +103,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
     public void initializeRecycler() {
 
-        operations.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsID() {
+        operations.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsDateID() {
             @Override
             public void onSuccess(final ArrayList<FoodClass> food_list) {
 
@@ -126,7 +126,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     }
 
                     mAdapter = new FoodAdapter(food_list);
-
                 }
 
                 //Checks for vegan food if tab is selected
