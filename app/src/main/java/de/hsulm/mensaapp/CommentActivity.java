@@ -1,6 +1,8 @@
 package de.hsulm.mensaapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,12 +35,13 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     private String user_id_str = Integer.toString(SharedPrefManager.getInstance(this).getUserId());
     private int user_id = SharedPrefManager.getInstance(this).getUserId();
+    private String username = SharedPrefManager.getInstance(this).getUsername();
+    private DialogInterface.OnClickListener dialogClickListener;
     private int food_id;
     private String food_id_str;
     private String comment;
     private RatingBar ratingBar;
     private String location =null;
-    private String username = SharedPrefManager.getInstance(this).getUsername();
     private String user_rating_str;
 
 
@@ -95,17 +98,26 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         btnTransmitComment.setTransformationMethod(null);
 
         initializeRating();
+        initializeDialog();
 
     }
 
 
     @Override
     public void onClick(View view) {
-
         if (view == btnTransmitComment) {
-            transmitComment();
+            if (Connection.getInstance().isOnline(this)) {
+                if (location.length() > 5) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("Bist du sicher dass du den Kommentar senden willst?").setPositiveButton("Ja", dialogClickListener)
+                            .setNegativeButton("Nein", dialogClickListener).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Bitte Standort auswählen!", Toast.LENGTH_LONG).show();
+                }
+            }else{
+                    Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
+            }
         }
-
     }
 
     /**
@@ -131,6 +143,23 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    private void initializeDialog(){
+        dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        transmitComment();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+    }
+
     /**
      * Transmits the comment to the DB
      */
@@ -138,8 +167,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         comment = MultiTextComment.getText().toString().trim();
 
-        if (Connection.getInstance().isOnline(this)) {
-            if (location.length() > 5) {
+
                     progressDialog.setMessage("Bewertung abgeben...");
                     progressDialog.show();
                     DatabaseOperationsTransmitComments new_comment = new DatabaseOperationsTransmitComments(this);
@@ -150,13 +178,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                             finish();
                         }
                     });
-            } else {
-                Toast.makeText(getApplicationContext(), "Bitte Standort auswählen!", Toast.LENGTH_LONG).show();
-            }
 
-        }else{
-            Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
-        }
 
     }
 
