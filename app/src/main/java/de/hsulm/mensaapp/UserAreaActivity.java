@@ -65,10 +65,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             }
 
         }else{
-            TextView mDate = (TextView) findViewById(R.id.mDate);
             ImageView noserver = (ImageView)findViewById(R.id.noserver);
             noserver.setVisibility(View.VISIBLE);
-            mDate.setText("Offline");
         }
 
     }
@@ -161,8 +159,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
 
                             ImageView noserver = (ImageView)findViewById(R.id.noserver);
                             noserver.setVisibility(View.VISIBLE);
-                            TextView mDate = (TextView) findViewById(R.id.mDate);
-                            mDate.setText("Offline");
                         }
                     }
                 });
@@ -273,10 +269,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                         mAdapter.clear();
                     }
 
-                    TextView mDate = (TextView) findViewById(R.id.mDate);
                     ImageView noserver = (ImageView)findViewById(R.id.noserver);
                     noserver.setVisibility(View.VISIBLE);
-                    mDate.setText("Offline");
 
                     if (swipe_refresh != null) {
                         swipe_refresh.setRefreshing(false);
@@ -302,10 +296,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             if (mAdapter != null) {
                 mAdapter.clear();
             }
-            TextView mDate = (TextView) findViewById(R.id.mDate);
             ImageView noserver = (ImageView)findViewById(R.id.noserver);
             noserver.setVisibility(View.VISIBLE);
-            mDate.setText("Offline");
         }
     }
 
