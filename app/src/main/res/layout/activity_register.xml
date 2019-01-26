@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hsu_icon" />
+        app:srcCompat="@drawable/ic_launcher" />
 
     <TextView
 
@@ -135,6 +135,16 @@
         android:indeterminateDrawable="@drawable/progressbar_register_foregound"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eTEmail" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="84dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:srcCompat="@mipmap/ic_restaurant_menu_black_24dp" />
 
 
 </android.support.constraint.ConstraintLayout>
