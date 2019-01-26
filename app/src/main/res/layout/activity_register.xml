@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher" />
+        app:srcCompat="@drawable/ic_app" />
 
     <TextView
 
@@ -135,24 +135,6 @@
         android:indeterminateDrawable="@drawable/progressbar_register_foregound"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eTEmail" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="53dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="122dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_restaurant_menu_black_24dp" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="53dp"
-        android:layout_height="78dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-        app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:srcCompat="@drawable/ic_tea_cup" />
 
 
 </android.support.constraint.ConstraintLayout>
