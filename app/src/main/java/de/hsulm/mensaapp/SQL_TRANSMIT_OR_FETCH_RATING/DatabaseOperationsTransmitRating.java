@@ -32,7 +32,7 @@ public class DatabaseOperationsTransmitRating {
     }
 
 
-    public void setAndGetRating(int user_id, final int food_id, final int user_rating) {
+    public void setAndGetRating(int user_id, final int food_id, final int user_rating, final IDatabaseOperationsTransmitRating callback) {
 
         final String user_id_string = ((Integer)user_id).toString();
         final String food_id_string = ((Integer)food_id).toString();
@@ -55,8 +55,11 @@ public class DatabaseOperationsTransmitRating {
                             if (!rating_obj.getBoolean("error") && !rating_obj.getString("message").equals("alreadyRated")) {
                                 Toast.makeText(mContext, rating_obj.getString("message"), Toast.LENGTH_LONG).show();
 
-                            } else if (rating_obj.getBoolean("error"))
+                            } else if (rating_obj.getBoolean("error")) {
                                 Toast.makeText(mContext, "Fehler bei der Bewertung!", Toast.LENGTH_LONG).show();
+                            }
+
+                            callback.onSuccess();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

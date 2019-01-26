@@ -20,11 +20,13 @@ public class FoodClass implements Parcelable {
     private int rating;
     private String imgID;
     private int number_rating;
+    private String lastTime;
 
 
     public FoodClass(){ }
 
-    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price, String uuid, int rating, String mimgId, int number_rating){
+    public FoodClass(int id, String name, String category, int vegan, int vegetarian, String price,
+                     String uuid, int rating, String mimgId, int number_rating, String lastTime){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -36,6 +38,7 @@ public class FoodClass implements Parcelable {
         this.rating = rating;
         this.imgID = mimgId;
         this.number_rating = number_rating;
+        this.lastTime = lastTime;
     }
 
     protected FoodClass(Parcel in) {
@@ -50,6 +53,7 @@ public class FoodClass implements Parcelable {
         rating = in.readInt();
         imgID = in.readString();
         number_rating = in.readInt();
+        lastTime = in.readString();
     }
 
     public static final Creator<FoodClass> CREATOR = new Creator<FoodClass>() {
@@ -109,6 +113,8 @@ public class FoodClass implements Parcelable {
 
     public int getNumberRating(){return number_rating;}
 
+    public String getLastTime() { return lastTime; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -127,5 +133,6 @@ public class FoodClass implements Parcelable {
         dest.writeInt(rating);
         dest.writeString(imgID);
         dest.writeInt(number_rating);
+        dest.writeString(lastTime);
     }
 }

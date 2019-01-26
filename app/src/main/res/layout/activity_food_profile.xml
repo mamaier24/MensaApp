@@ -59,7 +59,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageSlider"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar3" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
     <TextView
         android:id="@+id/tVComment"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     <RatingBar
-        android:id="@+id/ratingBar3"
+        android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -220,7 +220,7 @@
         android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar3" />
+        app:layout_constraintTop_toTopOf="@+id/ratingBar" />
 
 
     <android.support.v7.widget.RecyclerView
@@ -259,7 +259,7 @@
         android:textColor="#0066CC"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/ratingBar3"
+        app:layout_constraintEnd_toEndOf="@+id/ratingBar"
         app:layout_constraintTop_toTopOf="parent" />
 
 

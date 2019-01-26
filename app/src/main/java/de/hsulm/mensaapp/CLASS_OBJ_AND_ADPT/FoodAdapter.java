@@ -22,7 +22,7 @@ import de.hsulm.mensaapp.R;
  * Created by Marcel Maier on 30/11/18.
  */
 public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<FoodClass> mexampleList;
+    private ArrayList<FoodClass> food_list;
     private OnItemClickListener mListener;
     private static ImageView mImage;
     private static TextView mTitel;
@@ -31,11 +31,13 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static RatingBar mRatingBar;
     private static TextView mCategory;
     private static TextView mDate;
+    private static TextView mLastTime;
     private static DateID time = new DateID();
 
-    public FoodAdapter(ArrayList<FoodClass> exampleList) {
-        this.mexampleList = exampleList;
-        mexampleList.add(0, new FoodClass());
+    public FoodAdapter(ArrayList<FoodClass> food_list) {
+        this.food_list = food_list;
+        //Empty food class needs to be added first for correct display in UserAreaActivity
+        food_list.add(0, new FoodClass());
     }
 
 
@@ -79,7 +81,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(holder.getItemViewType()==1){
             mDate.setText(time.getDate() + " - " + time.getDay());
         }else {
-            FoodClass currentItem = mexampleList.get(position);
+            FoodClass currentItem = food_list.get(position);
             String url = URLS.ROOT_URL_PICTURES + currentItem.getmimgId();
             new DownloadRecyclerImage(mImage).execute(url);
             mTitel.setText(currentItem.getName());
@@ -87,13 +89,14 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mBewertung.setText(((Float) (((Integer) currentItem.getRating()).floatValue())).toString());
             mRatingBar.setRating(currentItem.getRating());
             mCategory.setText(currentItem.getCategory());
+            mLastTime.setText(currentItem.getLastTime() + " Tag(en)");
         }
     }
 
 
     @Override
     public int getItemCount() {
-        return mexampleList.size();
+        return food_list.size();
     }
 
 
@@ -108,8 +111,8 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public void clear() {
-        final int size = mexampleList.size();
-        mexampleList.clear();
+        final int size = food_list.size();
+        food_list.clear();
         notifyItemRangeRemoved(0, size);
     }
 
@@ -125,6 +128,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
                 mRatingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
                 mCategory = (TextView) itemView.findViewById(R.id.mCategory);
+                mLastTime = (TextView) itemView.findViewById(R.id.mLastTime);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -139,6 +143,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 });
             }
     }
+
 
     public static class DateViewHolder extends RecyclerView.ViewHolder {
 
@@ -168,6 +173,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             return mIcon11;
         }
+
 
         protected void onPostExecute(Bitmap result) {
             if (result != null) {

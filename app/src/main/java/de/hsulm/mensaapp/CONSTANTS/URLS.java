@@ -16,7 +16,8 @@ public class URLS {
     public static final String URL_LOGIN = ROOT_URL + "user_login.php";
 
     //URLs needed for searching
-    public static final String URL_SEARCH_BY_ID = ROOT_URL + "search_by_id.php";
+    public static final String URL_SEARCH_BY_DATEID = ROOT_URL + "search_by_dateID.php";
+    public static final String URL_SEARCH_BY_ID = ROOT_URL + "search_by_ID.php";
     public static final String URL_SEARCH_BY_FRAGMENTS = ROOT_URL + "search_by_fragments.php";
 
     //URLs needed for transmission

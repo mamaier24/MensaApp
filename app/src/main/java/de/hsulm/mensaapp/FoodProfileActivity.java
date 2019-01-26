@@ -38,8 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsAdapter;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsClass;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
@@ -57,6 +55,7 @@ import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.DatabaseOperationsFetchImag
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.DatabaseOperationsTransmitImages;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.IDatabaseOperationsFetchImages;
 import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_IMAGE.IDatabaseOperationsTransmitImages;
+import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.IDatabaseOperationsTransmitRating;
 
 import static de.hsulm.mensaapp.R.layout.activity_food_profile;
 
@@ -85,7 +84,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
 
     private RecyclerView.Adapter adapter;
     private FoodClass food = null;
-    private DatabaseOperationsFetchComments operations = new DatabaseOperationsFetchComments(this);
+    private DatabaseOperationsFetchComments operationsComments = new DatabaseOperationsFetchComments(this);
     private DatabaseOperationsID operationsID = new DatabaseOperationsID(this);
     private DateID time = new DateID();
     private String prev_intent;
@@ -138,7 +137,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
          */
         ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
-        mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar3);
+        mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar);
         sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
         btnCamera  = (ImageView)findViewById(R.id.btnCamera);
         btnComment = (Button)findViewById(R.id.bWroteComment);
@@ -205,6 +204,9 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    /**
+     * Creates new options menu to prevent unlimited intent creation
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (prev_intent.equals("SearchActivity")) {
@@ -217,6 +219,9 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    /**
+     * Necessary code for the options menu
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -549,7 +554,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
      */
     public void initializeRecyclerComments(int food_id) {
 
-        operations.getCommentsFromDB(Integer.toString(food_id), new IDatabaseOperationsFetchComments() {
+        operationsComments.getCommentsFromDB(Integer.toString(food_id), new IDatabaseOperationsFetchComments() {
 
             @Override
             public void onSuccess(final boolean isDefault, final ArrayList<CommentsClass> comments_list) {
@@ -615,26 +620,27 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                     btnComment.setEnabled(true);
                 }
                 int user_id = SharedPrefManager.getInstance(FoodProfileActivity.this).getUserId();
-                int food_id = food.getId();
+                final int food_id = food.getId();
                 DatabaseOperationsTransmitRating new_rating = new DatabaseOperationsTransmitRating(FoodProfileActivity.this);
-                new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()));
 
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                new_rating.setAndGetRating(user_id, food_id, Math.round(mRatingBar.getRating()), new IDatabaseOperationsTransmitRating() {
+
                     @Override
-                    public void run() {
-                        operationsID.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsID() {
+                    public void onSuccess() {
+
+                        operationsID.getFoodFromDB(Integer.toString(food_id), new IDatabaseOperationsID() {
                             @Override
-                            public void onSuccess(final ArrayList<FoodClass> food_list) {
-                                FoodClass refreshed_food = food_list.get(position);
-                                int number_rating = refreshed_food.getNumberRating();
-                                int rating = refreshed_food.getRating();
+                            public void onSuccess(FoodClass food) {
+                                int number_rating = food.getNumberRating();
+                                int rating = food.getRating();
                                 mRatingBar2.setRating(rating);
                                 uiE_number_rating.setText("( " + String.valueOf(number_rating) + " )");
                             }
                         });
+
                     }
-                }, 11000);
+
+                });
 
             }
 
