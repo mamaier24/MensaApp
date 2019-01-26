@@ -116,12 +116,21 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="84dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="53dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_restaurant_menu_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="53dp"
+        android:layout_height="78dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:srcCompat="@drawable/ic_tea_cup" />
 
 </android.support.constraint.ConstraintLayout>
