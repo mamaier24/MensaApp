@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#e9e9e9"
-        app:defaultQueryHint="Search.."></android.support.v7.widget.SearchView>
+        app:defaultQueryHint="Search..."></android.support.v7.widget.SearchView>
 
     <ListView
         android:id="@+id/lv"
