@@ -42,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
         app:layout_constraintEnd_toStartOf="@+id/imageSlider"
         app:layout_constraintStart_toStartOf="parent"
