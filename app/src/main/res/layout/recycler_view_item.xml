@@ -33,13 +33,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="11dp"
-            android:background="@drawable/image_border"
+            android:background="@drawable/recycler_image_border"
             android:padding="1dp"
             android:scaleType="fitCenter"
+            android:scrollY="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_restaurant_menu_black_24dp" />
+            app:srcCompat="@drawable/icon_recycler_placeholder" />
 
         <TextView
             android:id="@+id/tvPreis"
@@ -126,7 +127,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/mLastTime"
             app:layout_constraintEnd_toStartOf="@+id/mLastTime"
             app:layout_constraintTop_toTopOf="@+id/mLastTime"
-            app:srcCompat="@drawable/ic_restore_black_24dp" />
+            app:srcCompat="@drawable/icon_last_time" />
 
         <TextView
             android:id="@+id/mLastTime"

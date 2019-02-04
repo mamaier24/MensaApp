@@ -19,7 +19,7 @@
             android:id="@+id/btn_capture_photo"
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:src="@drawable/recycler_comment_rectangle"
+            android:src="@drawable/comments_data_rectangle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
             android:layout_height="18dp"
             app:layout_constraintEnd_toStartOf="@+id/tVComment_stars"
             app:layout_constraintTop_toTopOf="@+id/btn_capture_photo"
-            app:srcCompat="@drawable/rating_star_24dp" />
+            app:srcCompat="@drawable/icon_rating" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -98,7 +98,7 @@
             android:layout_height="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
             app:layout_constraintStart_toStartOf="@+id/btn_capture_photo"
-            app:srcCompat="@drawable/location_icon_24dp" />
+            app:srcCompat="@drawable/icon_location" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -106,7 +106,7 @@
             android:layout_height="18dp"
             app:layout_constraintStart_toStartOf="@+id/btn_capture_photo"
             app:layout_constraintTop_toTopOf="@+id/btn_capture_photo"
-            app:srcCompat="@drawable/user_icon_24dp" />
+            app:srcCompat="@drawable/icon_user" />
 
         <ImageView
             android:id="@+id/imageView7"

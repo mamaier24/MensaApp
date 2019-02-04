@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app" />
+        app:srcCompat="@drawable/icon_app" />
 
     <TextView
         android:id="@+id/textView"
