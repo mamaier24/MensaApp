@@ -35,7 +35,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@mipmap/ic_camera_alt" />
+        app:srcCompat="@mipmap/icon_camera" />
 
     <ImageView
         android:id="@+id/placeholder"

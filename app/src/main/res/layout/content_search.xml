@@ -27,7 +27,7 @@
     </ListView>
 
     <ImageView
-        android:id="@+id/nodataImg"
+        android:id="@+id/nodata"
         android:visibility="invisible"
         android:src="@drawable/icon_no_data"
         android:layout_centerInParent="true"

@@ -114,7 +114,7 @@
             android:layout_height="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_capture_photo"
             app:layout_constraintEnd_toStartOf="@+id/tVComment_date"
-            app:srcCompat="@mipmap/ic_last_time" />
+            app:srcCompat="@mipmap/icon_last_time" />
 
 
     </android.support.constraint.ConstraintLayout>

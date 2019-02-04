@@ -28,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
 
         lv= (ListView) findViewById(R.id.lv);
         sv= (SearchView) findViewById(R.id.sv);
-        noDataImg= (ImageView) findViewById(R.id.nodataImg);
+        noDataImg= (ImageView) findViewById(R.id.nodata);
         noNetworkImg= (ImageView) findViewById(R.id.noserver);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
