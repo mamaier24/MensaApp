@@ -37,7 +37,8 @@
             android:screenOrientation="nosensor" />
 
         <activity
-            android:name=".MenuActivity" />
+            android:name=".MenuActivity"
+            android:screenOrientation="nosensor"/>
 
         <activity
             android:name=".FoodProfileActivity"
@@ -50,7 +51,8 @@
             android:windowSoftInputMode="stateVisible|adjustPan" />
 
         <activity
-            android:name=".IngredientsActivity" />
+            android:name=".IngredientsActivity"
+            android:screenOrientation="nosensor"/>
 
         <activity
             android:name=".CommentActivity"
