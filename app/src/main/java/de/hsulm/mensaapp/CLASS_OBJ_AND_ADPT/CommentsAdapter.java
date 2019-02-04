@@ -50,7 +50,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             holder.tVComment_user.setText("");
             holder.tVComment_location.setText("");
             holder.tVComment_date.setText("");
-            holder.tVComment_foodProfile.setText("Noch kein Kommentar vorhanden! Sei der erste der ein Kommentar abgibt!");
+            holder.tVComment_foodProfile.setText("Noch kein Kommentar vorhanden! Sei der erste der einen Kommentar abgibt!");
             holder.tVComment_rating.setText("");
             holder.tvComment_userPicture.setVisibility(View.GONE);
             holder.tvComment_datePicture.setVisibility(View.GONE);
