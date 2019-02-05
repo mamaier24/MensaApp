@@ -18,12 +18,11 @@ import java.util.Map;
 import de.hsulm.mensaapp.CONSTANTS.URLS;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
+/**
+ * Created by Marcel Maier 30/12/2018
+ * Class necessary for transmission of a rating of specific food
+ */
 public class DatabaseOperationsTransmitRating {
-
-    /**
-     * Created by Stephan Danz 05/12/2018
-     * Class necessary for handling all DB operations such as getting food
-     */
 
     private Context mContext;
 

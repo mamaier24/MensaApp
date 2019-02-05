@@ -22,7 +22,7 @@ import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.CommentsClass;
 
 /**
  * Created by Marcel Maier 30/12/2018
- * Class necessary for handling all DB operations such as getting food
+ * Class necessary for getting all comments of specific food from DB
  */
 public class DatabaseOperationsFetchComments {
 

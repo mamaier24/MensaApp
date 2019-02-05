@@ -17,6 +17,10 @@ import java.util.Map;
 import de.hsulm.mensaapp.CONSTANTS.URLS;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
+/**
+ * Created by Marcel Maier 30/12/2018
+ * Class necessary for fetching an rating of a specific food from DB
+ */
 public class DatabaseOperationsFetchRating {
 
     private Context mContext;

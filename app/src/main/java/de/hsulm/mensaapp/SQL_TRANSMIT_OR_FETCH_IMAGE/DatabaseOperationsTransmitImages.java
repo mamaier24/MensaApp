@@ -15,8 +15,8 @@ import de.hsulm.mensaapp.CONSTANTS.URLS;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 
 /**
- * Created by Stephan Danz 05/12/2018
- * Class necessary for handling all DB operations such as getting food
+ * Created by Stephan Danz 30/12/2018
+ * Class necessary for transmitting an image to the DB
  */
 public class DatabaseOperationsTransmitImages {
 
