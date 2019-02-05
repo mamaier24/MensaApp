@@ -53,7 +53,6 @@ public class DatabaseOperationsTransmitRating {
 
                             if (!rating_obj.getBoolean("error") && !rating_obj.getString("message").equals("alreadyRated")) {
                                 Toast.makeText(mContext, rating_obj.getString("message"), Toast.LENGTH_LONG).show();
-
                             } else if (rating_obj.getBoolean("error")) {
                                 Toast.makeText(mContext, "Fehler bei der Bewertung!", Toast.LENGTH_LONG).show();
                             }
