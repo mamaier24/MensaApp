@@ -10,7 +10,6 @@
 
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="350dp">
 
@@ -120,7 +119,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="#b8424242"
