@@ -35,7 +35,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        spinner = (Spinner)findViewById(R.id.spinnerStandort);
+        spinner = (Spinner)findViewById(R.id.spLocation);
         pdfview =(PDFView)findViewById(R.id.pdfView);
 
         adapter = ArrayAdapter.createFromResource(this, R.array.Standorte, android.R.layout.simple_spinner_item);

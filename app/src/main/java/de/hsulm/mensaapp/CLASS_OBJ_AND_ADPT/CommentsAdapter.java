@@ -48,23 +48,23 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
         if(isDefault == true) {
 
-            holder.tVComment_user.setText("");
-            holder.tVComment_location.setText("");
-            holder.tVComment_date.setText("");
-            holder.tVComment_foodProfile.setText("Noch kein Kommentar vorhanden! Sei der erste der einen Kommentar abgibt!");
-            holder.tVComment_rating.setText("");
-            holder.tvComment_userPicture.setVisibility(View.GONE);
-            holder.tvComment_datePicture.setVisibility(View.GONE);
-            holder.tvComment_locationPicture.setVisibility(View.GONE);
-            holder.tvComment_ratingPicture.setVisibility(View.GONE);
+            holder.tvCommentUser.setText("");
+            holder.tvCommentLocation.setText("");
+            holder.tvCommentDate.setText("");
+            holder.tvTitle.setText("Noch kein Kommentar vorhanden! Sei der erste der einen Kommentar abgibt!");
+            holder.tvCommentRating.setText("");
+            holder.ivIconCommentUser.setVisibility(View.GONE);
+            holder.ivIconCommentDate.setVisibility(View.GONE);
+            holder.ivIconCommentLocation.setVisibility(View.GONE);
+            holder.ivIconCommentRating.setVisibility(View.GONE);
 
         }else{
             CommentsClass commentsClass = listItems.get(position);
-            holder.tVComment_user.setText(commentsClass.getUser());
-            holder.tVComment_location.setText(commentsClass.getLocation());
-            holder.tVComment_date.setText(commentsClass.getCDate());
-            holder.tVComment_foodProfile.setText(commentsClass.getComment());
-            holder.tVComment_rating.setText(commentsClass.getUserRating());
+            holder.tvCommentUser.setText(commentsClass.getUser());
+            holder.tvCommentLocation.setText(commentsClass.getLocation());
+            holder.tvCommentDate.setText(commentsClass.getCDate());
+            holder.tvTitle.setText(commentsClass.getComment());
+            holder.tvCommentRating.setText(commentsClass.getUserRating());
         }
 
     }
@@ -81,28 +81,28 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView tVComment_user;
-        public TextView tVComment_rating;
-        public TextView tVComment_location;
-        public TextView tVComment_date;
-        public TextView tVComment_foodProfile;
-        public ImageView tvComment_userPicture;
-        public ImageView tvComment_datePicture;
-        public ImageView tvComment_locationPicture;
-        public ImageView tvComment_ratingPicture;
+        public TextView tvCommentUser;
+        public TextView tvCommentRating;
+        public TextView tvCommentLocation;
+        public TextView tvCommentDate;
+        public TextView tvTitle;
+        public ImageView ivIconCommentUser;
+        public ImageView ivIconCommentDate;
+        public ImageView ivIconCommentLocation;
+        public ImageView ivIconCommentRating;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tVComment_user = (TextView) itemView.findViewById(R.id.tVComment_user);
-            tVComment_rating = (TextView) itemView.findViewById(R.id.tVComment_stars);
-            tVComment_location = (TextView) itemView.findViewById(R.id.tVComment_location);
-            tVComment_date = (TextView) itemView.findViewById(R.id.tVComment_date);
-            tVComment_foodProfile = (TextView) itemView.findViewById(R.id.tvComment_foodProfile);
-            tvComment_userPicture = (ImageView) itemView.findViewById(R.id.imageView6);
-            tvComment_datePicture = (ImageView) itemView.findViewById(R.id.imageView7);
-            tvComment_locationPicture = (ImageView) itemView.findViewById(R.id.imageView3);
-            tvComment_ratingPicture = (ImageView) itemView.findViewById(R.id.imageView4);
+            tvCommentUser = (TextView) itemView.findViewById(R.id.tvCommentUser);
+            tvCommentRating = (TextView) itemView.findViewById(R.id.tvCommentRating);
+            tvCommentLocation = (TextView) itemView.findViewById(R.id.tvCommentLocation);
+            tvCommentDate = (TextView) itemView.findViewById(R.id.tvCommentDate);
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            ivIconCommentUser = (ImageView) itemView.findViewById(R.id.ivIconCommentUser);
+            ivIconCommentDate = (ImageView) itemView.findViewById(R.id.ivIconCommentDate);
+            ivIconCommentLocation = (ImageView) itemView.findViewById(R.id.ivIconCommentLocation);
+            ivIconCommentRating = (ImageView) itemView.findViewById(R.id.ivIconCommentRating);
         }
     }
 

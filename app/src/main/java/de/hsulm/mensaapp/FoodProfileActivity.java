@@ -72,14 +72,14 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     private String imageFilePath;
     private ByteArrayOutputStream byteArrayOutputStream;
 
-    private Button btnComment;
+    private Button btnWriteComment;
     private ImageView btnCamera;
-    private TextView ratingAvg;
-    private TextView uiE_number_rating;
+    private TextView tvAverageRating;
+    private TextView tvNumberOfRatings;
     private RecyclerView recyclerView;
-    private RatingBar mRatingBar;
-    private RatingBar mRatingBar2;
-    private SliderLayout sliderShow;
+    private RatingBar rbUserRating;
+    private RatingBar rbAverageRating;
+    private SliderLayout imageSlider;
     private Bitmap image;
 
     private RecyclerView.Adapter adapter;
@@ -126,46 +126,46 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         /**
          * UI elements with method space init.
          */
-        TextView mTitel = (TextView) findViewById(R.id.tVComment);
-        TextView mPreis = (TextView) findViewById(R.id.Preis);
-        CheckBox mCheckBox_vegan = (CheckBox)findViewById(R.id.checkBox_vegan);
-        CheckBox mCheckBox_vegetarian = (CheckBox)findViewById(R.id.checkBox_vegetarian);
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        TextView tvPrice = (TextView) findViewById(R.id.tvPrice);
+        CheckBox cbVegan = (CheckBox)findViewById(R.id.cbVegan);
+        CheckBox cbVegetarian = (CheckBox)findViewById(R.id.cbVegetarian);
 
 
         /**
          * UI elements with class space init.
          */
-        ratingAvg = (TextView)findViewById(R.id.tVratingAVG);
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar2);
-        mRatingBar2 = (RatingBar) findViewById(R.id.ratingBar);
-        sliderShow = (SliderLayout)findViewById(R.id.imageSlider);
+        tvAverageRating = (TextView)findViewById(R.id.tvAverageRating);
+        rbUserRating = (RatingBar) findViewById(R.id.rbUserRating);
+        rbAverageRating = (RatingBar) findViewById(R.id.rbAverageRating);
+        imageSlider = (SliderLayout)findViewById(R.id.imageSlider);
         btnCamera  = (ImageView)findViewById(R.id.btnCamera);
-        btnComment = (Button)findViewById(R.id.bWroteComment);
-        uiE_number_rating = (TextView)findViewById(R.id.uiE_number_rating);
+        btnWriteComment = (Button)findViewById(R.id.btnWriteComment);
+        tvNumberOfRatings = (TextView)findViewById(R.id.tvNumberOfRatings);
 
 
         /**
          * UI state init.
          */
-        mCheckBox_vegan.setClickable(false);
-        mCheckBox_vegetarian.setClickable(false);
-        btnComment.setTransformationMethod(null);
-        btnComment.setEnabled(false);
+        cbVegan.setClickable(false);
+        cbVegetarian.setClickable(false);
+        btnWriteComment.setTransformationMethod(null);
+        btnWriteComment.setEnabled(false);
         btnCamera.setOnClickListener(this);
-        btnComment.setOnClickListener(this);
-        mRatingBar.setRating(0);
-        mRatingBar.setStepSize(1);
-        mRatingBar2.setRating(rating);
-        mRatingBar2.setIsIndicator(true);
-        ratingAvg.setText(String.valueOf(rating));
-        mPreis.setText(price);
-        mTitel.setText(name);
-        uiE_number_rating.setText("( " + String.valueOf(number_rating) + " )");
+        btnWriteComment.setOnClickListener(this);
+        rbUserRating.setRating(0);
+        rbUserRating.setStepSize(1);
+        rbAverageRating.setRating(rating);
+        rbAverageRating.setIsIndicator(true);
+        tvAverageRating.setText(String.valueOf(rating));
+        tvPrice.setText(price);
+        tvTitle.setText(name);
+        tvNumberOfRatings.setText("( " + String.valueOf(number_rating) + " )");
 
         if(vegetarian == 1){
-            mCheckBox_vegetarian.setChecked(true);
+            cbVegetarian.setChecked(true);
             if(vegan==1){
-                mCheckBox_vegan.setChecked(true);
+                cbVegan.setChecked(true);
             }
         }
 
@@ -198,7 +198,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onStop() {
 
-        sliderShow.stopAutoCycle();
+        imageSlider.stopAutoCycle();
         super.onStop();
 
     }
@@ -231,8 +231,8 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.Inhaltsstoffe:
-                Intent InhaltsstoffeIntent = new Intent(this, IngredientsActivity.class);
-                this.startActivity(InhaltsstoffeIntent);
+                Intent intent_ingredients = new Intent(this, IngredientsActivity.class);
+                this.startActivity(intent_ingredients);
                 break;
 
 
@@ -277,10 +277,10 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
 
-        if(view == btnComment) {
+        if(view == btnWriteComment) {
             Intent commentIntent = new Intent(FoodProfileActivity.this, CommentActivity.class);
             commentIntent.putExtra("food_id", food_id);
-            commentIntent.putExtra("user_rating", mRatingBar.getRating());
+            commentIntent.putExtra("user_rating", rbUserRating.getRating());
             FoodProfileActivity.this.startActivity(commentIntent);
         }else if(view == btnCamera) {
             addPicture();
@@ -437,8 +437,8 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
 
         protected Void doInBackground(final ArrayList<String>... images) {
 
-            final ImageView placeholder = (ImageView)findViewById(R.id.placeholder);
-            final ProgressBar progressbar = (ProgressBar)findViewById(R.id.progressBar_loadImages);
+            final ImageView placeholder = (ImageView)findViewById(R.id.ivPlaceholder);
+            final ProgressBar progressbar = (ProgressBar)findViewById(R.id.pbLoadImages);
 
             try {
 
@@ -451,14 +451,14 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                          @Override
                          public void run() {
 
-                             sliderShow.setVisibility(View.INVISIBLE);
-                             sliderShow.removeAllSliders();
+                             imageSlider.setVisibility(View.INVISIBLE);
+                             imageSlider.removeAllSliders();
                              String url = URLS.ROOT_URL_PICTURES + images[0].get(0);
                              defaultSliderView.image(url);
                              defaultSliderView.setScaleType(BaseSliderView.ScaleType.CenterCrop);
-                             sliderShow.addSlider(defaultSliderView);
-                             sliderShow.stopAutoCycle();
-                             sliderShow.setPagerTransformer(false, new BaseTransformer() {
+                             imageSlider.addSlider(defaultSliderView);
+                             imageSlider.stopAutoCycle();
+                             imageSlider.setPagerTransformer(false, new BaseTransformer() {
                                  @Override
                                  protected void onTransform(View view, float position) {
                                  }
@@ -466,7 +466,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
 
                              placeholder.setVisibility(View.GONE);
                              progressbar.setVisibility(View.GONE);
-                             sliderShow.setVisibility(View.VISIBLE);
+                             imageSlider.setVisibility(View.VISIBLE);
 
                          }
                      });
@@ -478,8 +478,8 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                          @Override
                          public void run() {
 
-                             sliderShow.setVisibility(View.INVISIBLE);
-                             sliderShow.removeAllSliders();
+                             imageSlider.setVisibility(View.INVISIBLE);
+                             imageSlider.removeAllSliders();
 
                              for (int i = 0; i < images[0].size(); i++){
 
@@ -491,8 +491,8 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                                  String url = URLS.ROOT_URL_PICTURES + images[0].get(i);
                                  defaultSliderView.image(url);
                                  defaultSliderView.setScaleType(BaseSliderView.ScaleType.CenterCrop);
-                                 sliderShow.addSlider(defaultSliderView);
-                                 sliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                                 imageSlider.addSlider(defaultSliderView);
+                                 imageSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
 
                              }
 
@@ -502,7 +502,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                                  public void run() {
                                      placeholder.setVisibility(View.GONE);
                                      progressbar.setVisibility(View.GONE);
-                                     sliderShow.setVisibility(View.VISIBLE);
+                                     imageSlider.setVisibility(View.VISIBLE);
                                  }
                              }, 1500);
 
@@ -524,7 +524,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                 Toast.makeText(getApplicationContext(), "Slider konnte nicht initialisiert werden!", Toast.LENGTH_LONG).show();
             }
 
-            sliderShow.setDuration(10000);
+            imageSlider.setDuration(10000);
             return null;
         }
     }
@@ -599,7 +599,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
             public void onSuccess(String fetched_rating) {
 
                 if(fetched_rating != null && !fetched_rating.isEmpty() && !fetched_rating.equals("null")) {
-                    mRatingBar.setRating(Integer.parseInt(fetched_rating));
+                    rbUserRating.setRating(Integer.parseInt(fetched_rating));
                 }
 
             }
@@ -609,15 +609,15 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         /**
          * Transmits all changes of the ratingbar to the DB.
          */
-        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        rbUserRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
             @Override
             public void onRatingChanged(RatingBar mRatingBar, float user_rating, boolean fromUser) {
                 if(user_rating<1){
                     mRatingBar.setRating(1);
                 }
-                if(!btnComment.isEnabled()){
-                    btnComment.setEnabled(true);
+                if(!btnWriteComment.isEnabled()){
+                    btnWriteComment.setEnabled(true);
                 }
                 int user_id = SharedPrefManager.getInstance(FoodProfileActivity.this).getUserId();
                 final int food_id = food.getId();
@@ -633,8 +633,8 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
                             public void onSuccess(FoodClass food) {
                                 int number_rating = food.getNumberRating();
                                 int rating = food.getRating();
-                                mRatingBar2.setRating(rating);
-                                uiE_number_rating.setText("( " + String.valueOf(number_rating) + " )");
+                                rbAverageRating.setRating(rating);
+                                tvNumberOfRatings.setText("( " + String.valueOf(number_rating) + " )");
                             }
                         });
 

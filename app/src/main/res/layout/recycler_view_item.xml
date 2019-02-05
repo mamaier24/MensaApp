@@ -22,8 +22,8 @@
             android:text="X.XX"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
+            app:layout_constraintStart_toEndOf="@+id/tvInfoRating"
+            app:layout_constraintTop_toTopOf="@+id/tvInfoRating" />
 
         <ImageView
             android:id="@+id/ivFavorite"
@@ -52,7 +52,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/tvInfoPrice"
             app:layout_constraintTop_toBottomOf="@+id/tvTitel" />
 
         <TextView
@@ -66,10 +66,10 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mLastTime" />
+            app:layout_constraintTop_toBottomOf="@+id/tvLastTime" />
 
         <RatingBar
-            android:id="@+id/ratingBar"
+            android:id="@+id/rbAverageRating"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_width="182dp"
             android:layout_height="33dp"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvPreis" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvInfoPrice"
             android:layout_width="37dp"
             android:layout_height="19dp"
             android:layout_marginBottom="4dp"
@@ -93,19 +93,19 @@
             app:layout_constraintTop_toTopOf="@+id/tvPreis" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvInfoRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="14dp"
             android:text="Bewertung:"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+            app:layout_constraintBottom_toBottomOf="@+id/rbAverageRating"
+            app:layout_constraintStart_toStartOf="@+id/tvInfoPrice"
+            app:layout_constraintTop_toTopOf="@+id/rbAverageRating" />
 
         <TextView
-            android:id="@+id/mCategory"
+            android:id="@+id/tvCategory"
             android:layout_width="0dp"
             android:layout_height="18dp"
             android:background="#b8424242"
@@ -119,16 +119,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/ivIconLastTime"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="#b8424242"
-            app:layout_constraintBottom_toBottomOf="@+id/mLastTime"
-            app:layout_constraintEnd_toStartOf="@+id/mLastTime"
-            app:layout_constraintTop_toTopOf="@+id/mLastTime"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLastTime"
+            app:layout_constraintEnd_toStartOf="@+id/tvLastTime"
+            app:layout_constraintTop_toTopOf="@+id/tvLastTime"
             app:srcCompat="@drawable/icon_last_time" />
 
         <TextView
-            android:id="@+id/mLastTime"
+            android:id="@+id/tvLastTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="71dp"
@@ -137,7 +138,7 @@
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mCategory" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCategory" />
     </android.support.constraint.ConstraintLayout>
 
 

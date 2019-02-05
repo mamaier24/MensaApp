@@ -26,10 +26,10 @@ import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.IDatabaseOperationsFetchRa
  */
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Spinner spinner;
+    private Spinner spLocation;
     private ArrayAdapter<CharSequence> adapter;
 
-    private EditText MultiTextComment;
+    private EditText mtcComment;
     private Button btnTransmitComment;
     private ProgressDialog progressDialog;
 
@@ -40,7 +40,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private int food_id;
     private String food_id_str;
     private String comment;
-    private RatingBar ratingBar;
+    private RatingBar rbUserRating;
     private String location =null;
     private String user_rating_str;
 
@@ -54,17 +54,17 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         food_id_str = Integer.toString(getIntent().getIntExtra("food_id", 0));
         user_rating_str = Integer.toString(Math.round(getIntent().getFloatExtra("user_rating", 0.0f)));
 
-        MultiTextComment = (EditText) findViewById(R.id.mACTComment);
-        btnTransmitComment = (Button) findViewById(R.id.bpushRating);
-        spinner = (Spinner)findViewById(R.id.fp_spinnerStandort);
-        ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        mtcComment = (EditText) findViewById(R.id.mtcComment);
+        btnTransmitComment = (Button) findViewById(R.id.btnTransmitComment);
+        spLocation = (Spinner)findViewById(R.id.spLocation);
+        rbUserRating = (RatingBar)findViewById(R.id.rbAverageRating);
 
-        ratingBar.setIsIndicator(true);
+        rbUserRating.setIsIndicator(true);
 
         adapter = ArrayAdapter.createFromResource(this, R.array.StandorteMensa, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spLocation.setAdapter(adapter);
+        spLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
@@ -134,7 +134,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             public void onSuccess(String fetched_rating) {
 
                 if (fetched_rating != null && !fetched_rating.isEmpty() && !fetched_rating.equals("null")) {
-                    ratingBar.setRating(Integer.parseInt(fetched_rating));
+                    rbUserRating.setRating(Integer.parseInt(fetched_rating));
                 }
 
             }
@@ -165,7 +165,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void transmitComment() {
 
-        comment = MultiTextComment.getText().toString().trim();
+        comment = mtcComment.getText().toString().trim();
 
 
                     progressDialog.setMessage("Bewertung abgeben...");

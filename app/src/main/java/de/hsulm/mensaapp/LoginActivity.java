@@ -32,11 +32,11 @@ import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManag
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText editTextUsername, editTextPassword;
-    private Button buttonLogin;
+    private EditText etUsername, etPassword;
+    private Button btnLogin;
     private ProgressDialog progressDialog;
-    private ProgressBar progressBar_login;
-    private TextView registerLink;
+    private ProgressBar pbLogin;
+    private TextView tvRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,27 +50,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        editTextUsername = (EditText) findViewById(R.id.eTUsername);
-        editTextPassword = (EditText) findViewById(R.id.eTPassword);
-        buttonLogin = (Button) findViewById(R.id.bLogin);
-        progressBar_login = (ProgressBar)findViewById(R.id.progressBar_login);
-        registerLink = (TextView)findViewById(R.id.tVRegister);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        pbLogin = (ProgressBar)findViewById(R.id.pbLogin);
+        tvRegister = (TextView)findViewById(R.id.tvRegister);
 
-        progressBar_login.setVisibility(View.GONE);
-        buttonLogin.setTransformationMethod(null);
+        pbLogin.setVisibility(View.GONE);
+        btnLogin.setTransformationMethod(null);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait...");
 
-        buttonLogin.setOnClickListener(this);
-        registerLink.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+        tvRegister.setOnClickListener(this);
 
     }
 
     private void userLogin(){
 
-        final String username = editTextUsername.getText().toString().trim();
-        final String password = editTextPassword.getText().toString().trim();
+        final String username = etUsername.getText().toString().trim();
+        final String password = etPassword.getText().toString().trim();
 
         progressDialog.show();
 
@@ -136,16 +136,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        if (view == registerLink)
+        if (view == tvRegister)
             startActivity(new Intent(this, RegisterActivity.class));
 
         else if(Connection.getInstance().isOnline(this)) {
 
-            progressBar_login.setVisibility(View.VISIBLE);
+            pbLogin.setVisibility(View.VISIBLE);
 
-            buttonLogin.setEnabled(false);
+            btnLogin.setEnabled(false);
 
-            if (view == buttonLogin)
+            if (view == btnLogin)
                 userLogin();
 
             Timer buttonTimer = new Timer();
@@ -157,8 +157,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         @Override
                         public void run() {
-                            buttonLogin.setEnabled(true);
-                            progressBar_login.setVisibility(View.GONE);
+                            btnLogin.setEnabled(true);
+                            pbLogin.setVisibility(View.GONE);
                         }
                     });
                 }

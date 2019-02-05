@@ -37,7 +37,7 @@
         app:srcCompat="@mipmap/icon_camera" />
 
     <ImageView
-        android:id="@+id/placeholder"
+        android:id="@+id/ivPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
@@ -49,7 +49,7 @@
         app:srcCompat="@drawable/icon_foodprofile_placeholder" />
 
     <ProgressBar
-        android:id="@+id/progressBar_loadImages"
+        android:id="@+id/pbLoadImages"
         style="?android:attr/progressBarStyle"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -59,10 +59,10 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageSlider"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/rbAverageRating" />
 
     <TextView
-        android:id="@+id/tVComment"
+        android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -78,18 +78,18 @@
         app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
 
     <TextView
-        android:id="@+id/Preis"
+        android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_marginStart="8dp"
         android:text="@string/preis"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/tvPriceInfo"
+        app:layout_constraintTop_toTopOf="@+id/tvPriceInfo" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/rbAverageRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar2"
+        android:id="@+id/rbUserRating"
         android:layout_width="236dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
@@ -113,10 +113,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPriceInfo" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvPriceInfo"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -125,10 +125,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox_vegetarian" />
+        app:layout_constraintTop_toBottomOf="@+id/cbVegetarian" />
 
     <CheckBox
-        android:id="@+id/checkBox_vegetarian"
+        android:id="@+id/cbVegetarian"
         style="@style/CustomCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -137,10 +137,10 @@
         android:text="vegetarisch"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tVComment" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <CheckBox
-        android:id="@+id/checkBox_vegan"
+        android:id="@+id/cbVegan"
         style="@style/CustomCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,8 +148,8 @@
         android:layout_marginTop="20dp"
         android:text="vegan"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/checkBox_vegetarian"
-        app:layout_constraintTop_toBottomOf="@+id/tVComment" />
+        app:layout_constraintStart_toEndOf="@+id/cbVegetarian"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -160,10 +160,10 @@
         android:text="Deine Bewertung:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/ratingBar2"
+        app:layout_constraintEnd_toStartOf="@+id/rbUserRating"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPriceInfo" />
 
     <TextView
         android:layout_width="103dp"
@@ -176,19 +176,19 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/checkBox_vegan"
-        app:layout_constraintTop_toBottomOf="@+id/tVComment" />
+        app:layout_constraintStart_toEndOf="@+id/cbVegan"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/vLineSeparator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="#b8424242"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
+        app:layout_constraintTop_toBottomOf="@+id/rbUserRating" />
 
     <Button
-        android:id="@+id/bWroteComment"
+        android:id="@+id/btnWriteComment"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -204,10 +204,10 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/bWroteComment" />
+        app:layout_constraintTop_toBottomOf="@+id/btnWriteComment" />
 
     <TextView
-        android:id="@+id/tVratingAVG"
+        android:id="@+id/tvAverageRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="210dp"
@@ -217,7 +217,7 @@
         android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+        app:layout_constraintTop_toTopOf="@+id/rbAverageRating" />
 
 
     <android.support.v7.widget.RecyclerView
@@ -230,12 +230,12 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6">
+        app:layout_constraintTop_toBottomOf="@+id/tvCommentsInfo">
 
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvCommentsInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -244,10 +244,10 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/vLineSeparator" />
 
     <TextView
-        android:id="@+id/uiE_number_rating"
+        android:id="@+id/tvNumberOfRatings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="125dp"
@@ -256,7 +256,7 @@
         android:textColor="#0066CC"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/ratingBar"
+        app:layout_constraintEnd_toEndOf="@+id/rbAverageRating"
         app:layout_constraintTop_toTopOf="parent" />
 
 

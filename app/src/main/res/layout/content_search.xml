@@ -27,7 +27,7 @@
     </ListView>
 
     <ImageView
-        android:id="@+id/nodata"
+        android:id="@+id/ivNoData"
         android:visibility="invisible"
         android:src="@drawable/icon_no_data"
         android:layout_centerInParent="true"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/noserver"
+        android:id="@+id/ivNoServer"
         android:visibility="invisible"
         android:src="@drawable/icon_no_connection"
         android:layout_centerInParent="true"

@@ -25,14 +25,14 @@ import de.hsulm.mensaapp.R;
 public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FoodClass> food_list;
     private OnItemClickListener mListener;
-    private static ImageView mImage;
-    private static TextView mTitel;
-    private static TextView mPreis;
-    private static TextView mBewertung;
-    private static RatingBar mRatingBar;
-    private static TextView mCategory;
+    private static ImageView ivFavorite;
+    private static TextView tvTitel;
+    private static TextView tvPreis;
+    private static TextView tvBewertung;
+    private static RatingBar rbAverageRating;
+    private static TextView tvCategory;
     private static TextView mDate;
-    private static TextView mLastTime;
+    private static TextView tvLastTime;
     private static DateID time = new DateID();
 
     public FoodAdapter(ArrayList<FoodClass> food_list) {
@@ -85,13 +85,13 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else {
             FoodClass currentItem = food_list.get(position);
             String url = URLS.ROOT_URL_PICTURES + currentItem.getmimgId();
-            new DownloadRecyclerImage(mImage).execute(url);
-            mTitel.setText(currentItem.getName());
-            mPreis.setText(currentItem.getPrice());
-            mBewertung.setText(((Float) (((Integer) currentItem.getRating()).floatValue())).toString());
-            mRatingBar.setRating(currentItem.getRating());
-            mCategory.setText(currentItem.getCategory());
-            mLastTime.setText(currentItem.getLastTime() + " Tag(en)");
+            new DownloadRecyclerImage(ivFavorite).execute(url);
+            tvTitel.setText(currentItem.getName());
+            tvPreis.setText(currentItem.getPrice());
+            tvBewertung.setText(((Float) (((Integer) currentItem.getRating()).floatValue())).toString());
+            rbAverageRating.setRating(currentItem.getRating());
+            tvCategory.setText(currentItem.getCategory());
+            tvLastTime.setText(currentItem.getLastTime() + " Tag(en)");
         }
     }
 
@@ -124,13 +124,13 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public FoodViewHolder(View itemView, final OnItemClickListener listener) {
                 super(itemView);
 
-                mImage = (ImageView) itemView.findViewById(R.id.ivFavorite);
-                mTitel = (TextView) itemView.findViewById(R.id.tvTitel);
-                mPreis = (TextView) itemView.findViewById(R.id.tvPreis);
-                mBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
-                mRatingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
-                mCategory = (TextView) itemView.findViewById(R.id.mCategory);
-                mLastTime = (TextView) itemView.findViewById(R.id.mLastTime);
+                ivFavorite = (ImageView) itemView.findViewById(R.id.ivFavorite);
+                tvTitel = (TextView) itemView.findViewById(R.id.tvTitel);
+                tvPreis = (TextView) itemView.findViewById(R.id.tvPreis);
+                tvBewertung = (TextView) itemView.findViewById(R.id.tvBewertung);
+                rbAverageRating = (RatingBar) itemView.findViewById(R.id.rbAverageRating);
+                tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
+                tvLastTime = (TextView) itemView.findViewById(R.id.tvLastTime);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -152,7 +152,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public DateViewHolder(View itemView) {
             super(itemView);
 
-            mDate = (TextView) itemView.findViewById(R.id.mDate);
+            mDate = (TextView) itemView.findViewById(R.id.tvDate);
         }
     }
 

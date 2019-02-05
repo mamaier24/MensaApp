@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -33,10 +32,10 @@ import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
  */
 public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView mRecyclerView;
-    private FoodAdapter mAdapter = null;
-    private RecyclerView.LayoutManager mLayoutmanager;
-    private SwipeRefreshLayout swipe_refresh;
+    private RecyclerView recyclerView;
+    private FoodAdapter recyclerViewAdapter = null;
+    private RecyclerView.LayoutManager layoutManager;
+    private SwipeRefreshLayout swipeRefresh;
     private TabLayout tabLayout;
     private DatabaseOperationsDateID operations = new DatabaseOperationsDateID(this);
     private DateID time = new DateID();
@@ -47,13 +46,13 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
-        tabLayout = (TabLayout)findViewById(R.id.tabs);
-        swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipe_refresh.setOnRefreshListener(this);
+        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(this);
 
         if(Connection.getInstance().isOnline(this)) {
 
-            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
             noserver.setVisibility(View.INVISIBLE);
 
             initializeTabLayout();
@@ -65,7 +64,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             }
 
         }else{
-            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
             noserver.setVisibility(View.VISIBLE);
         }
 
@@ -77,8 +76,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                if (mAdapter != null) {
-                    mAdapter.clear();
+                if (recyclerViewAdapter != null) {
+                    recyclerViewAdapter.clear();
                 }
 
                 initializeRecycler();
@@ -105,12 +104,12 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onSuccess(final ArrayList<FoodClass> food_list) {
 
-                mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                mLayoutmanager = new LinearLayoutManager(UserAreaActivity.this);
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                layoutManager = new LinearLayoutManager(UserAreaActivity.this);
 
                 //Doesnt check for vegan or vegetarian
                 if (tabLayout.getSelectedTabPosition() == 0){
-                    mAdapter = new FoodAdapter(food_list);
+                    recyclerViewAdapter = new FoodAdapter(food_list);
                 }
 
                 //Checks for vegetarian food if tab is selected
@@ -123,7 +122,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                         }
                     }
 
-                    mAdapter = new FoodAdapter(food_list);
+                    recyclerViewAdapter = new FoodAdapter(food_list);
                 }
 
                 //Checks for vegan food if tab is selected
@@ -135,15 +134,15 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                         }
                     }
                     
-                    mAdapter = new FoodAdapter(food_list);
+                    recyclerViewAdapter = new FoodAdapter(food_list);
                 }
 
 
 
-                mRecyclerView.setLayoutManager(mLayoutmanager);
-                mRecyclerView.setAdapter(mAdapter);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(recyclerViewAdapter);
 
-                mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
+                recyclerViewAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
                     @Override
                     public void OnItemClick(int position) {
                         if(Connection.getInstance().isOnline(UserAreaActivity.this)) {
@@ -153,11 +152,11 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                             intent.putExtra("position", position);
                             startActivity(intent);
                         }else{
-                            if(mAdapter != null) {
-                                mAdapter.clear();
+                            if(recyclerViewAdapter != null) {
+                                recyclerViewAdapter.clear();
                             }
 
-                            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+                            ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
                             noserver.setVisibility(View.VISIBLE);
                         }
                     }
@@ -241,17 +240,17 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 @Override
                 public void run() {
 
-                    ImageView noserver = (ImageView)findViewById(R.id.noserver);
+                    ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
                     noserver.setVisibility(View.INVISIBLE);
 
-                    if (mAdapter != null) {
-                        mAdapter.clear();
+                    if (recyclerViewAdapter != null) {
+                        recyclerViewAdapter.clear();
                     }
 
                     initializeRecycler();
 
-                    if (swipe_refresh != null) {
-                        swipe_refresh.setRefreshing(false);
+                    if (swipeRefresh != null) {
+                        swipeRefresh.setRefreshing(false);
                     }
 
                 }
@@ -265,15 +264,15 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 @Override
                 public void run() {
 
-                    if(mAdapter != null) {
-                        mAdapter.clear();
+                    if(recyclerViewAdapter != null) {
+                        recyclerViewAdapter.clear();
                     }
 
-                    ImageView noserver = (ImageView)findViewById(R.id.noserver);
+                    ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
                     noserver.setVisibility(View.VISIBLE);
 
-                    if (swipe_refresh != null) {
-                        swipe_refresh.setRefreshing(false);
+                    if (swipeRefresh != null) {
+                        swipeRefresh.setRefreshing(false);
                     }
                 }
 
@@ -287,16 +286,16 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     public void onRestart() {
         if(Connection.getInstance().isOnline(this)) {
             super.onRestart();
-            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
             noserver.setVisibility(View.INVISIBLE);
-            mAdapter.clear();
+            recyclerViewAdapter.clear();
             initializeRecycler();
         }else{
             super.onRestart();
-            if (mAdapter != null) {
-                mAdapter.clear();
+            if (recyclerViewAdapter != null) {
+                recyclerViewAdapter.clear();
             }
-            ImageView noserver = (ImageView)findViewById(R.id.noserver);
+            ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
             noserver.setVisibility(View.VISIBLE);
         }
     }

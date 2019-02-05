@@ -12,7 +12,7 @@
 
 
     <EditText
-        android:id="@+id/eTUsername"
+        android:id="@+id/etUsername"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
@@ -24,10 +24,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/ivAppIcon" />
 
     <EditText
-        android:id="@+id/eTPassword"
+        android:id="@+id/etPassword"
         android:layout_width="0dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
@@ -39,10 +39,10 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <Button
-        android:id="@+id/bLogin"
+        android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginEnd="70dp"
@@ -53,11 +53,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
 
     <TextView
-        android:id="@+id/tVRegister"
+        android:id="@+id/tvRegister"
         android:layout_width="181dp"
         android:layout_height="32dp"
         android:layout_marginBottom="24dp"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/ivAppIcon"
         android:layout_width="210dp"
         android:layout_height="179dp"
         android:layout_marginStart="8dp"
@@ -84,12 +84,12 @@
         app:srcCompat="@drawable/icon_app" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvInfoUserCredentials"
         android:layout_width="0dp"
         android:layout_height="21dp"
         android:layout_marginStart="16dp"
         android:text="Zugangsdaten eingeben:"
-        app:layout_constraintBottom_toTopOf="@+id/eTUsername"
+        app:layout_constraintBottom_toTopOf="@+id/etUsername"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
@@ -101,10 +101,10 @@
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/progressbar_register_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <ProgressBar
-        android:id="@+id/progressBar_login"
+        android:id="@+id/pbLogin"
         style="?android:attr/progressBarStyle"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -112,6 +112,6 @@
         android:layout_marginTop="18dp"
         android:indeterminateDrawable="@drawable/progressbar_register_foregound"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
 </android.support.constraint.ConstraintLayout>

@@ -33,10 +33,10 @@ import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManag
  */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText editTextUsername, editTextEmail, editTextPassword;
-    private Button buttonRegister;
+    private EditText etUsername, etMail, etPassword;
+    private Button btnRegister;
     private ProgressDialog progressDialog;
-    private ProgressBar progessBar_register;
+    private ProgressBar pbRegister;
     private TextView textViewLogin;
 
 
@@ -51,27 +51,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        editTextEmail = (EditText) findViewById(R.id.eTEmail);
-        editTextUsername = (EditText) findViewById(R.id.eTUsername);
-        editTextPassword = (EditText) findViewById(R.id.eTPassword);
-        progessBar_register = (ProgressBar)findViewById(R.id.progressBar_register);
-        progessBar_register.setVisibility(View.GONE);
+        etMail = (EditText) findViewById(R.id.etMail);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        pbRegister = (ProgressBar)findViewById(R.id.pbRegister);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
 
-
-        buttonRegister = (Button) findViewById(R.id.bRegister);
-
+        pbRegister.setVisibility(View.GONE);
         progressDialog = new ProgressDialog(this);
-
-        buttonRegister.setOnClickListener(this);
-        buttonRegister.setTransformationMethod(null);
+        btnRegister.setOnClickListener(this);
+        btnRegister.setTransformationMethod(null);
 
     }
 
 
     private void registerUser() {
-        final String email = editTextEmail.getText().toString().trim();
-        final String username = editTextUsername.getText().toString().trim();
-        final String password = editTextPassword.getText().toString().trim();
+        final String email = etMail.getText().toString().trim();
+        final String username = etUsername.getText().toString().trim();
+        final String password = etPassword.getText().toString().trim();
 
         if (username.length() > 5 || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
 
@@ -149,10 +146,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         if (Connection.getInstance().isOnline(this)) {
 
-            progessBar_register.setVisibility(View.VISIBLE);
-            buttonRegister.setEnabled(false);
+            pbRegister.setVisibility(View.VISIBLE);
+            btnRegister.setEnabled(false);
 
-            if (view == buttonRegister) {
+            if (view == btnRegister) {
                 registerUser();
             }
 
@@ -165,8 +162,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                         @Override
                         public void run() {
-                            buttonRegister.setEnabled(true);
-                            progessBar_register.setVisibility(View.GONE);
+                            btnRegister.setEnabled(true);
+                            pbRegister.setVisibility(View.GONE);
                         }
                     });
                 }

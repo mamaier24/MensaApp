@@ -7,7 +7,7 @@
     tools:context=".CommentActivity">
 
     <TextView
-        android:id="@+id/tVComment"
+        android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tVStandort"
+        android:id="@+id/tvLocation"
         android:layout_width="167dp"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -30,20 +30,20 @@
         android:text="Standort der Mensa:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tVComment" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <Spinner
-        android:id="@+id/fp_spinnerStandort"
+        android:id="@+id/spLocation"
         android:layout_width="184dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tVStandort"
-        app:layout_constraintTop_toTopOf="@+id/tVStandort" />
+        app:layout_constraintStart_toEndOf="@+id/tvLocation"
+        app:layout_constraintTop_toTopOf="@+id/tvLocation" />
 
     <Button
-        android:id="@+id/bpushRating"
+        android:id="@+id/btnTransmitComment"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -53,10 +53,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+        app:layout_constraintTop_toBottomOf="@+id/rbAverageRating" />
 
     <EditText
-        android:id="@+id/mACTComment"
+        android:id="@+id/mtcComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -72,10 +72,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tVStandort" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -86,10 +86,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mACTComment" />
+        app:layout_constraintTop_toBottomOf="@+id/mtcComment" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/rbAverageRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -99,7 +99,7 @@
         android:transformPivotX="240dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
 
 
 </android.support.constraint.ConstraintLayout>
