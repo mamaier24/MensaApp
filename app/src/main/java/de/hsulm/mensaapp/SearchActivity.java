@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import de.hsulm.mensaapp.CONSTANTS.URLS;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
 
 /**
  * Created by Marcel Maier on 30/11/18.

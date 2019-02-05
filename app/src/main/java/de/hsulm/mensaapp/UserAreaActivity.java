@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodAdapter;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
-import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_DATEID.DatabaseOperationsDateID;
-import de.hsulm.mensaapp.SQL_SEARCH_BY_DATEID.IDatabaseOperationsDateID;
-import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER.SharedPrefManager;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_SEARCH_BY_DATEID.DatabaseOperationsDateID;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_SEARCH_BY_DATEID.IDatabaseOperationsDateID;
+import de.hsulm.mensaapp.CONNECTION_STATUS.Connection;
 
 /**
  * Created by Marcel Maier on 30/11/18.

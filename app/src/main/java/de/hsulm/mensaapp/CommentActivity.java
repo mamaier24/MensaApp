@@ -14,12 +14,12 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
-import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
-import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.DatabaseOperationsTransmitComments;
-import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_COMMENT.IDatabaseOperationsTransmitComments;
-import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.DatabaseOperationsFetchRating;
-import de.hsulm.mensaapp.SQL_TRANSMIT_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
+import de.hsulm.mensaapp.CONNECTION_STATUS.Connection;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER.SharedPrefManager;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_TRANSMIT_OR_FETCH_COMMENT.DatabaseOperationsTransmitComments;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_TRANSMIT_OR_FETCH_COMMENT.IDatabaseOperationsTransmitComments;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_TRANSMIT_OR_FETCH_RATING.DatabaseOperationsFetchRating;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_TRANSMIT_OR_FETCH_RATING.IDatabaseOperationsFetchRating;
 
 /**
  * Created by Marcel Maier on 30/11/18.

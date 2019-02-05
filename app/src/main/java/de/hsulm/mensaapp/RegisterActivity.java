@@ -23,10 +23,10 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.hsulm.mensaapp.ANDROID_IS_ONLINE.Connection;
+import de.hsulm.mensaapp.CONNECTION_STATUS.Connection;
 import de.hsulm.mensaapp.CONSTANTS.URLS;
-import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
-import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.SharedPrefManager;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_REQUEST_HANDLER.RequestHandler;
+import de.hsulm.mensaapp.SHARED_PREF_MANAGER.SharedPrefManager;
 
 /**
  * Created by Marcel Maier on 30/11/18.
