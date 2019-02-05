@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 import de.hsulm.mensaapp.FoodProfileActivity;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ * Class necessary for SearchActivity
+ */
 public class Parser extends AsyncTask<Void,Void,Integer> {
 
     private Context c;

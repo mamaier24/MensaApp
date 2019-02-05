@@ -5,6 +5,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ * Class necessary for SearchActivity
+ */
 public class Connector {
 
     public static HttpURLConnection connect(String urlAddress)

@@ -21,7 +21,7 @@ import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 
 /**
  * Created by Stephan Danz 05/12/2018
- * Class necessary for handling all DB operations such as getting food
+ * Class necessary for getting food for specific week from DB
  */
 public class DatabaseOperationsDateID {
 

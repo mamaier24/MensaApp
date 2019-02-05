@@ -60,36 +60,45 @@ public class CommentsClass implements Parcelable {
         return username;
     }
 
+
     public String getLocation() {
         return location;
     }
+
 
     public String getCDate() {
         return date;
     }
 
+
     public String getComment() {
         return comments;
     }
+
 
     public int getUser_id() {
         return user_id;
     }
 
+
     public int getFood_id() {
         return food_id;
     }
+
 
     public int getComment_id() {
         return comment_id;
     }
 
+
     public String getUserRating() { return user_rating; }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -102,4 +111,5 @@ public class CommentsClass implements Parcelable {
         dest.writeString(username);
         dest.writeString(user_rating);
     }
+
 }

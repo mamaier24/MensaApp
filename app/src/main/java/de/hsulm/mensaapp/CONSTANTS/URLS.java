@@ -2,7 +2,6 @@ package de.hsulm.mensaapp.CONSTANTS;
 
 /**
  * Created by Marcel Maier on 30/11/18.
- *
  * Defines all constants: In this case all URLs needed for PHP handling.
  */
 public class URLS {

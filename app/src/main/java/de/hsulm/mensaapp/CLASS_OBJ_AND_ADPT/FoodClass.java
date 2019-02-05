@@ -72,6 +72,7 @@ public class FoodClass implements Parcelable {
         return id;
     }
 
+
     public String getName() {
         if(name != null) {
             name = name.replaceAll(System.getProperty("line.separator"), (""));
@@ -79,17 +80,21 @@ public class FoodClass implements Parcelable {
         return name;
     }
 
+
     public String getDate() {
         return date;
     }
+
 
     public int isVegan() {
         return vegan;
     }
 
+
     public int isVegetarian() {
         return vegetarian;
     }
+
 
     public String getPrice() {
         if(price != null) {
@@ -99,26 +104,34 @@ public class FoodClass implements Parcelable {
         return price;
     }
 
+
     public String getUuid() {
         return uuid;
     }
 
+
     public int getRating(){return rating;}
+
 
     public String getmimgId() {
         return imgID;
     }
 
+
     public String getCategory(){return category;}
+
 
     public int getNumberRating(){return number_rating;}
 
+
     public String getLastTime() { return lastTime; }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -135,4 +148,5 @@ public class FoodClass implements Parcelable {
         dest.writeInt(number_rating);
         dest.writeString(lastTime);
     }
+
 }

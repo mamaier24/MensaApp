@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which handles the users login data
  */
 public class SharedPrefManager {
 

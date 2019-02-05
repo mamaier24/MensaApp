@@ -14,6 +14,7 @@ import de.hsulm.mensaapp.R;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Adapter for RecyclerView - Comment fields in FoodProfile
  */
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 

@@ -21,6 +21,10 @@ import de.hsulm.mensaapp.CONSTANTS.URLS;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER_AND_REQUEST_HANDLER.RequestHandler;
 import de.hsulm.mensaapp.SQL_SEARCH_BY_DATEID.IDatabaseOperationsDateID;
 
+/**
+ * Created by Stephan Danz 05/12/2018
+ * Class necessary for getting food for specific ID from DB
+ */
 public class DatabaseOperationsID {
 
     private Context mContext;

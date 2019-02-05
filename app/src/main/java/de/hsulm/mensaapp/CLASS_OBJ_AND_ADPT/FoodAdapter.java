@@ -20,6 +20,7 @@ import de.hsulm.mensaapp.R;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Adapter for RecyclerView - Food in UserAreaActivity
  */
 public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FoodClass> food_list;
@@ -37,6 +38,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public FoodAdapter(ArrayList<FoodClass> food_list) {
         this.food_list = food_list;
         //Empty food class needs to be added first for correct display in UserAreaActivity
+        //First element in list must be zero because first field is another recycler card of type DATE
         food_list.add(0, new FoodClass());
     }
 

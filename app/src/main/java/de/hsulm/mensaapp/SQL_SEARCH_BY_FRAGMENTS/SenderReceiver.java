@@ -16,6 +16,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ * Class necessary for SearchActivity
+ */
 public class SenderReceiver extends AsyncTask<Void,Void,String>{
 
     private Context c;

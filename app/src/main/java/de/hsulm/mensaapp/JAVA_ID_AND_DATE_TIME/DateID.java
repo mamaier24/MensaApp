@@ -7,6 +7,7 @@ import java.util.Locale;
 
 /**
  * Created by Stephan Danz 05/12/2018
+ * Class necessary for DateID-generation and dates/times at all
  */
 public class DateID {
 

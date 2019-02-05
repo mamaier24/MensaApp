@@ -7,6 +7,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Iterator;
 
+/**
+ * Created by Marcel Maier on 30/11/18.
+ * Class necessary for SearchActivity
+ */
 public class DataPackager {
 
     String query;

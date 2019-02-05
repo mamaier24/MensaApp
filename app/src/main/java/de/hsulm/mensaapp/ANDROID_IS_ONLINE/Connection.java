@@ -3,6 +3,10 @@ package de.hsulm.mensaapp.ANDROID_IS_ONLINE;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+/**
+ * Created by Stephan Danz on 30/11/18.
+ * Checks online state of the mobile device
+ */
 public class Connection {
 
     private static final Connection ourInstance = new Connection();
