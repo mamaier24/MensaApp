@@ -126,7 +126,7 @@ public class FoodProfileActivity extends AppCompatActivity implements View.OnCli
         /**
          * UI elements with method space init.
          */
-        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        TextView tvTitle = (TextView) findViewById(R.id.tvComment);
         TextView tvPrice = (TextView) findViewById(R.id.tvPrice);
         CheckBox cbVegan = (CheckBox)findViewById(R.id.cbVegan);
         CheckBox cbVegetarian = (CheckBox)findViewById(R.id.cbVegetarian);

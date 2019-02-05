@@ -51,7 +51,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             holder.tvCommentUser.setText("");
             holder.tvCommentLocation.setText("");
             holder.tvCommentDate.setText("");
-            holder.tvTitle.setText("Noch kein Kommentar vorhanden! Sei der erste der einen Kommentar abgibt!");
+            holder.tvComment.setText("Noch kein Kommentar vorhanden! Sei der erste der einen Kommentar abgibt!");
             holder.tvCommentRating.setText("");
             holder.ivIconCommentUser.setVisibility(View.GONE);
             holder.ivIconCommentDate.setVisibility(View.GONE);
@@ -63,7 +63,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             holder.tvCommentUser.setText(commentsClass.getUser());
             holder.tvCommentLocation.setText(commentsClass.getLocation());
             holder.tvCommentDate.setText(commentsClass.getCDate());
-            holder.tvTitle.setText(commentsClass.getComment());
+            holder.tvComment.setText(commentsClass.getComment());
             holder.tvCommentRating.setText(commentsClass.getUserRating());
         }
 
@@ -85,7 +85,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         public TextView tvCommentRating;
         public TextView tvCommentLocation;
         public TextView tvCommentDate;
-        public TextView tvTitle;
+        public TextView tvComment;
         public ImageView ivIconCommentUser;
         public ImageView ivIconCommentDate;
         public ImageView ivIconCommentLocation;
@@ -98,7 +98,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             tvCommentRating = (TextView) itemView.findViewById(R.id.tvCommentRating);
             tvCommentLocation = (TextView) itemView.findViewById(R.id.tvCommentLocation);
             tvCommentDate = (TextView) itemView.findViewById(R.id.tvCommentDate);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvComment = (TextView) itemView.findViewById(R.id.tvComment);
             ivIconCommentUser = (ImageView) itemView.findViewById(R.id.ivIconCommentUser);
             ivIconCommentDate = (ImageView) itemView.findViewById(R.id.ivIconCommentDate);
             ivIconCommentLocation = (ImageView) itemView.findViewById(R.id.ivIconCommentLocation);
