@@ -23,15 +23,12 @@ public class IngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
-
         pdfview =(PDFView)findViewById(R.id.pdfView);
         link = "https://studierendenwerk-ulm.de/wp-content/uploads/2016/12/Allergenaushang-A4-quer.pdf";
         new RetrievePDFStream(link).execute();
-
     }
 
-    class RetrievePDFStream extends AsyncTask<String,Void,InputStream>
-    {
+    class RetrievePDFStream extends AsyncTask<String,Void,InputStream> {
         private String pdfurl;
 
         public RetrievePDFStream(String url){
@@ -48,9 +45,7 @@ public class IngredientsActivity extends AppCompatActivity {
                 {
                     inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 return inputStream = null;
             }
             return inputStream;
@@ -65,8 +60,6 @@ public class IngredientsActivity extends AppCompatActivity {
                 Toast.makeText(IngredientsActivity.this, "Inhaltsstoffe nicht verfügbar!", Toast.LENGTH_LONG).show();
             }
         }
-
     }
-
 
 }

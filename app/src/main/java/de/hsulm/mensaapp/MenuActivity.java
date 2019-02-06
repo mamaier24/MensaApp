@@ -44,7 +44,6 @@ public class MenuActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
 
@@ -80,12 +79,9 @@ public class MenuActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
-
-            }
+            public void onNothingSelected(AdapterView<?> parent){ }
 
         });
-
     }
 
 
@@ -119,12 +115,10 @@ public class MenuActivity extends AppCompatActivity {
         protected void onPostExecute(InputStream inputStream){
             if(inputStream != null){
                 pdfview.fromStream(inputStream).load();
-            }
-            else{
+            } else{
                 Toast.makeText(MenuActivity.this, "Speiseplan nicht verfügbar!", Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
 

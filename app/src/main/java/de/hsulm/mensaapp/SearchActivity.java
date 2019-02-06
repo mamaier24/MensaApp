@@ -44,7 +44,6 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
 
-
             @Override
             public boolean onQueryTextChange(String query) {
                 SenderReceiver sr=new SenderReceiver(SearchActivity.this,urlAddress,query,lv,noDataImg,noNetworkImg);
@@ -54,7 +53,6 @@ public class SearchActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
 }

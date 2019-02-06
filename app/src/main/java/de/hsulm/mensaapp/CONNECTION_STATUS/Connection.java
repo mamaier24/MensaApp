@@ -15,9 +15,7 @@ public class Connection {
         return ourInstance;
     }
 
-    private Connection() {
-
-    }
+    private Connection() { }
 
     public boolean isOnline(Context context) {
         boolean var = false;

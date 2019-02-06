@@ -112,7 +112,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     for(int i=0; i<food_list.size();i++){
                         if(food_list.get(i).isVegetarian() != 1){
                             food_list.remove(i);
-                            i = i - 1;
+                            i--;
                         }
                     }
 
@@ -124,7 +124,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     for(int i=0; i<food_list.size();i++){
                         if(food_list.get(i).isVegan() == 0){
                             food_list.remove(i);
-                            i = i - 1;
+                            i--;
                         }
                     }
                     
@@ -185,7 +185,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 Intent InhaltsstoffeIntent = new Intent(UserAreaActivity.this, IngredientsActivity.class);
                 UserAreaActivity.this.startActivity(InhaltsstoffeIntent);
                 break;
-                
+
             case R.id.Lob_Tadel:
                 //Intent for "Lob und Tadel"
                 Log.i("Want to Send Mail", "");
