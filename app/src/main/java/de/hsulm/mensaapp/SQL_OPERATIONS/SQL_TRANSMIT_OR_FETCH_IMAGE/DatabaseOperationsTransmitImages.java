@@ -27,7 +27,7 @@ public class DatabaseOperationsTransmitImages {
     }
 
 
-    public void uploadImageToDB(final String img_enc, final int user_id, final int food_id, final IDatabaseOperationsTransmitImages callback) {
+    public void transmitImageToDB(final String img_enc, final int user_id, final int food_id, final IDatabaseOperationsTransmitImages callback) {
 
         //Need to be converted to String because Parsing-Hashmap only takes Strings
         final String user_id_str = ((Integer)user_id).toString();

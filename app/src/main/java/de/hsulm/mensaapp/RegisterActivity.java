@@ -25,11 +25,14 @@ import java.util.TimerTask;
 
 import de.hsulm.mensaapp.CONNECTION_STATUS.Connection;
 import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_REGISTER.DatabaseOperationsRegister;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_REGISTER.IDatabaseOperationsRegister;
 import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_REQUEST_HANDLER.RequestHandler;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER.SharedPrefManager;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which handles the registration of new users
  */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private ProgressDialog progressDialog;
     private ProgressBar pbRegister;
     private TextView textViewLogin;
+    private DatabaseOperationsRegister register = new DatabaseOperationsRegister(this);
 
 
     @Override
@@ -61,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressDialog = new ProgressDialog(this);
         btnRegister.setOnClickListener(this);
         btnRegister.setTransformationMethod(null);
-
     }
 
 
@@ -79,52 +82,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     progressDialog.setMessage("Benutzer registrieren...");
                     progressDialog.show();
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                            URLS.URL_REGISTER,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    progressDialog.dismiss();
-
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(response);
-
-                                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
-
-                                        if (jsonObject.getString("error") == "false") {
-
-                                            onNotError();
-
-                                        }
-
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    progressDialog.hide();
-                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-
-
-                                }
-
-                            }) {
+                    register.checkRegistrationCredentials(username, password, email, new IDatabaseOperationsRegister() {
                         @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<>();
-                            params.put("username", username);
-                            params.put("email", email);
-                            params.put("password", password);
-                            return params;
+                        public void onSuccess() {
+                            progressDialog.dismiss();
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            finish();
                         }
-                    };
 
-
-                    RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+                        @Override
+                        public void onError() {
+                            progressDialog.dismiss();
+                        }
+                    });
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Fehlerhafte E-Mail-Adresse!", Toast.LENGTH_LONG).show();
@@ -137,15 +107,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else {
             Toast.makeText(getApplicationContext(), "Benutzername zu kurz! Min. 6 Zeichen!", Toast.LENGTH_LONG).show();
         }
-
     }
 
 
     @Override
     public void onClick(View view) {
-
         if (Connection.getInstance().isOnline(this)) {
-
             pbRegister.setVisibility(View.VISIBLE);
             btnRegister.setEnabled(false);
 
@@ -169,16 +136,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
 
             }, 5000);
-
         }else{
             Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
         }
-
-    }
-
-
-    public void onNotError(){
-        startActivity(new Intent(this, LoginActivity.class));
     }
 
 

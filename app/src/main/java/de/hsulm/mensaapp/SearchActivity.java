@@ -12,6 +12,7 @@ import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_SEARCH_BY_FRAGMENTS.SenderReceiver;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which handles all search requests
  */
 public class SearchActivity extends AppCompatActivity {
 

@@ -1,21 +1,17 @@
 package de.hsulm.mensaapp.SQL_OPERATIONS.SQL_TRANSMIT_OR_FETCH_IMAGE;
 
 import android.content.Context;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import de.hsulm.mensaapp.CONSTANTS.URLS;
 import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_REQUEST_HANDLER.RequestHandler;
 
@@ -30,7 +26,7 @@ public class DatabaseOperationsFetchImages {
     public DatabaseOperationsFetchImages(Context context) { mContext = context; }
 
 
-    public void getImagesFromDB(final int food_id, final IDatabaseOperationsFetchImages callback) {
+    public void fetchImagesFromDB(final int food_id, final IDatabaseOperationsFetchImages callback) {
 
         final String food_id_string = ((Integer)food_id).toString();
 
@@ -60,15 +56,11 @@ public class DatabaseOperationsFetchImages {
                         } catch (JSONException e) {
                             callback.onSuccess(img_id_list);
                         }
-
-                }
-
+                    }
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-
+                    public void onErrorResponse(VolleyError error) { }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

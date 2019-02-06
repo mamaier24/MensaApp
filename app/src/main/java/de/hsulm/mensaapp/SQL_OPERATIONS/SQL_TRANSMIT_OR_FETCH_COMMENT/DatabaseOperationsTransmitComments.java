@@ -34,10 +34,8 @@ public class DatabaseOperationsTransmitComments {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLS.URL_TRANSMIT_COMMENT,
                 new Response.Listener<String>() {
-
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             JSONObject object = new JSONObject(response);
 
@@ -55,17 +53,13 @@ public class DatabaseOperationsTransmitComments {
 
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.hide();
                         Toast.makeText(context, "Es ist ein Fehler beim Senden des Kommentars aufgetreten!", Toast.LENGTH_LONG).show();
                     }
-
                 }
-
         ) {
-
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
@@ -77,7 +71,6 @@ public class DatabaseOperationsTransmitComments {
                 params.put("username", username);
                 params.put("user_rating", user_rating_str);
                 return params;
-
             }
 
         };

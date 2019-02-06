@@ -23,16 +23,15 @@ import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_TRANSMIT_OR_FETCH_RATING.IDatabaseOp
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which handles creation of new comments from users
  */
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Spinner spLocation;
     private ArrayAdapter<CharSequence> adapter;
-
     private EditText mtcComment;
     private Button btnTransmitComment;
     private ProgressDialog progressDialog;
-
     private String user_id_str = Integer.toString(SharedPrefManager.getInstance(this).getUserId());
     private int user_id = SharedPrefManager.getInstance(this).getUserId();
     private String username = SharedPrefManager.getInstance(this).getUsername();
@@ -43,7 +42,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private RatingBar rbUserRating;
     private String location =null;
     private String user_rating_str;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +101,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    /**
+     * Button handling
+     */
     @Override
     public void onClick(View view) {
         if (view == btnTransmitComment) {
@@ -120,6 +121,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+
     /**
      * Fetch rating and initialize ratingbarOnChangeListener
      */
@@ -127,21 +129,19 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         /**
          * Fetches the unique user rating from DB.
          */
-        DatabaseOperationsFetchRating get_rating = new DatabaseOperationsFetchRating(CommentActivity.this);
-        get_rating.setAndGetRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
+        DatabaseOperationsFetchRating rating = new DatabaseOperationsFetchRating(CommentActivity.this);
+        rating.fetchRating(user_id, food_id, new IDatabaseOperationsFetchRating() {
 
             @Override
             public void onSuccess(String fetched_rating) {
-
                 if (fetched_rating != null && !fetched_rating.isEmpty() && !fetched_rating.equals("null")) {
                     rbUserRating.setRating(Integer.parseInt(fetched_rating));
                 }
-
             }
 
         });
-
     }
+
 
     private void initializeDialog(){
         dialogClickListener = new DialogInterface.OnClickListener() {
@@ -160,26 +160,22 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         };
     }
 
+
     /**
      * Transmits the comment to the DB
      */
     private void transmitComment() {
-
         comment = mtcComment.getText().toString().trim();
+        progressDialog.setMessage("Bewertung abgeben...");
+        progressDialog.show();
+        DatabaseOperationsTransmitComments new_comment = new DatabaseOperationsTransmitComments(this);
 
-
-                    progressDialog.setMessage("Bewertung abgeben...");
-                    progressDialog.show();
-                    DatabaseOperationsTransmitComments new_comment = new DatabaseOperationsTransmitComments(this);
-
-                    new_comment.transmitCommentToDB(user_id_str, food_id_str, comment, location, username, user_rating_str, progressDialog, new IDatabaseOperationsTransmitComments() {
-                        @Override
-                        public void onSuccess() {
-                            finish();
-                        }
-                    });
-
-
+        new_comment.transmitCommentToDB(user_id_str, food_id_str, comment, location, username, user_rating_str, progressDialog, new IDatabaseOperationsTransmitComments() {
+            @Override
+            public void onSuccess() {
+                finish();
+            }
+        });
     }
 
 }

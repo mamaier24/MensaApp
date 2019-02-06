@@ -22,6 +22,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which handles display of the PDF menu from Studierendenwerk Ulm
  */
 public class MenuActivity extends AppCompatActivity {
 

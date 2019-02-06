@@ -32,10 +32,7 @@ public class DatabaseOperationsFetchComments {
         this.context = context;
     }
 
-
-    public void getCommentsFromDB(final String searchQuery, final IDatabaseOperationsFetchComments callback) {
-
-        final String Comments_object = null;
+    public void fetchCommentsFromDB(final String searchQuery, final IDatabaseOperationsFetchComments callback) {
 
         StringRequest arrayRequest = new StringRequest(
                 Request.Method.POST,
@@ -45,7 +42,6 @@ public class DatabaseOperationsFetchComments {
 
                     @Override
                     public void onResponse(String response) {
-
                         final ArrayList<CommentsClass> comments_list = new ArrayList<>();
                         CommentsClass comment = null;
 
@@ -82,21 +78,16 @@ public class DatabaseOperationsFetchComments {
                     }
                 },
                 new Response.ErrorListener() {
-
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-
+                    public void onErrorResponse(VolleyError error) { }
                 }
         ) {
-
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
                 params.put("searchQuery", searchQuery);
                 return params;
             }
-
         };
 
         RequestHandler.getInstance(context).addToRequestQueue(arrayRequest);

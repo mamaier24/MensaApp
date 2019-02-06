@@ -20,7 +20,7 @@
         android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="Benutzername"
-        android:inputType="textPersonName"
+        android:inputType="textVisiblePassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

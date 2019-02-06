@@ -32,7 +32,7 @@ public class DatabaseOperationsID {
     }
 
 
-    public void getFoodFromDB(final String searchQuery, final IDatabaseOperationsID callback) {
+    public void getFoodFromDBbyID(final String searchQuery, final IDatabaseOperationsID callback) {
 
         final String food_object = null;
 

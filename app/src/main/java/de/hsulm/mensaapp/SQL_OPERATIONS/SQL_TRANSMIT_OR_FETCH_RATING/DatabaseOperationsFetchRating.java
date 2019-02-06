@@ -29,7 +29,7 @@ public class DatabaseOperationsFetchRating {
     public DatabaseOperationsFetchRating(Context context) { mContext = context; }
 
 
-    public void setAndGetRating(int user_id, final int food_id, final IDatabaseOperationsFetchRating callback) {
+    public void fetchRating(int user_id, final int food_id, final IDatabaseOperationsFetchRating callback) {
 
         final String user_id_string = ((Integer)user_id).toString();
         final String food_id_string = ((Integer)food_id).toString();

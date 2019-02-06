@@ -17,8 +17,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.util.ArrayList;
-
-
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodAdapter;
 import de.hsulm.mensaapp.CLASS_OBJ_AND_ADPT.FoodClass;
 import de.hsulm.mensaapp.JAVA_ID_AND_DATE_TIME.DateID;
@@ -29,6 +27,7 @@ import de.hsulm.mensaapp.CONNECTION_STATUS.Connection;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which implements the MAIN window
  */
 public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -51,7 +50,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
         swipeRefresh.setOnRefreshListener(this);
 
         if(Connection.getInstance().isOnline(this)) {
-
             ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
             noserver.setVisibility(View.INVISIBLE);
 
@@ -62,48 +60,44 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 finish();
                 startActivity(new Intent(this, LoginActivity.class));
             }
-
         }else{
             ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
             noserver.setVisibility(View.VISIBLE);
         }
-
     }
 
-    public void initializeTabLayout(){
 
+    /*
+     * Initializes the TabLayout with vegan and vegetarian food.
+     */
+    public void initializeTabLayout(){
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 if (recyclerViewAdapter != null) {
                     recyclerViewAdapter.clear();
                 }
-
                 initializeRecycler();
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
 
         });
-
     }
 
 
+    /*
+     * Initializes the Recycler and gets all current meals
+     * Called on SwipeRefresh, onResume and onRestart.
+     */
     public void initializeRecycler() {
-
-        operations.getFoodFromDB(time.getFoodID(), new IDatabaseOperationsDateID() {
+        operations.getFoodFromDBbyDateID(time.getFoodID(), new IDatabaseOperationsDateID() {
             @Override
             public void onSuccess(final ArrayList<FoodClass> food_list) {
-
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                 layoutManager = new LinearLayoutManager(UserAreaActivity.this);
 
@@ -137,8 +131,6 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     recyclerViewAdapter = new FoodAdapter(food_list);
                 }
 
-
-
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(recyclerViewAdapter);
 
@@ -161,13 +153,14 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                         }
                     }
                 });
-
             }
         });
-
     }
 
 
+    /*
+     * Creates the menu spinner
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -175,6 +168,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
 
+    /*
+     * Handling of the menu spinner
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -230,16 +226,15 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
 
+    /*
+     * Handling the SwipeRefresh
+     */
     @Override
     public void onRefresh() {
-
         if(Connection.getInstance().isOnline(this)) {
-
             new Handler().postDelayed(new Runnable() {
-
                 @Override
                 public void run() {
-
                     ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
                     noserver.setVisibility(View.INVISIBLE);
 
@@ -252,13 +247,9 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                     if (swipeRefresh != null) {
                         swipeRefresh.setRefreshing(false);
                     }
-
                 }
-
             }, 4000);
-
         }else{
-
             new Handler().postDelayed(new Runnable() {
 
                 @Override
@@ -277,11 +268,13 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 }
 
             }, 4000);
-
         }
     }
 
 
+    /*
+     * Handling if the app is restarted
+     */
     @Override
     public void onRestart() {
         if(Connection.getInstance().isOnline(this)) {

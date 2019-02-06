@@ -24,11 +24,14 @@ import java.util.TimerTask;
 
 import de.hsulm.mensaapp.CONNECTION_STATUS.Connection;
 import de.hsulm.mensaapp.CONSTANTS.URLS;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_LOGIN.DatabaseOperationsLogin;
+import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_LOGIN.IDatabaseOperationsLogin;
 import de.hsulm.mensaapp.SQL_OPERATIONS.SQL_REQUEST_HANDLER.RequestHandler;
 import de.hsulm.mensaapp.SHARED_PREF_MANAGER.SharedPrefManager;
 
 /**
  * Created by Marcel Maier on 30/11/18.
+ * Class which handles the user login
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,10 +40,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressDialog progressDialog;
     private ProgressBar pbLogin;
     private TextView tvRegister;
+    private DatabaseOperationsLogin login = new DatabaseOperationsLogin(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -64,70 +67,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
-
     }
 
-    private void userLogin(){
 
+    /**
+     * Method which is calling the DB request
+     */
+    private void userLogin(){
         final String username = etUsername.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
 
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.POST,
-                URLS.URL_LOGIN,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            if(!obj.getBoolean("error")){
-                                SharedPrefManager.getInstance(getApplicationContext())
-                                        .userLogin(
-                                                obj.getInt("id"),
-                                                obj.getString("username"),
-                                                obj.getString("email")
-                                        );
-                                startActivity(new Intent(getApplicationContext(), UserAreaActivity.class));
-                                finish();
-                            }else{
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        obj.getString("message"),
-                                        Toast.LENGTH_LONG
-                                ).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-
-                        Toast.makeText(
-                                getApplicationContext(),
-                               error.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                }
-        ){
+        login.checkLoginCredentials(username, password, new IDatabaseOperationsLogin() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
+            public void onSuccess() {
+                progressDialog.dismiss();
+                startActivity(new Intent(LoginActivity.this, UserAreaActivity.class));
+                finish();
             }
 
-        };
-
-        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+            @Override
+            public void onError() {
+                progressDialog.dismiss();
+            }
+        });
     }
 
 
@@ -135,7 +99,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //Activate progressbar to symbol activity
     @Override
     public void onClick(View view) {
-
         if (view == tvRegister)
             startActivity(new Intent(this, RegisterActivity.class));
 
@@ -168,7 +131,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else{
             Toast.makeText(getApplicationContext(), "Du bist nicht mit dem Internet verbunden!", Toast.LENGTH_LONG).show();
         }
-
     }
 
 }
