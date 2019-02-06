@@ -42,6 +42,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         return new ViewHolder(v);
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
@@ -105,6 +106,5 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             ivIconCommentRating = (ImageView) itemView.findViewById(R.id.ivIconCommentRating);
         }
     }
-
 
 }

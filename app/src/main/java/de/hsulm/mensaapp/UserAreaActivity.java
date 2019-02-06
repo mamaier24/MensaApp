@@ -61,8 +61,8 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 startActivity(new Intent(this, LoginActivity.class));
             }
         }else{
-            ImageView noserver = (ImageView)findViewById(R.id.ivNoServer);
-            noserver.setVisibility(View.VISIBLE);
+            ImageView ivNoserver = (ImageView)findViewById(R.id.ivNoServer);
+            ivNoserver.setVisibility(View.VISIBLE);
         }
     }
 
@@ -185,8 +185,7 @@ public class UserAreaActivity extends AppCompatActivity implements SwipeRefreshL
                 Intent InhaltsstoffeIntent = new Intent(UserAreaActivity.this, IngredientsActivity.class);
                 UserAreaActivity.this.startActivity(InhaltsstoffeIntent);
                 break;
-
-
+                
             case R.id.Lob_Tadel:
                 //Intent for "Lob und Tadel"
                 Log.i("Want to Send Mail", "");

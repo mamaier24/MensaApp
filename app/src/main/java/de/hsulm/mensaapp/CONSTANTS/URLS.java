@@ -5,7 +5,6 @@ package de.hsulm.mensaapp.CONSTANTS;
  * Defines all constants: In this case all URLs needed for PHP handling.
  */
 public class URLS {
-
     //ROOT URLs
     public static final String ROOT_URL = "http://www.s673993392.online.de/v1/";
     public static final String ROOT_URL_PICTURES = "http://www.s673993392.online.de/v1/upload/";
@@ -28,5 +27,4 @@ public class URLS {
     public static final String URL_FETCH_RATING = ROOT_URL + "fetch_user_rating.php";
     public static final String URL_FETCH_IMG = ROOT_URL + "fetch_img.php";
     public static final String URL_FETCH_COMMENT = ROOT_URL + "fetch_comments.php";
-
 }
